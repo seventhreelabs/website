@@ -2,6 +2,10 @@
 
 import { useEffect, useRef } from "react";
 
+// raymarch cost is per pixel - cap the render area, never exceed device pixels
+const DESKTOP_PIXELS = 1_400_000;
+const MOBILE_PIXELS = 450_000;
+
 const VERTEX = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
 
 const FRAGMENT = `precision highp float;
@@ -19,15 +23,17 @@ vec3 nor(vec3 p){vec2 e=vec2(.002,0.);return normalize(vec3(map(p+e.xyy)-map(p-e
 void main(){
 vec2 u=(gl_FragCoord.xy-.5*r)/r.y;
 vec3 ro=vec3(0.,0.,5.5),rd=normalize(vec3(u*1.15,-1.5));
-float d=0.,h=1.;
-for(int i=0;i<56;i++){h=map(ro+rd*d);if(h<.002||d>10.)break;d+=h;}
+float d=0.,h=1.,mn=1e3,dm=0.;
+for(int i=0;i<64;i++){h=map(ro+rd*d);if(h<mn){mn=h;dm=d;}if(h<.002||d>10.)break;d+=h;}
+float px=4./r.y;
+float cov=1.-smoothstep(.002,.002+px,mn);
 float c=0.;
-if(d<10.){
-vec3 p=ro+rd*d,n=nor(p),q=reflect(rd,n);
+if(cov>0.){
+vec3 p=ro+rd*dm,n=nor(p),q=reflect(rd,n);
 float f=pow(1.-max(dot(n,-rd),0.),2.);
 float sp=pow(max(dot(q,normalize(vec3(.5,.8,.6))),0.),40.);
-float env=smoothstep(.55,.6,.5+.5*sin(q.y*5.+q.x*2.+t*.15));
-c=.04+.42*f+.3*sp+.07*env;
+float env=smoothstep(.5,.65,.5+.5*sin(q.y*5.+q.x*2.+t*.15));
+c=(.04+.42*f+.3*sp+.07*env)*cov;
 }
 c*=1.-.35*dot(u,u);
 gl_FragColor=vec4(vec3(c*.96,c*.98,c*1.05),1.);
@@ -82,7 +88,10 @@ export function HeroBackground() {
     };
 
     const draw = (ms: number) => {
-      const scale = window.innerWidth < 768 ? 0.45 : 0.6;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const area = canvas.clientWidth * canvas.clientHeight;
+      const budget = window.innerWidth < 768 ? MOBILE_PIXELS : DESKTOP_PIXELS;
+      const scale = Math.min(dpr, Math.sqrt(budget / Math.max(1, area)));
       const width = Math.max(1, Math.round(canvas.clientWidth * scale));
       const height = Math.max(1, Math.round(canvas.clientHeight * scale));
       if (canvas.width !== width || canvas.height !== height) {
