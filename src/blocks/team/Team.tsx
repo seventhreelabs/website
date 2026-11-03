@@ -39,7 +39,7 @@ export default function Team({ content }: BlockProps<typeof teamProps>) {
                   alt={mediaAlt(member.photo) ?? member.name}
                   width={140}
                   height={170}
-                  unoptimized
+                  quality={85}
                   className="h-[10.625rem] w-35 shrink-0 rounded-lg object-cover"
                 />
               ) : (

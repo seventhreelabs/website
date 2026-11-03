@@ -33,6 +33,7 @@ Rule of thumb: `app` -> `services` -> `lib`; `blocks` -> `components/ui` + `util
   - CMS primitives: `CmssyFormDefinition`, `CmssyLocalizedValue`, etc. from `@cmssy/react`.
 - **Blocks** are thin: fields schema + layout. Visual building blocks go to `components/ui`; logic to `utils`; data to `services`.
 - **Server actions** live in `services/` with `"use server"` at the top, not inside block folders.
+- **Images** go through `next/image`; `src/lib/cmssy/image-loader.ts` asks the cmssy CDN for a variant sized to the slot. Never `unoptimized`, never the raw asset URL in an `<img>`.
 - **Design tokens** live only in `src/app/globals.css` (`:root` raw values, `@theme inline` mapping). Use `text-header2-clamp`, `bg-panel`, `max-w-content`; no arbitrary `text-[...]` or hex colours in components.
 - **Field labels and helper text are Polish**; field keys and block types are English kebab-case.
 - Every section block has `anchor: anchorField("...")` so the header menu can link to it.
