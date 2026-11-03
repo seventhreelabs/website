@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "codegen": "graphql-codegen --config codegen.ts",
+    "cmssy:types": "cmssy types --operations-out src/lib/graphql/cmssy-operations.graphql --out src/lib/graphql/generated/cmssy-models.ts && pnpm codegen"
   },
   "dependencies": {
     "@cmssy/core": "^19.27.0",
@@ -18,12 +21,16 @@
   },
   "devDependencies": {
     "@cmssy/eslint-plugin": "^19.27.0",
+    "@graphql-codegen/cli": "^7.4.6",
+    "@graphql-codegen/client-preset": "^6.2.3",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
+    "graphql": "^17.0.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

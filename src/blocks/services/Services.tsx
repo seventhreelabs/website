@@ -1,5 +1,6 @@
-import { fields, type BlockProps } from "@cmssy/react";
-import { anchorField } from "../shared/fields";
+import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
+import { Section, SectionHeading } from "@/components/ui/section";
+import { anchorField } from "@/lib/cmssy/fields";
 
 export const servicesProps = {
   anchor: anchorField("zakres"),
@@ -41,7 +42,9 @@ export const servicesProps = {
   }),
 };
 
-type Row = { label: string; value?: string; highlighted?: boolean };
+export type ServicesContent = InferBlockContent<typeof servicesProps>;
+type ServiceItem = NonNullable<ServicesContent["items"]>[number];
+type Row = NonNullable<ServiceItem["rows"]>[number];
 
 function DocumentVisual({
   title,
@@ -112,13 +115,8 @@ export default function Services({
   const items = content.items ?? [];
 
   return (
-    <section
-      id={content.anchor || undefined}
-      className="mx-auto max-w-content scroll-mt-4 px-5 py-16 md:px-8 md:py-26"
-    >
-      <h2 className="m-0 mb-8 text-header2-clamp font-medium tracking-[-0.03em] md:mb-12">
-        {content.heading}
-      </h2>
+    <Section anchor={content.anchor}>
+      <SectionHeading className="mb-8 md:mb-12">{content.heading}</SectionHeading>
       <div className="grid gap-4 md:grid-cols-2 md:gap-5">
         {items.map((item, index) => {
           const visual = item.visual ?? "Lista";
@@ -156,6 +154,6 @@ export default function Services({
           );
         })}
       </div>
-    </section>
+    </Section>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import type { WorkProcessContent } from "./WorkProcess";
 
-export type Phase = { title: string; text?: string; result?: string };
+type Phase = NonNullable<WorkProcessContent["phases"]>[number];
 
 export function WorkProcessView({
   phases,

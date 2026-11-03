@@ -1,5 +1,6 @@
-import { fields, type BlockProps } from "@cmssy/react";
-import { anchorField } from "../shared/fields";
+import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
+import { Section, SectionHeading } from "@/components/ui/section";
+import { anchorField } from "@/lib/cmssy/fields";
 import { WorkProcessView } from "./WorkProcessView";
 
 export const workProcessProps = {
@@ -24,21 +25,18 @@ export const workProcessProps = {
   }),
 };
 
+export type WorkProcessContent = InferBlockContent<typeof workProcessProps>;
+
 export default function WorkProcess({
   content,
 }: BlockProps<typeof workProcessProps>) {
   return (
-    <section
-      id={content.anchor || undefined}
-      className="mx-auto max-w-content scroll-mt-4 px-5 py-16 md:px-8 md:py-26"
-    >
-      <h2 className="m-0 mb-8 text-header2-clamp font-medium tracking-[-0.03em] md:mb-10">
-        {content.heading}
-      </h2>
+    <Section anchor={content.anchor}>
+      <SectionHeading className="mb-8 md:mb-10">{content.heading}</SectionHeading>
       <WorkProcessView
         phases={content.phases ?? []}
         resultLabel={content.resultLabel}
       />
-    </section>
+    </Section>
   );
 }

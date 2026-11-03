@@ -1,0 +1,13 @@
+# Submit a Form Builder form from the site.
+mutation SubmitSiteForm($formId: ID!, $input: SubmitFormInput!) {
+  public {
+    form {
+      submit(formId: $formId, input: $input) {
+        success
+        message
+        submissionId
+        redirectUrl
+      }
+    }
+  }
+}

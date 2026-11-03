@@ -1,5 +1,6 @@
 import { fields, type BlockProps } from "@cmssy/react";
-import { anchorField } from "../shared/fields";
+import { Section, SectionHeading } from "@/components/ui/section";
+import { anchorField } from "@/lib/cmssy/fields";
 
 export const faqProps = {
   anchor: anchorField("pytania"),
@@ -20,13 +21,11 @@ export default function Faq({ content }: BlockProps<typeof faqProps>) {
   const items = content.items ?? [];
 
   return (
-    <section
-      id={content.anchor || undefined}
-      className="mx-auto grid max-w-content scroll-mt-4 gap-8 px-5 py-16 md:px-8 md:py-26 lg:grid-cols-[1fr_2fr] lg:gap-18"
+    <Section
+      anchor={content.anchor}
+      innerClassName="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-18"
     >
-      <h2 className="m-0 text-header2-clamp font-medium tracking-[-0.03em]">
-        {content.heading}
-      </h2>
+      <SectionHeading>{content.heading}</SectionHeading>
       <div className="min-w-0 border-t border-ink">
         {items.map((item, index) => (
           <details
@@ -41,6 +40,6 @@ export default function Faq({ content }: BlockProps<typeof faqProps>) {
           </details>
         ))}
       </div>
-    </section>
+    </Section>
   );
 }

@@ -1,46 +1,16 @@
-import { createCmssyClient, typedOperation } from "@cmssy/core";
 import { cmssy } from "@/cmssy.config";
+import { cmssyClient } from "@/lib/cmssy/client";
+import { PublishedPagesDocument } from "@/lib/graphql/generated/graphql";
 
-type PublishedPages = {
-  public?: {
-    page?: { list?: { slug?: string | null; publishedAt?: string | null }[] | null } | null;
-  } | null;
-};
-
-const PUBLISHED_PAGES = typedOperation<
-  PublishedPages,
-  { workspaceSlug: string }
->(`query PublishedPages($workspaceSlug: String!) {
-  public {
-    page {
-      list(workspaceSlug: $workspaceSlug) {
-        slug
-        publishedAt
-      }
-    }
-  }
-}`);
-
-const client = createCmssyClient({
-  apiUrl: cmssy.apiUrl,
-  org: cmssy.org,
-  workspaceSlug: cmssy.workspaceSlug,
-});
-
+/** Published page paths for generateStaticParams. */
 export async function publishedPaths(): Promise<{ path: string[] }[]> {
-  const data = await client.query(
-    PUBLISHED_PAGES,
+  const data = await cmssyClient.query(
+    PublishedPagesDocument,
     { workspaceSlug: cmssy.workspaceSlug },
-    {
-      public: true,
-      retry: {},
-    },
+    { public: true, retry: {} },
   );
 
-  const pages = data?.public?.page?.list ?? [];
-  return pages
+  return data.public.page.list
     .filter((page) => page.publishedAt)
-    .map((page) => ({
-      path: (page.slug ?? "").split("/").filter(Boolean),
-    }));
+    .map((page) => ({ path: page.slug.split("/").filter(Boolean) }));
 }

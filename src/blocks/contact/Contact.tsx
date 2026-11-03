@@ -1,5 +1,6 @@
 import { fields, type BlockProps } from "@cmssy/react";
-import { anchorField } from "../shared/fields";
+import { Section } from "@/components/ui/section";
+import { anchorField } from "@/lib/cmssy/fields";
 import { ContactForm } from "./ContactForm";
 
 export const contactProps = {
@@ -20,35 +21,31 @@ export default function Contact({
   const form = content.form ? context?.forms?.[content.form] : undefined;
 
   return (
-    <section
-      id={content.anchor || undefined}
-      className="relative scroll-mt-4 overflow-hidden bg-panel text-white"
+    <Section
+      anchor={content.anchor}
+      className="relative overflow-hidden bg-panel text-white"
+      innerClassName="grid gap-10 lg:grid-cols-2 lg:gap-18"
     >
-      <div className="mx-auto grid max-w-content gap-10 px-5 py-16 md:px-8 md:py-26 lg:grid-cols-2 lg:gap-18">
-        <div className="min-w-0">
-          <h2 className="m-0 text-header1-clamp font-medium tracking-[-0.03em]">
-            {content.heading}
-          </h2>
-          {content.text ? (
-            <p className="mt-6 mb-0 max-w-[30em] text-medium-clamp">
-              {content.text}
-            </p>
-          ) : null}
-          {content.email ? (
-            <p className="mt-6 mb-0">
-              <a href={`mailto:${content.email}`} className="underline">
-                {content.email}
-              </a>
-            </p>
-          ) : null}
-        </div>
-        {form ? (
-          <ContactForm
-            form={form}
-            locale={context?.locale.current ?? "pl"}
-          />
+      <div className="min-w-0">
+        <h2 className="m-0 text-header1-clamp font-medium tracking-[-0.03em]">
+          {content.heading}
+        </h2>
+        {content.text ? (
+          <p className="mt-6 mb-0 max-w-[30em] text-medium-clamp">
+            {content.text}
+          </p>
+        ) : null}
+        {content.email ? (
+          <p className="mt-6 mb-0">
+            <a href={`mailto:${content.email}`} className="underline">
+              {content.email}
+            </a>
+          </p>
         ) : null}
       </div>
-    </section>
+      {form ? (
+        <ContactForm form={form} locale={context?.locale.current ?? "pl"} />
+      ) : null}
+    </Section>
   );
 }

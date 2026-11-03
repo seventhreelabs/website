@@ -1,11 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { HeroContent } from "./Hero";
 
-export type ProcessFlow = {
-  label: string;
-  steps?: { text: string; actor?: string }[];
-};
+type ProcessFlow = NonNullable<HeroContent["flows"]>[number];
 
 export function ProcessDemo({
   flows,

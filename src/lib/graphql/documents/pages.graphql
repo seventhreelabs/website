@@ -1,0 +1,11 @@
+# Published page list - feeds generateStaticParams.
+query PublishedPages($workspaceSlug: String!) {
+  public {
+    page {
+      list(workspaceSlug: $workspaceSlug) {
+        slug
+        publishedAt
+      }
+    }
+  }
+}

@@ -7,7 +7,9 @@ import {
   type CmssyFormDefinition,
   type CmssyFormField,
 } from "@cmssy/react";
-import { submitForm } from "./actions";
+import { Button } from "@/components/ui/button";
+import { submitForm } from "@/services/forms";
+import { localize } from "@/utils/localize";
 
 const CONTROL =
   "box-border w-full rounded-lg border border-rim bg-pitch px-4 py-3 font-[inherit] text-white";
@@ -32,14 +34,6 @@ const SUPPORTED = new Set<CmssyFormField["fieldType"]>([
   "textarea",
   "select",
 ]);
-
-type LocalizedText = string | Record<string, string> | null | undefined;
-
-function localize(text: LocalizedText, locale: string) {
-  if (!text) return "";
-  if (typeof text === "string") return text;
-  return text[locale] ?? Object.values(text)[0] ?? "";
-}
 
 type Status = { kind: "idle" | "sending" | "sent" | "error"; message?: string };
 
@@ -161,13 +155,13 @@ export function ContactForm({
           {status.message}
         </p>
       ) : null}
-      <button
+      <Button
         type="submit"
         disabled={status.kind === "sending"}
-        className="min-h-13 rounded-full bg-amber px-7 font-bold text-ink hover:opacity-90 disabled:opacity-60 sm:self-start"
+        className="disabled:opacity-60 sm:self-start"
       >
         {localize(settings.submitButtonLabel, locale)}
-      </button>
+      </Button>
     </form>
   );
 }
