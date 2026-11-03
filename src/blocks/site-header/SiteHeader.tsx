@@ -1,11 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { fields, type BlockProps } from "@cmssy/react";
+import { readBranding } from "@/lib/cmssy/branding";
 
 export const siteHeaderProps = {
-  name: fields.text({ label: "Nazwa", required: true }),
+  name: fields.text({
+    label: "Nazwa",
+    helperText:
+      "Zapasowa. Logo i nazwę marki ustawisz w Ustawienia -> Branding; pole jest używane, gdy brandingu brak.",
+    required: true,
+  }),
   links: fields.repeater({
     label: "Menu",
     itemLabel: "Link",
@@ -23,16 +30,36 @@ export const siteHeaderProps = {
 
 export default function SiteHeader({
   content,
+  context,
 }: BlockProps<typeof siteHeaderProps>) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   const links = content.links ?? [];
+  const branding = readBranding(context?.app);
+  const name = branding?.brandName || content.name;
+  // header sits on black - prefer the logo variant meant for dark backgrounds
+  const logo = branding?.logoDarkUrl || branding?.logoUrl;
 
   return (
     <header className="bg-black text-white">
       <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-4 md:px-8 md:py-6">
-        <Link href="/" className="text-header4-clamp font-extrabold tracking-tight">
-          {content.name}
+        <Link
+          href="/"
+          aria-label={name}
+          className="flex items-center text-header4-clamp font-extrabold tracking-tight"
+        >
+          {logo ? (
+            <Image
+              src={logo}
+              alt={name}
+              width={180}
+              height={40}
+              priority
+              className="h-5 w-auto md:h-7"
+            />
+          ) : (
+            name
+          )}
         </Link>
         <button
           type="button"

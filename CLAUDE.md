@@ -37,6 +37,7 @@ Rule of thumb: `app` -> `services` -> `lib`; `blocks` -> `components/ui` + `util
 - **Design tokens** live only in `src/app/globals.css` (`:root` raw values, `@theme inline` mapping). Use `text-header2-clamp`, `bg-panel`, `max-w-content`; no arbitrary `text-[...]` or hex colours in components.
 - **Field labels and helper text are Polish**; field keys and block types are English kebab-case.
 - Every section block has `anchor: anchorField("...")` so the header menu can link to it.
+- **Site-wide values** (branding: logo, brand name) are fetched once in the route via `services/site.ts` and handed to blocks through `appContext`; blocks read them with `readBranding(context?.app)` from `lib/cmssy/branding.ts`. No block `loader` for that - the editor bundles `blocks.ts` client-side.
 - Client components only where state or browser APIs are needed; mark them with `"use client"` and keep them as leaves.
 
 ## Git

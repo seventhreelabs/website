@@ -6,6 +6,8 @@ import { blocks } from "@/cmssy/blocks";
 import { CmssyEditor } from "@/cmssy/editor";
 import { EditableLayout } from "@/cmssy/editable-layout";
 import { publishedPaths } from "@/services/pages";
+import { siteBranding } from "@/services/site";
+import { BRANDING_CONTEXT_KEY } from "@/lib/cmssy/branding";
 
 type PageProps = {
   params: Promise<{ path?: string[] }>;
@@ -21,14 +23,20 @@ export function generateStaticParams() {
   return publishedPaths();
 }
 
+const appContext = async () => ({
+  [BRANDING_CONTEXT_KEY]: await siteBranding(cache),
+});
+
 const CmssyPage = createCmssyPage(cmssy, blocks, {
   editor: CmssyEditor,
   cache,
+  appContext,
 });
 
 export default async function Page(props: PageProps) {
   const { path } = await props.params;
   const { isEnabled: preview } = await draftMode();
+  const context = await appContext();
   const slot = (region: CmssyRegion<typeof layout>) => (
     <CmssyLayoutSlot
       config={cmssy}
@@ -38,6 +46,7 @@ export default async function Page(props: PageProps) {
       editMode={false}
       preview={preview}
       editable={EditableLayout}
+      appContext={context}
       cache={cache}
     />
   );
