@@ -5,7 +5,7 @@ export const siteHeaderBlock = defineBlock({
   type: "site-header",
   label: "Nagłówek",
   category: "Układ",
-  description: "Nazwa firmy, menu i przycisk. Region header, dziedziczony przez podstrony.",
+  description: "Logo z brandingu, menu i przycisk. Region header, dziedziczony przez podstrony.",
   layoutRegions: ["header"],
   component: SiteHeader,
   props: siteHeaderProps,

@@ -1,7 +1,8 @@
 import { fields, type BlockProps } from "@cmssy/react";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import { readBranding } from "@/lib/cmssy/branding";
 
 export const siteFooterProps = {
-  company: fields.text({ label: "Firma", required: true }),
   details: fields.repeater({
     label: "Dane firmy",
     itemLabel: "Pozycja",
@@ -23,12 +24,19 @@ export const siteFooterProps = {
 
 export default function SiteFooter({
   content,
+  context,
 }: BlockProps<typeof siteFooterProps>) {
+  const branding = readBranding(context?.app);
+
   return (
     <footer className="bg-panel text-small text-white">
       <div className="mx-auto max-w-content px-5 pb-8 md:px-8">
         <div className="flex flex-col gap-2 border-t border-rim pt-5 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-8">
-          <span>{content.company}</span>
+          <BrandLogo
+            branding={branding}
+            imageClassName="h-4"
+            textClassName="text-small"
+          />
           {(content.details ?? []).map((item, index) => (
             <span key={index}>{item.text}</span>
           ))}
