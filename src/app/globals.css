@@ -20,7 +20,7 @@
   --color-amber: #ffb000;
 
   /* Type scale: desktop */
-  --font-display: 88px;
+  --font-display: 76px;
   --font-header1: 76px;
   --font-header2: 64px;
   --font-header3: 32px;
@@ -29,7 +29,7 @@
   --font-medium: 20px;
 
   /* Type scale: mobile */
-  --font-display-mobile: 44px;
+  --font-display-mobile: 40px;
   --font-header1-mobile: 40px;
   --font-header2-mobile: 36px;
   --font-header3-mobile: 28px;
@@ -44,7 +44,7 @@
   --font-label: 14px;
 
   /* Fluid sizes */
-  --font-display-clamp: clamp(var(--font-display-mobile), 6.4vw, var(--font-display));
+  --font-display-clamp: clamp(var(--font-display-mobile), 5vw, var(--font-display));
   --font-header1-clamp: clamp(var(--font-header1-mobile), 5.4vw, var(--font-header1));
   --font-header2-clamp: clamp(var(--font-header2-mobile), 4.6vw, var(--font-header2));
   --font-header3-clamp: clamp(var(--font-header3-mobile), 2.4vw, var(--font-header3));

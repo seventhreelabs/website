@@ -59,7 +59,7 @@ export default function Hero({ content }: BlockProps<typeof heroProps>) {
   return (
     <section className="relative overflow-hidden bg-black text-white">
       <HeroBackground />
-      <Container className="relative grid items-center gap-12 pt-10 pb-14 md:pt-16 md:pb-20 lg:grid-cols-2 lg:gap-16">
+      <Container className="relative grid items-center gap-12 pt-10 pb-14 md:pt-16 md:pb-20 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
         <div className="min-w-0">
           <h1 className="m-0 text-display-clamp font-medium tracking-[-0.035em] text-balance">
             {content.heading}
