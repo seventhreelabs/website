@@ -55,13 +55,13 @@ export default function Hero({ content }: BlockProps<typeof heroProps>) {
   return (
     <section className="relative overflow-hidden bg-black text-white">
       <HeroBackground />
-      <div className="relative mx-auto grid max-w-[80rem] items-center gap-12 px-5 pt-10 pb-14 md:px-8 md:pt-16 md:pb-20 lg:grid-cols-2 lg:gap-16">
+      <div className="relative mx-auto grid max-w-content items-center gap-12 px-5 pt-10 pb-14 md:px-8 md:pt-16 md:pb-20 lg:grid-cols-2 lg:gap-16">
         <div className="min-w-0">
-          <h1 className="m-0 text-[clamp(2.75rem,6.4vw,5.5rem)] leading-[1.04] font-medium tracking-[-0.035em]">
+          <h1 className="m-0 text-display-clamp font-medium tracking-[-0.035em] text-balance">
             {content.heading}
           </h1>
           {content.text ? (
-            <p className="mt-6 mb-0 max-w-[34em] text-lg leading-normal md:mt-8 md:text-[1.3125rem]">
+            <p className="mt-6 mb-0 max-w-[34em] text-large-clamp md:mt-8">
               {content.text}
             </p>
           ) : null}

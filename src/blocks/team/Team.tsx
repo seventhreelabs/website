@@ -28,8 +28,8 @@ export default function Team({ content }: BlockProps<typeof teamProps>) {
       id={content.anchor || undefined}
       className="scroll-mt-4 border-y border-line bg-white"
     >
-      <div className="mx-auto max-w-[80rem] px-5 py-16 md:px-8 md:py-26">
-        <h2 className="m-0 mb-8 text-[clamp(2.25rem,4.6vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em] md:mb-12">
+      <div className="mx-auto max-w-content px-5 py-16 md:px-8 md:py-26">
+        <h2 className="m-0 mb-8 text-header2-clamp font-medium tracking-[-0.03em] md:mb-12">
           {content.heading}
         </h2>
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
@@ -54,7 +54,7 @@ export default function Team({ content }: BlockProps<typeof teamProps>) {
                   />
                 )}
                 <div className="min-w-0">
-                  <h3 className="m-0 text-[1.75rem] font-medium tracking-[-0.015em]">
+                  <h3 className="m-0 text-header3-clamp font-medium tracking-[-0.015em]">
                     {member.name}
                   </h3>
                   {member.role ? (

@@ -24,13 +24,13 @@ export default function Contact({
       id={content.anchor || undefined}
       className="relative scroll-mt-4 overflow-hidden bg-panel text-white"
     >
-      <div className="mx-auto grid max-w-[80rem] gap-10 px-5 py-16 md:px-8 md:py-26 lg:grid-cols-2 lg:gap-18">
+      <div className="mx-auto grid max-w-content gap-10 px-5 py-16 md:px-8 md:py-26 lg:grid-cols-2 lg:gap-18">
         <div className="min-w-0">
-          <h2 className="m-0 text-[clamp(2.5rem,5.4vw,4.75rem)] leading-[1.04] font-medium tracking-[-0.03em]">
+          <h2 className="m-0 text-header1-clamp font-medium tracking-[-0.03em]">
             {content.heading}
           </h2>
           {content.text ? (
-            <p className="mt-6 mb-0 max-w-[30em] text-lg md:text-xl">
+            <p className="mt-6 mb-0 max-w-[30em] text-medium-clamp">
               {content.text}
             </p>
           ) : null}

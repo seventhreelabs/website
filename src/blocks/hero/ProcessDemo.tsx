@@ -52,7 +52,7 @@ export function ProcessDemo({
               setPicked(index);
               setActive(0);
             }}
-            className={`min-h-11 rounded-full border border-white px-4 text-[0.9375rem] font-bold ${
+            className={`min-h-11 rounded-full border border-white px-4 text-caption font-bold ${
               index === picked ? "bg-white text-panel" : "text-white"
             }`}
           >
@@ -68,18 +68,18 @@ export function ProcessDemo({
             <li
               key={index}
               className={`flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1 rounded-lg px-3 py-3 sm:px-4 ${
-                index === active ? "bg-[#2a2e35]" : ""
+                index === active ? "bg-lift" : ""
               } ${actor === "Człowiek" ? "text-amber" : "text-white"}`}
             >
               <span className="min-w-0 flex-[1_1_13rem] font-medium leading-snug">
                 {step.text}
               </span>
-              <span className="font-mono text-sm">{actor}</span>
+              <span className="font-mono text-label">{actor}</span>
             </li>
           );
         })}
       </ol>
-      {note ? <p className="mt-4 mb-0 text-[0.9375rem] text-mute">{note}</p> : null}
+      {note ? <p className="mt-4 mb-0 text-caption text-mute">{note}</p> : null}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
 import { submitForm } from "./actions";
 
 const CONTROL =
-  "box-border w-full rounded-lg border border-[#6b727c] bg-[#0b0d10] px-4 py-3 font-[inherit] text-white";
+  "box-border w-full rounded-lg border border-rim bg-pitch px-4 py-3 font-[inherit] text-white";
 
 const INPUT_TYPES: Partial<Record<CmssyFormField["fieldType"], string>> = {
   email: "email",
@@ -84,7 +84,7 @@ export function ContactForm({
 
   if (status.kind === "sent") {
     return (
-      <p role="status" className="m-0 self-center text-xl">
+      <p role="status" className="m-0 self-center text-medium-clamp">
         {status.message}
       </p>
     );
@@ -113,7 +113,7 @@ export function ContactForm({
 
         return (
           <div key={field.id} className="flex flex-col gap-2">
-            <label htmlFor={id} className="text-base font-bold">
+            <label htmlFor={id} className="text-small font-bold">
               {localize(field.label, locale)}
             </label>
             {field.fieldType === "textarea" ? (
@@ -139,7 +139,7 @@ export function ContactForm({
               />
             )}
             {field.helpText ? (
-              <p className="m-0 text-[0.9375rem] text-mute">
+              <p className="m-0 text-caption text-mute">
                 {localize(field.helpText, locale)}
               </p>
             ) : null}

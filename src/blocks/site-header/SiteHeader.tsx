@@ -30,8 +30,8 @@ export default function SiteHeader({
 
   return (
     <header className="bg-black text-white">
-      <div className="mx-auto flex max-w-[80rem] flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-4 md:px-8 md:py-6">
-        <Link href="/" className="text-[1.375rem] font-extrabold tracking-tight">
+      <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-4 md:px-8 md:py-6">
+        <Link href="/" className="text-header4-clamp font-extrabold tracking-tight">
           {content.name}
         </Link>
         <button
@@ -39,14 +39,14 @@ export default function SiteHeader({
           aria-expanded={open}
           aria-controls="site-menu"
           onClick={() => setOpen(!open)}
-          className="min-h-11 rounded-full border border-white px-5 text-base font-bold md:hidden"
+          className="min-h-11 rounded-full border border-white px-5 text-small font-bold md:hidden"
         >
           {open ? "Zamknij" : "Menu"}
         </button>
         <nav
           id="site-menu"
           aria-label="Główna"
-          className={`${open ? "flex" : "hidden"} w-full flex-col gap-1 pb-3 text-base font-medium md:flex md:w-auto md:flex-row md:items-center md:gap-7 md:pb-0`}
+          className={`${open ? "flex" : "hidden"} w-full flex-col gap-1 pb-3 text-small font-medium md:flex md:w-auto md:flex-row md:items-center md:gap-7 md:pb-0`}
         >
           {links.map((link, index) => (
             <a

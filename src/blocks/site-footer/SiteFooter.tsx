@@ -25,9 +25,9 @@ export default function SiteFooter({
   content,
 }: BlockProps<typeof siteFooterProps>) {
   return (
-    <footer className="bg-panel text-base text-white">
-      <div className="mx-auto max-w-[80rem] px-5 pb-8 md:px-8">
-        <div className="flex flex-col gap-2 border-t border-[#6b727c] pt-5 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-8">
+    <footer className="bg-panel text-small text-white">
+      <div className="mx-auto max-w-content px-5 pb-8 md:px-8">
+        <div className="flex flex-col gap-2 border-t border-rim pt-5 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-8">
           <span>{content.company}</span>
           {(content.details ?? []).map((item, index) => (
             <span key={index}>{item.text}</span>

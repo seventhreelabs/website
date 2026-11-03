@@ -54,11 +54,11 @@ function DocumentVisual({
 }) {
   return (
     <div className="grid min-w-0 gap-3 sm:grid-cols-2">
-      <div className="rounded-lg bg-soft p-5 text-[0.9375rem] leading-relaxed text-ink">
+      <div className="rounded-lg bg-soft p-5 text-caption leading-relaxed text-ink">
         {title ? <strong className="block">{title}</strong> : null}
         {text}
       </div>
-      <dl className="m-0 rounded-lg bg-panel p-5 font-mono text-sm leading-loose text-white">
+      <dl className="m-0 rounded-lg bg-panel p-5 font-mono text-label leading-loose text-white">
         {rows.map((row, index) => (
           <div
             key={index}
@@ -75,7 +75,7 @@ function DocumentVisual({
 
 function ListVisual({ rows }: { rows: Row[] }) {
   return (
-    <dl className="m-0 border-t border-edge pt-4 font-mono text-sm leading-loose">
+    <dl className="m-0 border-t border-edge pt-4 font-mono text-label leading-loose">
       {rows.map((row, index) => (
         <div
           key={index}
@@ -93,7 +93,7 @@ function ListVisual({ rows }: { rows: Row[] }) {
 
 function StepsVisual({ rows }: { rows: Row[] }) {
   return (
-    <ol className="m-0 flex list-none flex-wrap gap-2 border-t border-line p-0 pt-4 font-mono text-sm">
+    <ol className="m-0 flex list-none flex-wrap gap-2 border-t border-line p-0 pt-4 font-mono text-label">
       {rows.map((row, index) => (
         <li
           key={index}
@@ -114,9 +114,9 @@ export default function Services({
   return (
     <section
       id={content.anchor || undefined}
-      className="mx-auto max-w-[80rem] scroll-mt-4 px-5 py-16 md:px-8 md:py-26"
+      className="mx-auto max-w-content scroll-mt-4 px-5 py-16 md:px-8 md:py-26"
     >
-      <h2 className="m-0 mb-8 text-[clamp(2.25rem,4.6vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em] md:mb-12">
+      <h2 className="m-0 mb-8 text-header2-clamp font-medium tracking-[-0.03em] md:mb-12">
         {content.heading}
       </h2>
       <div className="grid gap-4 md:grid-cols-2 md:gap-5">
@@ -134,7 +134,7 @@ export default function Services({
               } ${wide ? "grid items-center gap-6 md:col-span-2 lg:grid-cols-[1fr_2fr] lg:gap-14" : ""}`}
             >
               <div className="min-w-0">
-                <h3 className="m-0 text-[1.75rem] leading-[1.15] font-medium tracking-[-0.02em] md:text-[2rem]">
+                <h3 className="m-0 text-header3-clamp font-medium tracking-[-0.02em]">
                   {item.title}
                 </h3>
                 {item.text ? (

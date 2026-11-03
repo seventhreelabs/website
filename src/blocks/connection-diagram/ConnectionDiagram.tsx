@@ -48,12 +48,12 @@ export default function ConnectionDiagram({
       id={content.anchor || undefined}
       className="stl-grid scroll-mt-4 text-white"
     >
-      <div className="mx-auto max-w-[80rem] px-5 py-16 md:px-8 md:py-26">
-        <h2 className="m-0 max-w-[16em] text-[clamp(2.25rem,4.6vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]">
+      <div className="mx-auto max-w-content px-5 py-16 md:px-8 md:py-26">
+        <h2 className="m-0 max-w-[16em] text-header2-clamp font-medium tracking-[-0.03em]">
           {content.heading}
         </h2>
         {content.text ? (
-          <p className="mt-5 mb-10 max-w-[34em] text-lg md:mb-14 md:text-xl">
+          <p className="mt-5 mb-10 max-w-[34em] text-medium-clamp md:mb-14">
             {content.text}
           </p>
         ) : null}
@@ -69,8 +69,8 @@ export default function ConnectionDiagram({
               <div
                 className={`min-w-0 flex-1 rounded-xl p-6 ${TONES[node.tone ?? "Ciemny"]}`}
               >
-                <h3 className="m-0 mb-3 text-xl font-bold">{node.title}</h3>
-                <ul className="m-0 list-none p-0 font-mono text-sm leading-loose">
+                <h3 className="m-0 mb-3 text-header4-clamp font-bold">{node.title}</h3>
+                <ul className="m-0 list-none p-0 font-mono text-label leading-loose">
                   {(node.items ?? []).map((item, itemIndex) => (
                     <li key={itemIndex}>{item.text}</li>
                   ))}

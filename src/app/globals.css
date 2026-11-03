@@ -1,17 +1,106 @@
 @import "tailwindcss";
 
-@theme inline {
+/* ------------------------------------------------------------------
+   Design tokens. Raw values live in :root, Tailwind reads them via
+   @theme. One theme only. Fonts come from src/app/fonts.ts.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Palette */
   --color-ink: #16201d;
   --color-paper: #f7f8fa;
-  --color-panel: #121418;
   --color-soft: #f1f3f6;
   --color-line: #d5d9df;
+  --color-pitch: #0b0d10;
+  --color-panel: #121418;
+  --color-lift: #2a2e35;
   --color-edge: #3a3f47;
+  --color-rim: #6b727c;
   --color-mute: #c4c9d1;
   --color-amber: #ffb000;
+
+  /* Type scale: desktop */
+  --font-display: 88px;
+  --font-header1: 76px;
+  --font-header2: 64px;
+  --font-header3: 32px;
+  --font-header4: 22px;
+  --font-large: 21px;
+  --font-medium: 20px;
+
+  /* Type scale: mobile */
+  --font-display-mobile: 44px;
+  --font-header1-mobile: 40px;
+  --font-header2-mobile: 36px;
+  --font-header3-mobile: 28px;
+  --font-header4-mobile: 20px;
+  --font-large-mobile: 18px;
+  --font-medium-mobile: 18px;
+
+  /* Type scale: fixed */
+  --font-body: 18px;
+  --font-small: 16px;
+  --font-caption: 15px;
+  --font-label: 14px;
+
+  /* Fluid sizes */
+  --font-display-clamp: clamp(var(--font-display-mobile), 6.4vw, var(--font-display));
+  --font-header1-clamp: clamp(var(--font-header1-mobile), 5.4vw, var(--font-header1));
+  --font-header2-clamp: clamp(var(--font-header2-mobile), 4.6vw, var(--font-header2));
+  --font-header3-clamp: clamp(var(--font-header3-mobile), 2.4vw, var(--font-header3));
+  --font-header4-clamp: clamp(var(--font-header4-mobile), 1.6vw, var(--font-header4));
+  --font-large-clamp: clamp(var(--font-large-mobile), 1.6vw, var(--font-large));
+  --font-medium-clamp: clamp(var(--font-medium-mobile), 1.5vw, var(--font-medium));
+
+  /* Layout */
+  --size-content: 80rem;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-soft: var(--color-soft);
+  --color-line: var(--color-line);
+  --color-pitch: var(--color-pitch);
+  --color-panel: var(--color-panel);
+  --color-lift: var(--color-lift);
+  --color-edge: var(--color-edge);
+  --color-rim: var(--color-rim);
+  --color-mute: var(--color-mute);
+  --color-amber: var(--color-amber);
+
   --font-sans: var(--font-manrope), sans-serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
+
+  --text-display-clamp: var(--font-display-clamp);
+  --text-display-clamp--line-height: 1.04;
+  --text-header1-clamp: var(--font-header1-clamp);
+  --text-header1-clamp--line-height: 1.04;
+  --text-header2-clamp: var(--font-header2-clamp);
+  --text-header2-clamp--line-height: 1.05;
+  --text-header3-clamp: var(--font-header3-clamp);
+  --text-header3-clamp--line-height: 1.15;
+  --text-header4-clamp: var(--font-header4-clamp);
+  --text-header4-clamp--line-height: 1.25;
+  --text-large-clamp: var(--font-large-clamp);
+  --text-large-clamp--line-height: 1.5;
+  --text-medium-clamp: var(--font-medium-clamp);
+  --text-medium-clamp--line-height: 1.5;
+  --text-body: var(--font-body);
+  --text-body--line-height: 1.55;
+  --text-small: var(--font-small);
+  --text-small--line-height: 1.5;
+  --text-caption: var(--font-caption);
+  --text-caption--line-height: 1.5;
+  --text-label: var(--font-label);
+  --text-label--line-height: 1.4;
+
+  --container-content: var(--size-content);
 }
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
 
 html {
   scroll-behavior: smooth;
@@ -23,7 +112,7 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 1.125rem;
+  font-size: var(--font-body);
   line-height: 1.55;
   overflow-wrap: break-word;
 }
@@ -32,13 +121,18 @@ a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
   outline: 3px solid var(--color-amber);
   outline-offset: 3px;
 }
 
+/* ------------------------------------------------------------------
+   Components
+   ------------------------------------------------------------------ */
+
 .stl-grid {
-  background-color: #0b0d10;
+  background-color: var(--color-pitch);
   background-image:
     linear-gradient(rgb(255 255 255 / 0.055) 1px, transparent 1px),
     linear-gradient(90deg, rgb(255 255 255 / 0.055) 1px, transparent 1px);
