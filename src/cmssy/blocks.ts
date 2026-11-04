@@ -1,5 +1,6 @@
 import { connectionDiagramBlock } from "@/blocks/connection-diagram/block";
 import { contactBlock } from "@/blocks/contact/block";
+import { contentBlock } from "@/blocks/content/block";
 import { faqBlock } from "@/blocks/faq/block";
 import { heroBlock } from "@/blocks/hero/block";
 import { servicesBlock } from "@/blocks/services/block";
@@ -19,5 +20,6 @@ export const blocks = [
   teamBlock,
   faqBlock,
   contactBlock,
+  contentBlock,
   siteFooterBlock,
 ];

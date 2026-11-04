@@ -216,3 +216,45 @@ select:focus-visible {
     animation: none;
   }
 }
+
+/* Editor HTML from fields.richText (policies, articles). */
+.stl-prose {
+  font-size: var(--font-body);
+  line-height: 1.65;
+}
+.stl-prose > * + * {
+  margin-top: 1.1em;
+}
+.stl-prose h2 {
+  margin-top: 2.2em;
+  font-size: var(--font-header3-clamp);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.stl-prose h3 {
+  margin-top: 1.8em;
+  font-size: var(--font-header4-clamp);
+  line-height: 1.25;
+  font-weight: 600;
+}
+.stl-prose ul,
+.stl-prose ol {
+  padding-left: 1.4em;
+}
+.stl-prose ul {
+  list-style: disc;
+}
+.stl-prose ol {
+  list-style: decimal;
+}
+.stl-prose li + li {
+  margin-top: 0.4em;
+}
+.stl-prose a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.stl-prose strong {
+  font-weight: 600;
+}

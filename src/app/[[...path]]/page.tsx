@@ -1,11 +1,14 @@
+import type { Metadata } from "next";
 import { draftMode } from "next/headers";
+import { resolveCmssyLocale } from "@cmssy/core";
 import { createCmssyPage, CmssyLayoutSlot } from "@cmssy/next/server";
 import type { CmssyRegion } from "@cmssy/next";
 import { cmssy, type layout } from "@/cmssy.config";
 import { blocks } from "@/cmssy/blocks";
 import { CmssyEditor } from "@/cmssy/editor";
 import { EditableLayout } from "@/cmssy/editable-layout";
-import { publishedPaths } from "@/services/pages";
+import { pageMeta, publishedPaths } from "@/services/pages";
+import { slugFromPath } from "@/lib/site-url";
 import { siteBranding } from "@/services/site";
 import { BRANDING_CONTEXT_KEY } from "@/lib/cmssy/branding";
 
@@ -32,6 +35,35 @@ const CmssyPage = createCmssyPage(cmssy, blocks, {
   cache,
   appContext,
 });
+
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const { path } = await props.params;
+  const slug = slugFromPath(path);
+  const locale = (await resolveCmssyLocale(cmssy, path)) ?? "pl";
+  const [meta, branding] = await Promise.all([
+    pageMeta(slug, locale, cache),
+    siteBranding(cache),
+  ]);
+  if (!meta) return {};
+
+  const title = meta.title || branding?.brandName || undefined;
+  const ogImage = branding?.ogImageUrl ?? undefined;
+
+  return {
+    title,
+    description: meta.description || undefined,
+    alternates: { canonical: slug },
+    openGraph: {
+      type: "website",
+      locale: "pl_PL",
+      url: slug,
+      siteName: branding?.brandName ?? undefined,
+      title,
+      description: meta.description || undefined,
+      images: ogImage ? [{ url: ogImage }] : undefined,
+    },
+  };
+}
 
 export default async function Page(props: PageProps) {
   const { path } = await props.params;
