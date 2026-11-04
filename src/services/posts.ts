@@ -65,10 +65,7 @@ async function fetchPosts(
     },
     { public: true, retry: {}, ...(cache && !query.preview ? { fetch: cmssyCachedFetch(cache) } : {}) },
   );
-  return data.public.model.records.items
-    .map(parsePost)
-    .filter((p): p is Post => p !== null)
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  return data.public.model.records.items.map(parsePost).filter((p): p is Post => p !== null);
 }
 
 function listPosts(locale: string, cache?: CmssyDataCacheOptions, limit?: number, preview?: boolean): Promise<Post[]> {
