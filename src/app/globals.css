@@ -217,20 +217,27 @@ select:focus-visible {
   }
 }
 
-/* Editor HTML from fields.richText (policies, articles). */
+/*
+  RichText (components/ui/rich-text.tsx): HTML from the cmssy rich-text editor
+  (TipTap). Covers everything its toolbar can insert: h1-h3, lists, blockquote,
+  code block, inline code, horizontal rule, links, images, tables.
+*/
 .stl-prose {
   font-size: var(--font-body);
   line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 .stl-prose > * + * {
   margin-top: 1.1em;
 }
+.stl-prose h1,
 .stl-prose h2 {
   margin-top: 2.2em;
   font-size: var(--font-header3-clamp);
   line-height: 1.15;
   font-weight: 500;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 .stl-prose h3 {
   margin-top: 1.8em;
@@ -238,9 +245,31 @@ select:focus-visible {
   line-height: 1.25;
   font-weight: 600;
 }
+.stl-prose h1 + *,
+.stl-prose h2 + *,
+.stl-prose h3 + * {
+  margin-top: 0.7em;
+}
+.stl-prose > :first-child {
+  margin-top: 0;
+}
+.stl-prose strong {
+  font-weight: 600;
+}
+.stl-prose s {
+  color: var(--color-rim);
+}
+.stl-prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+.stl-prose a:hover {
+  text-decoration-color: var(--color-amber);
+}
 .stl-prose ul,
 .stl-prose ol {
-  padding-left: 1.4em;
+  padding-left: 1.5em;
 }
 .stl-prose ul {
   list-style: disc;
@@ -248,13 +277,91 @@ select:focus-visible {
 .stl-prose ol {
   list-style: decimal;
 }
-.stl-prose li + li {
-  margin-top: 0.4em;
+.stl-prose li {
+  padding-left: 0.2em;
 }
-.stl-prose a {
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
+.stl-prose li + li,
+.stl-prose li > ul,
+.stl-prose li > ol {
+  margin-top: 0.45em;
 }
-.stl-prose strong {
+.stl-prose li > p {
+  margin: 0;
+}
+.stl-prose blockquote {
+  margin-top: 1.6em;
+  padding: 0.2em 0 0.2em 1.25em;
+  border-left: 3px solid var(--color-amber);
+  font-size: var(--font-large-clamp);
+  line-height: 1.45;
+  color: var(--color-rim);
+}
+.stl-prose blockquote > p + p {
+  margin-top: 0.8em;
+}
+.stl-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.4em;
+  border-radius: 0.35rem;
+  background: var(--color-soft);
+  border: 1px solid var(--color-line);
+}
+.stl-prose pre {
+  margin-top: 1.4em;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--color-panel);
+  color: var(--color-mute);
+  font-family: var(--font-mono);
+  font-size: var(--font-small);
+  line-height: 1.6;
+  overflow-x: auto;
+}
+.stl-prose pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+.stl-prose hr {
+  margin-block: 2.5em;
+  border: 0;
+  border-top: 1px solid var(--color-line);
+}
+.stl-prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 1.6em;
+  border-radius: 0.75rem;
+}
+.stl-prose .tableWrapper {
+  margin-top: 1.6em;
+  overflow-x: auto;
+}
+.stl-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-small);
+  line-height: 1.45;
+}
+.stl-prose .tableWrapper table {
+  margin-top: 0;
+}
+.stl-prose th,
+.stl-prose td {
+  padding: 0.6em 0.8em;
+  border: 1px solid var(--color-line);
+  text-align: left;
+  vertical-align: top;
+}
+.stl-prose th {
   font-weight: 600;
+  background: var(--color-soft);
+}
+.stl-prose td > p,
+.stl-prose th > p {
+  margin: 0;
 }
