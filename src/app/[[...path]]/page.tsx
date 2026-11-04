@@ -45,7 +45,8 @@ export async function generateStaticParams() {
 const CmssyPage = createCmssyPage(cmssy, blocks, {
   editor: CmssyEditor,
   cache,
-  appContext: ({ page, locale }) => buildAppContext(page.slug ?? "/", locale, cache),
+  appContext: async ({ page, locale }) =>
+    buildAppContext(page.slug ?? "/", locale, cache, (await draftMode()).isEnabled),
 });
 
 /** `["blog", slug]` after the language prefix - a post from the `post` model, not a cmssy page. */
@@ -186,7 +187,7 @@ export default async function Page(props: PageProps) {
   const locales = await siteLocales();
   const { locale, path: pagePath } = splitLocaleFromPath(path, locales);
   const postId = postSlugFromPath(pagePath);
-  const context = await buildAppContext(postId ? postSlug(postId) : slugFromPath(pagePath), locale, cache);
+  const context = await buildAppContext(postId ? postSlug(postId) : slugFromPath(pagePath), locale, cache, preview);
   const slot = (region: CmssyRegion<typeof layout>) => (
     <CmssyLayoutSlot
       config={cmssy}
@@ -202,7 +203,7 @@ export default async function Page(props: PageProps) {
   );
 
   if (postId) {
-    const found = await post(postId, locale, cache);
+    const found = await post(postId, locale, cache, preview);
     if (!found) notFound();
     return (
       <>

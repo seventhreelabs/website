@@ -15,11 +15,12 @@ export async function buildAppContext(
   slug: string,
   locale: string,
   cache?: CmssyDataCacheOptions,
+  preview = false,
 ): Promise<Record<string, unknown>> {
   const [branding, latest, all] = await Promise.all([
     siteBranding(cache),
-    posts(locale, cache, LATEST),
-    slug === BLOG_SLUG ? posts(locale, cache) : Promise.resolve(undefined),
+    posts(locale, cache, LATEST, preview),
+    slug === BLOG_SLUG ? posts(locale, cache, undefined, preview) : Promise.resolve(undefined),
   ]);
   return {
     [BRANDING_CONTEXT_KEY]: branding,

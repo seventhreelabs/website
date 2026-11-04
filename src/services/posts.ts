@@ -1,6 +1,7 @@
 import { cache as memo } from "react";
 import { cmssyCachedFetch, type CmssyDataCacheOptions } from "@cmssy/next/server";
 import type { ResolvedMedia } from "@cmssy/core";
+import { cmssy } from "@/cmssy.config";
 import { PublicModelRecordsDocument } from "@/lib/graphql/generated/graphql";
 import { cmssyClient } from "@/lib/cmssy/client";
 import { siteLocales } from "@/lib/cmssy/locales";
@@ -35,7 +36,7 @@ function parsePost(record: { id: string; data: unknown; updatedAt: string }): Po
   };
 }
 
-type Query = { filter?: Record<string, unknown>; limit?: number; offset?: number };
+type Query = { filter?: Record<string, unknown>; limit?: number; offset?: number; preview?: boolean };
 
 async function fetchPosts(
   locale: string,
@@ -59,8 +60,10 @@ async function fetchPosts(
       locale,
       limit: query.limit ?? 100,
       offset: query.offset ?? 0,
+      // draft mode: unpublished records too, never from the content cache
+      ...(query.preview ? { previewSecret: cmssy.draftSecret } : {}),
     },
-    { public: true, retry: {}, ...(cache ? { fetch: cmssyCachedFetch(cache) } : {}) },
+    { public: true, retry: {}, ...(cache && !query.preview ? { fetch: cmssyCachedFetch(cache) } : {}) },
   );
   // the delivery API returns records in creation order whatever `sort` says - order here
   return data.public.model.records.items
@@ -69,19 +72,19 @@ async function fetchPosts(
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 }
 
-function listPosts(locale: string, cache?: CmssyDataCacheOptions, limit?: number): Promise<Post[]> {
-  return fetchPosts(locale, cache, { limit });
+function listPosts(locale: string, cache?: CmssyDataCacheOptions, limit?: number, preview?: boolean): Promise<Post[]> {
+  return fetchPosts(locale, cache, { limit, preview });
 }
 
-async function findPost(slug: string, locale: string, cache?: CmssyDataCacheOptions): Promise<Post | null> {
-  const [found] = await fetchPosts(locale, cache, { filter: { slug }, limit: 1 });
+async function findPost(slug: string, locale: string, cache?: CmssyDataCacheOptions, preview?: boolean): Promise<Post | null> {
+  const [found] = await fetchPosts(locale, cache, { filter: { slug }, limit: 1, preview });
   return found ?? null;
 }
 
-/** Published posts visible in `locale`, newest first. */
+/** Published posts visible in `locale`, newest first; with `preview` drafts too. */
 export const posts = memo(listPosts);
 
-/** One post by slug, or null when missing, unpublished or not yet in `locale`. */
+/** One post by slug, or null when missing, unpublished (unless `preview`) or not yet in `locale`. */
 export const post = memo(findPost);
 
 /** Every published post with its languages - sitemap, feeds, static params. */

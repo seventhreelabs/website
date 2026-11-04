@@ -30,6 +30,8 @@ type Strings = {
   blog: string;
   author: string;
   tags: string;
+  draftLabel: string;
+  draftExit: string;
 };
 
 const STRINGS: Record<string, Strings> = {
@@ -61,6 +63,8 @@ const STRINGS: Record<string, Strings> = {
     blog: "Blog",
     author: "Autor",
     tags: "Tagi",
+    draftLabel: "Szkic - widzisz niepublikowane zmiany",
+    draftExit: "Wyjdź ze szkicu",
   },
   en: {
     menuOpen: "Menu",
@@ -90,6 +94,8 @@ const STRINGS: Record<string, Strings> = {
     blog: "Blog",
     author: "Author",
     tags: "Tags",
+    draftLabel: "Draft - you are seeing unpublished changes",
+    draftExit: "Leave draft",
   },
 };
 

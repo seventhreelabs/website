@@ -22,7 +22,7 @@ type PageProps = {
 
 const CmssyEditPage = createCmssyEditPage(cmssy, blocks, {
   editor: CmssyEditor,
-  appContext: ({ page, locale }) => buildAppContext(page.slug ?? "/", locale),
+  appContext: ({ page, locale }) => buildAppContext(page.slug ?? "/", locale, undefined, true),
 });
 
 export default async function EditPage(props: PageProps) {
@@ -31,7 +31,7 @@ export default async function EditPage(props: PageProps) {
   const editMode = await isCmssyEditMode();
   const locales = await siteLocales();
   const { locale, path: pagePath } = splitLocaleFromPath(path, locales);
-  const context = await buildAppContext(slugFromPath(pagePath), locale);
+  const context = await buildAppContext(slugFromPath(pagePath), locale, undefined, true);
 
   const slot = (region: CmssyRegion<typeof layout>) => (
     <CmssyLayoutSlot
