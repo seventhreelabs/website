@@ -7,7 +7,8 @@ Next.js 16 (App Router) + cmssy headless CMS + Tailwind 4. Polish copy. One them
 - `pnpm dev` / `pnpm build` / `pnpm typecheck` / `pnpm lint`
 - `pnpm codegen` - regenerate GraphQL types after touching any `.graphql` document
 - `pnpm cmssy:types` - refresh SDK operations + model types from the workspace, then codegen
-- Block manifest changes land in cmssy only after a deploy; ask the user to open the editor once, then `list_block_types`.
+- `pnpm cmssy:sync` - push the block manifest from the repo to cmssy (needs `CMSSY_API_TOKEN` in `.env.local`); run after adding or changing a block's fields, before `add_block_to_page`. Without the token: deploy, then open the editor once.
+- New block locally, no deploy: the editor's dev host points at localhost, the block is in the palette as soon as it is in `src/cmssy/blocks.ts`, and its content lives in your private dev draft - fill it through MCP `update_page_blocks` with `target: "devDraft"`, `promote_dev_draft` once the code ships. Needs `CMSSY_API_TOKEN` (workspace owner or `site:preview_dev`); otherwise localhost renders published content and logs one warning.
 
 ## Directory layout
 

@@ -11,5 +11,7 @@ export const cmssy = defineCmssyConfig({
   org: process.env.CMSSY_ORG_SLUG,
   workspaceSlug: process.env.CMSSY_WORKSPACE_SLUG,
   draftSecret: process.env.CMSSY_DRAFT_SECRET,
+  // dev only: lets the editor's dev host show your per-user dev draft on localhost
+  devToken: process.env.CMSSY_API_TOKEN,
   layout,
 });
