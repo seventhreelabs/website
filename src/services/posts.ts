@@ -56,7 +56,7 @@ async function fetchPosts(
       workspaceId: site.workspaceId,
       modelSlug: MODEL,
       filter,
-      sort: "-publishedAt",
+      sort: "publishedAt_desc",
       locale,
       limit: query.limit ?? 100,
       offset: query.offset ?? 0,
@@ -65,7 +65,6 @@ async function fetchPosts(
     },
     { public: true, retry: {}, ...(cache && !query.preview ? { fetch: cmssyCachedFetch(cache) } : {}) },
   );
-  // the delivery API returns records in creation order whatever `sort` says - order here
   return data.public.model.records.items
     .map(parsePost)
     .filter((p): p is Post => p !== null)
