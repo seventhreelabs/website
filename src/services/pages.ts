@@ -23,12 +23,21 @@ export async function publishedPaths(): Promise<{ path: string[] }[]> {
     .map((page) => ({ path: page.slug.split("/").filter(Boolean) }));
 }
 
-/** Published pages with their last change - the sitemap. */
-export async function publishedPages(): Promise<{ slug: string; updatedAt: string }[]> {
+/**
+ * Published pages with their last change - the sitemap. With `cache` the list
+ * joins the cmssy content cache, so publishing a page refreshes it.
+ */
+export async function publishedPages(
+  cache?: CmssyDataCacheOptions,
+): Promise<{ slug: string; updatedAt: string }[]> {
   const data = await cmssyClient.query(
     PublicPagesDocument,
     { workspaceSlug: cmssy.workspaceSlug },
-    { public: true, retry: {} },
+    {
+      public: true,
+      retry: {},
+      ...(cache ? { fetch: cmssyCachedFetch(cache) } : {}),
+    },
   );
 
   return data.public.page.list

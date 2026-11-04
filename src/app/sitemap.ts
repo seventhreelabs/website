@@ -6,7 +6,7 @@ export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = siteUrl();
-  const pages = await publishedPages();
+  const pages = await publishedPages({ revalidate });
 
   return pages.map((page) => ({
     url: `${origin}${page.slug === "/" ? "" : page.slug}`,
