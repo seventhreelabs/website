@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { fields, mediaAlt, mediaUrl, type BlockProps } from "@cmssy/react";
+import { fields, mediaAlt, mediaUrl, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { anchorField } from "@/lib/cmssy/fields";
+
+export type TeamContent = InferBlockContent<typeof teamProps>;
 
 export const teamProps = {
   anchor: anchorField("zespol"),

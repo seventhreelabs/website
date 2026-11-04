@@ -1,6 +1,8 @@
-import { fields, type BlockProps } from "@cmssy/react";
+import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
+
+export type NotFoundContent = InferBlockContent<typeof notFoundProps>;
 
 export const notFoundProps = {
   code: fields.text({

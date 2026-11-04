@@ -11,3 +11,9 @@ export function siteUrl(): string {
 export function slugFromPath(path: string[] | undefined): string {
   return `/${(path ?? []).join("/")}`;
 }
+
+/** The markdown twin of a localized page path: `/index.md`, `/en/index.md`, `/en/blog/x.md`. */
+export function markdownPath(slug: string, localizedPagePath: string): string {
+  if (slug === "/") return `${localizedPagePath.replace(/\/$/, "")}/index.md`;
+  return `${localizedPagePath}.md`;
+}

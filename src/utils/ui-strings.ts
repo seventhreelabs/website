@@ -14,6 +14,17 @@ type Strings = {
   notFoundHeading: string;
   notFoundText: string;
   notFoundCta: string;
+  languageName: string;
+  technologies: string;
+  sampleProcesses: string;
+  profile: string;
+  email: string;
+  mdNote: string;
+  mdPages: string;
+  mdLanguages: string;
+  mdFormat: string;
+  mdFormatNote: string;
+  mdUpdated: string;
 };
 
 const STRINGS: Record<string, Strings> = {
@@ -29,6 +40,17 @@ const STRINGS: Record<string, Strings> = {
     notFoundHeading: "Tej strony nie ma",
     notFoundText: "Adres jest nieaktualny albo strona została przeniesiona.",
     notFoundCta: "Wróć na stronę główną",
+    languageName: "Polski",
+    technologies: "Technologie",
+    sampleProcesses: "Przykładowe procesy",
+    profile: "Profil",
+    email: "E-mail",
+    mdNote: "Wersja markdown strony",
+    mdPages: "Strony",
+    mdLanguages: "Inne języki",
+    mdFormat: "Format dla agentów i LLM",
+    mdFormatNote: "Każda strona jest dostępna jako markdown: dodaj `.md` do adresu albo wyślij nagłówek `Accept: text/markdown`. Cała treść serwisu w jednym pliku:",
+    mdUpdated: "Ostatnia aktualizacja",
   },
   en: {
     menuOpen: "Menu",
@@ -42,6 +64,17 @@ const STRINGS: Record<string, Strings> = {
     notFoundHeading: "This page does not exist",
     notFoundText: "The address is out of date or the page has moved.",
     notFoundCta: "Back to the home page",
+    languageName: "English",
+    technologies: "Technologies",
+    sampleProcesses: "Sample processes",
+    profile: "Profile",
+    email: "Email",
+    mdNote: "Markdown version of",
+    mdPages: "Pages",
+    mdLanguages: "Other languages",
+    mdFormat: "Format for agents and LLMs",
+    mdFormatNote: "Every page is available as markdown: append `.md` to its URL or send an `Accept: text/markdown` header. The whole site in one file:",
+    mdUpdated: "Last updated",
   },
 };
 

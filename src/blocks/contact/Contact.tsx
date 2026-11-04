@@ -1,7 +1,9 @@
-import { fields, type BlockProps } from "@cmssy/react";
+import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Section } from "@/components/ui/section";
 import { anchorField } from "@/lib/cmssy/fields";
 import { ContactForm } from "./ContactForm";
+
+export type ContactContent = InferBlockContent<typeof contactProps>;
 
 export const contactProps = {
   anchor: anchorField("kontakt"),

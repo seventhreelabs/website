@@ -1,7 +1,9 @@
-import { fields, type BlockProps } from "@cmssy/react";
+import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { RichText } from "@/components/ui/rich-text";
 import { Section } from "@/components/ui/section";
 import { anchorField } from "@/lib/cmssy/fields";
+
+export type ContentContent = InferBlockContent<typeof contentProps>;
 
 export const contentProps = {
   anchor: anchorField("tresc"),

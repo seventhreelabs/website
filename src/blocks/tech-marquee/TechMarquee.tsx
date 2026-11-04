@@ -1,4 +1,6 @@
-import { fields, type BlockProps } from "@cmssy/react";
+import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
+
+export type TechMarqueeContent = InferBlockContent<typeof techMarqueeProps>;
 
 export const techMarqueeProps = {
   items: fields.repeater({

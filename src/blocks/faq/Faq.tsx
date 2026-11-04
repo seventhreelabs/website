@@ -1,6 +1,8 @@
-import { fields, type BlockProps } from "@cmssy/react";
+import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { anchorField } from "@/lib/cmssy/fields";
+
+export type FaqContent = InferBlockContent<typeof faqProps>;
 
 export const faqProps = {
   anchor: anchorField("pytania"),

@@ -39,6 +39,7 @@ Rule of thumb: `app` -> `services` -> `lib`; `blocks` -> `components/ui` + `util
 - Every section block has `anchor: anchorField("...")` so the header menu can link to it.
 - **Site-wide values** (branding: logo, brand name) are fetched once in the route via `services/site.ts` and handed to blocks through `appContext`; blocks read them with `readBranding(context?.app)` from `lib/cmssy/branding.ts`. No block `loader` for that - the editor bundles `blocks.ts` client-side.
 - **Languages**: the default language has no URL prefix, others get `/<locale>/...` (SDK `localizedPath`, `localizeHref`, `splitLocaleFromPath`). Blocks read `context.locale`; the handful of non-CMS strings (menu button, aria labels, 404 fallback) live in `utils/ui-strings.ts`, everything else is cmssy content per language.
+- **LLM surface**: every page has a markdown twin (`/<path>.md`, `/index.md`, or `Accept: text/markdown`), plus `/llms.txt`, `/llms-full.txt` (per language under `/<locale>/...`) and a schema.org graph (`utils/structured-data.ts`). Each section block ships `markdown.ts` (`BlockMarkdown<Content>`) registered in `src/cmssy/markdown.ts`; a block without one is silently absent from the markdown, so add it with the block. Rich text goes through `utils/html-to-markdown.ts`.
 - Client components only where state or browser APIs are needed; mark them with `"use client"` and keep them as leaves.
 
 ## Git

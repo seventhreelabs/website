@@ -7,9 +7,11 @@ import { cmssy, type layout } from "@/cmssy.config";
 import { blocks } from "@/cmssy/blocks";
 import { CmssyEditor } from "@/cmssy/editor";
 import { EditableLayout } from "@/cmssy/editable-layout";
+import { publishedBlocks } from "@/services/markdown";
 import { pageMeta, publishedPaths } from "@/services/pages";
 import { siteLocales } from "@/lib/cmssy/locales";
-import { slugFromPath } from "@/lib/site-url";
+import { markdownPath, siteUrl, slugFromPath } from "@/lib/site-url";
+import { jsonLd, structuredData } from "@/utils/structured-data";
 import { ogLocale } from "@/utils/ui-strings";
 import { siteBranding } from "@/services/site";
 import { BRANDING_CONTEXT_KEY } from "@/lib/cmssy/branding";
@@ -62,6 +64,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     alternates: {
       canonical: url,
       languages: { ...languages, "x-default": languages[locales.defaultLocale] },
+      types: { "text/markdown": markdownPath(slug, url) },
     },
     openGraph: {
       type: "website",
@@ -74,6 +77,32 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       images: ogImage ? [{ url: ogImage }] : undefined,
     },
   };
+}
+
+/** schema.org graph for the published page - skipped in preview. */
+async function StructuredData({ path }: { path: string[] | undefined }) {
+  const locales = await siteLocales();
+  const { locale, path: pagePath } = splitLocaleFromPath(path, locales);
+  const slug = slugFromPath(pagePath);
+  const [blocks, meta, branding] = await Promise.all([
+    publishedBlocks(slug, locale, cache),
+    pageMeta(slug, locale, cache),
+    siteBranding(cache),
+  ]);
+  if (!blocks || !meta) return null;
+  const origin = siteUrl();
+  const data = structuredData({
+    origin,
+    url: `${origin}${localizedPath(slug, locale, locales.defaultLocale)}`,
+    locale,
+    siteName: branding?.brandName ?? "SevenThreeLabs",
+    logoUrl: branding?.logoUrl,
+    title: meta.title,
+    description: meta.description,
+    slug,
+    blocks,
+  });
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(data) }} />;
 }
 
 export default async function Page(props: PageProps) {
@@ -100,6 +129,7 @@ export default async function Page(props: PageProps) {
       <main>
         <CmssyPage {...props} />
       </main>
+      {preview ? null : <StructuredData path={path} />}
       {slot("footer")}
     </>
   );
