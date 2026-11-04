@@ -13,27 +13,27 @@
     "cmssy:sync": "cmssy sync-manifest"
   },
   "dependencies": {
-    "@cmssy/core": "^19.28.0",
-    "@cmssy/next": "^19.28.0",
-    "@cmssy/react": "^19.28.0",
-    "next": "16.4.3",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "@cmssy/core": "^19.28.1",
+    "@cmssy/next": "^19.28.1",
+    "@cmssy/react": "^19.28.1",
+    "next": "16.4.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
-    "@cmssy/cli": "^19.28.0",
-    "@cmssy/eslint-plugin": "^19.28.0",
+    "@cmssy/cli": "^19.28.1",
+    "@cmssy/eslint-plugin": "^19.28.1",
     "@graphql-codegen/cli": "^7.4.6",
     "@graphql-codegen/client-preset": "^6.2.3",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@tailwindcss/turbopack": "^4",
+    "@tailwindcss/turbopack": "^4.3.4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.4.3",
+    "eslint-config-next": "16.4.4",
     "graphql": "^17.0.2",
-    "tailwindcss": "^4",
+    "tailwindcss": "^4.3.4",
     "typescript": "^5"
   },
   "packageManager": "pnpm@11.1.2"
