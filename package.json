@@ -21,6 +21,7 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@cmssy/cli": "^19.28.0",
     "@cmssy/eslint-plugin": "^19.28.0",
     "@graphql-codegen/cli": "^7.4.6",
     "@graphql-codegen/client-preset": "^6.2.3",
