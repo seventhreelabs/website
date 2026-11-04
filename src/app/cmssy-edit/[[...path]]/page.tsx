@@ -8,8 +8,10 @@ import { cmssy, type layout } from "@/cmssy.config";
 import { blocks } from "@/cmssy/blocks";
 import { CmssyEditor } from "@/cmssy/editor";
 import { EditableLayout } from "@/cmssy/editable-layout";
-import { siteBranding } from "@/services/site";
-import { BRANDING_CONTEXT_KEY } from "@/lib/cmssy/branding";
+import { splitLocaleFromPath } from "@cmssy/core/internal";
+import { siteLocales } from "@/lib/cmssy/locales";
+import { slugFromPath } from "@/lib/site-url";
+import { buildAppContext } from "@/services/app-context";
 
 export const dynamic = "force-dynamic";
 
@@ -18,20 +20,18 @@ type PageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-const appContext = async () => ({
-  [BRANDING_CONTEXT_KEY]: await siteBranding(),
-});
-
 const CmssyEditPage = createCmssyEditPage(cmssy, blocks, {
   editor: CmssyEditor,
-  appContext,
+  appContext: ({ page, locale }) => buildAppContext(page.slug ?? "/", locale),
 });
 
 export default async function EditPage(props: PageProps) {
   const { path } = await props.params;
 
   const editMode = await isCmssyEditMode();
-  const context = await appContext();
+  const locales = await siteLocales();
+  const { locale, path: pagePath } = splitLocaleFromPath(path, locales);
+  const context = await buildAppContext(slugFromPath(pagePath), locale);
 
   const slot = (region: CmssyRegion<typeof layout>) => (
     <CmssyLayoutSlot

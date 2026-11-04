@@ -1,4 +1,6 @@
 import type { LocalizedBlock } from "@/services/markdown";
+import type { Post } from "@/lib/posts";
+import { tagLabel } from "@/utils/post-tags";
 
 type Thing = Record<string, unknown>;
 
@@ -101,4 +103,51 @@ export function structuredData(input: StructuredDataInput): { "@context": string
 /** Serialise for a `<script type="application/ld+json">` without closing it early. */
 export function jsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
+export type PostStructuredDataInput = {
+  origin: string;
+  url: string;
+  blogUrl: string;
+  blogName: string;
+  locale: string;
+  siteName: string;
+  logoUrl?: string | null;
+  post: Post;
+  coverUrl?: string | null;
+};
+
+/** BlogPosting with its publisher and breadcrumbs. */
+export function postStructuredData(input: PostStructuredDataInput): { "@context": string; "@graph": Thing[] } {
+  const orgId = `${input.origin}/#organization`;
+  const p = input.post;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Organization", "@id": orgId, name: input.siteName, url: input.origin, ...(input.logoUrl ? { logo: input.logoUrl } : {}) },
+      {
+        "@type": "BlogPosting",
+        "@id": input.url,
+        mainEntityOfPage: input.url,
+        url: input.url,
+        headline: p.title,
+        description: p.seoDescription || p.excerpt,
+        inLanguage: input.locale,
+        datePublished: p.publishedAt,
+        dateModified: p.updatedOn ?? p.publishedAt,
+        ...(p.author ? { author: { "@type": "Person", name: p.author, worksFor: { "@id": orgId } } } : {}),
+        publisher: { "@id": orgId },
+        ...(input.coverUrl ? { image: input.coverUrl } : {}),
+        ...(p.tags.length ? { keywords: p.tags.map((t) => tagLabel(t, input.locale)).join(", ") } : {}),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: input.siteName, item: input.origin },
+          { "@type": "ListItem", position: 2, name: input.blogName, item: input.blogUrl },
+          { "@type": "ListItem", position: 3, name: p.title, item: input.url },
+        ],
+      },
+    ],
+  };
 }

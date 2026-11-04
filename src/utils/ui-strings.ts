@@ -25,6 +25,11 @@ type Strings = {
   mdFormat: string;
   mdFormatNote: string;
   mdUpdated: string;
+  backToBlog: string;
+  minutesRead: string;
+  blog: string;
+  author: string;
+  tags: string;
 };
 
 const STRINGS: Record<string, Strings> = {
@@ -51,6 +56,11 @@ const STRINGS: Record<string, Strings> = {
     mdFormat: "Format dla agentów i LLM",
     mdFormatNote: "Każda strona jest dostępna jako markdown: dodaj `.md` do adresu albo wyślij nagłówek `Accept: text/markdown`. Cała treść serwisu w jednym pliku:",
     mdUpdated: "Ostatnia aktualizacja",
+    backToBlog: "Blog",
+    minutesRead: "min czytania",
+    blog: "Blog",
+    author: "Autor",
+    tags: "Tagi",
   },
   en: {
     menuOpen: "Menu",
@@ -75,6 +85,11 @@ const STRINGS: Record<string, Strings> = {
     mdFormat: "Format for agents and LLMs",
     mdFormatNote: "Every page is available as markdown: append `.md` to its URL or send an `Accept: text/markdown` header. The whole site in one file:",
     mdUpdated: "Last updated",
+    backToBlog: "Blog",
+    minutesRead: "min read",
+    blog: "Blog",
+    author: "Author",
+    tags: "Tags",
   },
 };
 

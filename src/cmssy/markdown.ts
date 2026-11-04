@@ -1,8 +1,10 @@
+import { blogListMarkdown } from "@/blocks/blog-list/markdown";
 import { connectionDiagramMarkdown } from "@/blocks/connection-diagram/markdown";
 import { contactMarkdown } from "@/blocks/contact/markdown";
 import { contentMarkdown } from "@/blocks/content/markdown";
 import { faqMarkdown } from "@/blocks/faq/markdown";
 import { heroMarkdown } from "@/blocks/hero/markdown";
+import { latestPostsMarkdown } from "@/blocks/latest-posts/markdown";
 import { notFoundMarkdown } from "@/blocks/not-found/markdown";
 import { servicesMarkdown } from "@/blocks/services/markdown";
 import { teamMarkdown } from "@/blocks/team/markdown";
@@ -26,4 +28,6 @@ export const blockMarkdown: Record<string, BlockMarkdown<never>> = {
   contact: contactMarkdown,
   content: contentMarkdown,
   "not-found": notFoundMarkdown,
+  "blog-list": blogListMarkdown,
+  "latest-posts": latestPostsMarkdown,
 };

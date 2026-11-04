@@ -6,7 +6,13 @@ import { cmssyClient } from "@/lib/cmssy/client";
 import { siteLocales } from "@/lib/cmssy/locales";
 import { PublicPageDocument } from "@/lib/graphql/generated/graphql";
 import { markdownPath, siteUrl } from "@/lib/site-url";
+import { buildAppContext } from "@/services/app-context";
 import { pageMeta, publishedPages } from "@/services/pages";
+import { post as fetchPost, posts as fetchPosts } from "@/services/posts";
+import type { Post } from "@/lib/posts";
+import { postSlug } from "@/lib/posts";
+import { htmlToMarkdown } from "@/utils/html-to-markdown";
+import { tagLabel } from "@/utils/post-tags";
 import { siteBranding } from "@/services/site";
 import { paragraphs, type MarkdownContext } from "@/utils/markdown";
 import { ui } from "@/utils/ui-strings";
@@ -47,22 +53,65 @@ function pageMarkdownUrl(slug: string, locale: string, defaultLocale: string): s
   return `${siteUrl()}${markdownPath(slug, localizedPath(slug, locale, defaultLocale))}`;
 }
 
+async function markdownContext(slug: string, locale: string, cache?: CmssyDataCacheOptions): Promise<MarkdownContext> {
+  const [locales, app] = await Promise.all([siteLocales(), buildAppContext(slug, locale, cache)]);
+  return {
+    locale,
+    origin: siteUrl(),
+    pageUrl: pageUrl(slug, locale, locales.defaultLocale),
+    t: ui(locale),
+    app,
+    postUrl: (postId) => pageUrl(postSlug(postId), locale, locales.defaultLocale),
+  };
+}
+
+/** One post as markdown: title, date and author, lead, body, tags. */
+function postBody(p: Post, ctx: MarkdownContext): string {
+  const meta = [p.publishedAt, p.author && `${ctx.t.author}: ${p.author}`].filter(Boolean).join(" · ");
+  return paragraphs(
+    `# ${p.title}`,
+    meta,
+    p.excerpt && `*${p.excerpt}*`,
+    htmlToMarkdown(p.body),
+    p.tags.length > 0 && `**${ctx.t.tags}:** ${p.tags.map((tag) => tagLabel(tag, ctx.locale)).join(", ")}`,
+    p.updatedOn && `${ctx.t.mdUpdated}: ${p.updatedOn}`,
+  );
+}
+
+/** Markdown of one blog post; null when missing or not yet in `locale`. */
+export async function postMarkdown(slug: string, locale: string, cache?: CmssyDataCacheOptions): Promise<string | null> {
+  const [found, locales] = await Promise.all([fetchPost(slug, locale, cache), siteLocales()]);
+  if (!found) return null;
+  const ctx = await markdownContext(postSlug(slug), locale, cache);
+  const alternates = locales.locales
+    .filter((code) => code !== locale && (code === locales.defaultLocale || found.inEnglish))
+    .map((code) => `[${ui(code).languageName}](${pageMarkdownUrl(postSlug(slug), code, locales.defaultLocale)})`)
+    .join(", ");
+  return paragraphs(
+    `> ${ctx.t.mdNote} ${ctx.pageUrl}${alternates ? ` · ${alternates}` : ""} · ${ctx.origin}${localizedPath("/llms.txt", locale, locales.defaultLocale)}`,
+    postBody(found, ctx),
+  );
+}
+
 /** Markdown of one page: a header line, then every block that has a renderer. */
 export async function pageMarkdown(
   slug: string,
   locale: string,
   cache?: CmssyDataCacheOptions,
 ): Promise<string | null> {
-  const [blocks, meta, locales] = await Promise.all([
+  const postMatch = slug.match(/^\/blog\/([^/]+)$/);
+  if (postMatch) return postMarkdown(postMatch[1], locale, cache);
+
+  const [blocks, meta, locales, ctx] = await Promise.all([
     publishedBlocks(slug, locale, cache),
     pageMeta(slug, locale, cache),
     siteLocales(),
+    markdownContext(slug, locale, cache),
   ]);
   if (!blocks) return null;
 
   const origin = siteUrl();
   const t = ui(locale);
-  const ctx: MarkdownContext = { locale, origin, pageUrl: pageUrl(slug, locale, locales.defaultLocale), t };
   const body = blocks
     .map((block) => blockMarkdown[block.type]?.(block.content as never, ctx) ?? "")
     .filter(Boolean)
@@ -92,7 +141,10 @@ export async function siteMarkdown(locale: string, cache?: CmssyDataCacheOptions
       return md && paragraphs(`# ${meta?.title ?? page.slug}`, `<${pageUrl(page.slug, locale, locales.defaultLocale)}>`, md);
     }),
   );
-  return paragraphs(`# ${branding?.brandName ?? "SevenThreeLabs"}`, ...sections) + "\n";
+  const all = await fetchPosts(locale, cache);
+  const ctx = await markdownContext("/blog", locale, cache);
+  const postSections = all.map((p) => paragraphs(`<${ctx.postUrl(p.slug)}>`, postBody(p, ctx)));
+  return paragraphs(`# ${branding?.brandName ?? "SevenThreeLabs"}`, ...sections, ...postSections) + "\n";
 }
 
 /**
@@ -100,11 +152,12 @@ export async function siteMarkdown(locale: string, cache?: CmssyDataCacheOptions
  * then the facts worth quoting - services and FAQ - lifted from the home page.
  */
 export async function llmsIndex(locale: string, cache?: CmssyDataCacheOptions): Promise<string> {
-  const [pages, branding, locales, home] = await Promise.all([
+  const [pages, branding, locales, home, all] = await Promise.all([
     publishedPages(cache),
     siteBranding(cache),
     siteLocales(),
     publishedBlocks("/", locale, cache),
+    fetchPosts(locale, cache),
   ]);
   const origin = siteUrl();
   const t = ui(locale);
@@ -112,7 +165,7 @@ export async function llmsIndex(locale: string, cache?: CmssyDataCacheOptions): 
   const metas = await Promise.all(pages.map((page) => pageMeta(page.slug, locale, cache)));
   const homeMeta = metas[pages.findIndex((p) => p.slug === "/")];
   const hero = home?.find((b) => b.type === "hero")?.content as { text?: string } | undefined;
-  const ctx: MarkdownContext = { locale, origin, pageUrl: pageUrl("/", locale, locales.defaultLocale), t };
+  const ctx = await markdownContext("/", locale, cache);
   const facts = (home ?? [])
     .filter((b) => ["services", "work-process", "faq", "contact"].includes(b.type))
     .map((b) => blockMarkdown[b.type]?.(b.content as never, ctx) ?? "")
@@ -131,6 +184,10 @@ export async function llmsIndex(locale: string, cache?: CmssyDataCacheOptions): 
         const desc = metas[i]?.description;
         return `- [${title}](${url})${desc ? `: ${desc}` : ""}`;
       })
+      .join("\n"),
+    all.length > 0 && `## ${t.blog}`,
+    all
+      .map((p) => `- [${p.title}](${pageMarkdownUrl(postSlug(p.slug), locale, locales.defaultLocale)}) (${p.publishedAt}): ${p.excerpt}`)
       .join("\n"),
     `## ${t.mdFormat}`,
     `${t.mdFormatNote} ${origin}${localizedPath("/llms-full.txt", locale, locales.defaultLocale)}`,

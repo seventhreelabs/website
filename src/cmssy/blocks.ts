@@ -1,8 +1,10 @@
+import { blogListBlock } from "@/blocks/blog-list/block";
 import { connectionDiagramBlock } from "@/blocks/connection-diagram/block";
 import { contactBlock } from "@/blocks/contact/block";
 import { contentBlock } from "@/blocks/content/block";
 import { faqBlock } from "@/blocks/faq/block";
 import { heroBlock } from "@/blocks/hero/block";
+import { latestPostsBlock } from "@/blocks/latest-posts/block";
 import { notFoundBlock } from "@/blocks/not-found/block";
 import { servicesBlock } from "@/blocks/services/block";
 import { siteFooterBlock } from "@/blocks/site-footer/block";
@@ -20,7 +22,9 @@ export const blocks = [
   workProcessBlock,
   teamBlock,
   faqBlock,
+  latestPostsBlock,
   contactBlock,
+  blogListBlock,
   contentBlock,
   notFoundBlock,
   siteFooterBlock,

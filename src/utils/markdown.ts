@@ -8,6 +8,10 @@ export type MarkdownContext = {
   /** Absolute URL of the page being rendered, for anchors. */
   pageUrl: string;
   t: UiStrings;
+  /** Site-wide values blocks read from `context.app` (posts, branding). */
+  app?: Record<string, unknown>;
+  /** Absolute, localized URL of a post by slug. */
+  postUrl: (slug: string) => string;
 };
 
 export type BlockMarkdown<Content> = (content: Content, ctx: MarkdownContext) => string;

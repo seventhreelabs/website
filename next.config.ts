@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
         },
         { source: "/:locale([a-z]{2})/llms.txt", destination: "/llms.txt/:locale" },
         { source: "/:locale([a-z]{2})/llms-full.txt", destination: "/llms-full.txt/:locale" },
+        { source: "/:locale([a-z]{2})/feed.xml", destination: "/feed.xml/:locale" },
       ],
       afterFiles: [],
       fallback: [],
