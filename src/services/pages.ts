@@ -3,11 +3,14 @@ import { cmssyCachedFetch, type CmssyDataCacheOptions } from "@cmssy/next/server
 import type { CmssyLocalizedValue } from "@cmssy/react";
 import { cmssy } from "@/cmssy.config";
 import { cmssyClient } from "@/lib/cmssy/client";
+import type { CmssyPageData } from "@cmssy/react";
 import {
+  PublicPageByIdDocument,
   PublicPageMetaDocument,
   PublicPagesDocument,
   PublishedPagesDocument,
 } from "@/lib/graphql/generated/graphql";
+import { siteConfig } from "@/services/site";
 import { localize } from "@/utils/localize";
 
 /** Published page paths for generateStaticParams. */
@@ -77,3 +80,33 @@ async function fetchPageMeta(
 }
 
 export const pageMeta = memo(fetchPageMeta);
+
+/**
+ * The published 404 page chosen in cmssy (Settings -> Site), as the SDK's page
+ * renderer expects it. Null when none is set or it is not published.
+ */
+export async function notFoundPage(
+  cache?: CmssyDataCacheOptions,
+): Promise<CmssyPageData | null> {
+  const site = await siteConfig(cache);
+  if (!site?.notFoundPageId) return null;
+
+  const data = await cmssyClient.query(
+    PublicPageByIdDocument,
+    { workspaceSlug: cmssy.workspaceSlug, pageId: site.notFoundPageId },
+    {
+      public: true,
+      retry: {},
+      ...(cache ? { fetch: cmssyCachedFetch(cache) } : {}),
+    },
+  );
+  const page = data.public.page.getById;
+  if (!page) return null;
+
+  return {
+    id: page.id,
+    slug: page.slug,
+    pageType: page.pageType,
+    blocks: page.publishedBlocks,
+  };
+}

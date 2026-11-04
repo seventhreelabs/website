@@ -3,6 +3,7 @@ import { contactBlock } from "@/blocks/contact/block";
 import { contentBlock } from "@/blocks/content/block";
 import { faqBlock } from "@/blocks/faq/block";
 import { heroBlock } from "@/blocks/hero/block";
+import { notFoundBlock } from "@/blocks/not-found/block";
 import { servicesBlock } from "@/blocks/services/block";
 import { siteFooterBlock } from "@/blocks/site-footer/block";
 import { siteHeaderBlock } from "@/blocks/site-header/block";
@@ -21,5 +22,6 @@ export const blocks = [
   faqBlock,
   contactBlock,
   contentBlock,
+  notFoundBlock,
   siteFooterBlock,
 ];
