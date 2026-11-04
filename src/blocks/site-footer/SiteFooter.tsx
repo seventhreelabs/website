@@ -1,3 +1,4 @@
+import { localizeHref } from "@cmssy/core";
 import { fields, type BlockProps } from "@cmssy/react";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { readBranding } from "@/lib/cmssy/branding";
@@ -27,6 +28,8 @@ export default function SiteFooter({
   context,
 }: BlockProps<typeof siteFooterProps>) {
   const branding = readBranding(context?.app);
+  const locale = context?.locale;
+  const href = (value: string) => (locale ? localizeHref(value, locale) : value);
 
   return (
     <footer className="bg-panel text-small text-white">
@@ -34,6 +37,7 @@ export default function SiteFooter({
         <div className="flex flex-col gap-2 border-t border-rim pt-5 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-8">
           <BrandLogo
             branding={branding}
+            href={href("/")}
             imageClassName="h-4"
             textClassName="text-small"
           />
@@ -41,7 +45,7 @@ export default function SiteFooter({
             <span key={index}>{item.text}</span>
           ))}
           {(content.links ?? []).map((link, index) => (
-            <a key={index} href={link.href} className="underline">
+            <a key={index} href={href(link.href)} className="underline">
               {link.label}
             </a>
           ))}

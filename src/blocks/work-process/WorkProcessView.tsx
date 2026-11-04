@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ui } from "@/utils/ui-strings";
 import type { WorkProcessContent } from "./WorkProcess";
 
 type Phase = NonNullable<WorkProcessContent["phases"]>[number];
@@ -8,10 +9,13 @@ type Phase = NonNullable<WorkProcessContent["phases"]>[number];
 export function WorkProcessView({
   phases,
   resultLabel,
+  locale,
 }: {
   phases: Phase[];
   resultLabel?: string;
+  locale?: string;
 }) {
+  const t = ui(locale);
   const [picked, setPicked] = useState(0);
   const phase = phases[picked] ?? phases[0];
   if (!phase) return null;
@@ -20,7 +24,7 @@ export function WorkProcessView({
     <>
       <div
         role="group"
-        aria-label="Etapy współpracy"
+        aria-label={t.workflowSteps}
         className="grid grid-cols-2 gap-2 lg:grid-cols-4"
       >
         {phases.map((item, index) => (

@@ -53,7 +53,10 @@ export const heroProps = {
 
 export type HeroContent = InferBlockContent<typeof heroProps>;
 
-export default function Hero({ content }: BlockProps<typeof heroProps>) {
+export default function Hero({
+  content,
+  context,
+}: BlockProps<typeof heroProps>) {
   const flows = content.flows ?? [];
 
   return (
@@ -82,7 +85,11 @@ export default function Hero({ content }: BlockProps<typeof heroProps>) {
           </div>
         </div>
         {flows.length > 0 ? (
-          <ProcessDemo flows={flows} note={content.flowNote} />
+          <ProcessDemo
+            flows={flows}
+            note={content.flowNote}
+            locale={context?.locale?.current}
+          />
         ) : null}
       </Container>
     </section>

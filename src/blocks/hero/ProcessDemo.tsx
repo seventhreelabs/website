@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ui } from "@/utils/ui-strings";
 import type { HeroContent } from "./Hero";
 
 type ProcessFlow = NonNullable<HeroContent["flows"]>[number];
@@ -8,10 +9,13 @@ type ProcessFlow = NonNullable<HeroContent["flows"]>[number];
 export function ProcessDemo({
   flows,
   note,
+  locale,
 }: {
   flows: ProcessFlow[];
   note?: string;
+  locale?: string;
 }) {
+  const t = ui(locale);
   const [picked, setPicked] = useState(0);
   const [active, setActive] = useState(0);
   const flow = flows[picked] ?? flows[0];
@@ -38,7 +42,7 @@ export function ProcessDemo({
     <div className="min-w-0 rounded-xl border border-edge bg-panel p-4 sm:p-6">
       <div
         role="group"
-        aria-label="Przykładowy proces"
+        aria-label={t.sampleProcess}
         className="flex flex-wrap gap-2"
       >
         {flows.map((item, index) => (
@@ -72,7 +76,9 @@ export function ProcessDemo({
               <span className="min-w-0 flex-[1_1_13rem] font-medium leading-snug">
                 {step.text}
               </span>
-              <span className="font-mono text-label">{actor}</span>
+              <span className="font-mono text-label">
+                {actor === "Człowiek" ? t.actorHuman : t.actorAgent}
+              </span>
             </li>
           );
         })}

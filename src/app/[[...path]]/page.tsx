@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";
-import { resolveCmssyLocale } from "@cmssy/core";
+import { localizedPath, splitLocaleFromPath } from "@cmssy/core/internal";
 import { createCmssyPage, CmssyLayoutSlot } from "@cmssy/next/server";
 import type { CmssyRegion } from "@cmssy/next";
 import { cmssy, type layout } from "@/cmssy.config";
@@ -8,7 +8,9 @@ import { blocks } from "@/cmssy/blocks";
 import { CmssyEditor } from "@/cmssy/editor";
 import { EditableLayout } from "@/cmssy/editable-layout";
 import { pageMeta, publishedPaths } from "@/services/pages";
+import { siteLocales } from "@/lib/cmssy/locales";
 import { slugFromPath } from "@/lib/site-url";
+import { ogLocale } from "@/utils/ui-strings";
 import { siteBranding } from "@/services/site";
 import { BRANDING_CONTEXT_KEY } from "@/lib/cmssy/branding";
 
@@ -38,8 +40,9 @@ const CmssyPage = createCmssyPage(cmssy, blocks, {
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { path } = await props.params;
-  const slug = slugFromPath(path);
-  const locale = (await resolveCmssyLocale(cmssy, path)) ?? "pl";
+  const locales = await siteLocales();
+  const { locale, path: pagePath } = splitLocaleFromPath(path, locales);
+  const slug = slugFromPath(pagePath);
   const [meta, branding] = await Promise.all([
     pageMeta(slug, locale, cache),
     siteBranding(cache),
@@ -48,15 +51,23 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
 
   const title = meta.title || branding?.brandName || undefined;
   const ogImage = branding?.ogImageUrl ?? undefined;
+  const url = localizedPath(slug, locale, locales.defaultLocale);
+  const languages = Object.fromEntries(
+    locales.locales.map((code) => [code, localizedPath(slug, code, locales.defaultLocale)]),
+  );
 
   return {
     title,
     description: meta.description || undefined,
-    alternates: { canonical: slug },
+    alternates: {
+      canonical: url,
+      languages: { ...languages, "x-default": languages[locales.defaultLocale] },
+    },
     openGraph: {
       type: "website",
-      locale: "pl_PL",
-      url: slug,
+      locale: ogLocale(locale),
+      alternateLocale: locales.locales.filter((code) => code !== locale).map(ogLocale),
+      url,
       siteName: branding?.brandName ?? undefined,
       title,
       description: meta.description || undefined,

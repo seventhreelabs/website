@@ -29,11 +29,13 @@ export type WorkProcessContent = InferBlockContent<typeof workProcessProps>;
 
 export default function WorkProcess({
   content,
+  context,
 }: BlockProps<typeof workProcessProps>) {
   return (
     <Section anchor={content.anchor}>
       <SectionHeading className="mb-8 md:mb-10">{content.heading}</SectionHeading>
       <WorkProcessView
+        locale={context?.locale?.current}
         phases={content.phases ?? []}
         resultLabel={content.resultLabel}
       />

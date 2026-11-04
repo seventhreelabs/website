@@ -1,7 +1,9 @@
 import { cache as memo } from "react";
 import { cmssyCachedFetch, type CmssyDataCacheOptions } from "@cmssy/next/server";
 import type { CmssyLocalizedValue } from "@cmssy/react";
+import { localizedPath } from "@cmssy/core/internal";
 import { cmssy } from "@/cmssy.config";
+import { siteLocales } from "@/lib/cmssy/locales";
 import { cmssyClient } from "@/lib/cmssy/client";
 import type { CmssyPageData } from "@cmssy/react";
 import {
@@ -13,8 +15,9 @@ import {
 import { siteConfig } from "@/services/site";
 import { localize } from "@/utils/localize";
 
-/** Published page paths for generateStaticParams. */
+/** Published page paths for generateStaticParams, once per enabled language. */
 export async function publishedPaths(): Promise<{ path: string[] }[]> {
+  const locales = await siteLocales();
   const data = await cmssyClient.query(
     PublishedPagesDocument,
     { workspaceSlug: cmssy.workspaceSlug },
@@ -23,7 +26,13 @@ export async function publishedPaths(): Promise<{ path: string[] }[]> {
 
   return data.public.page.list
     .filter((page) => page.publishedAt)
-    .map((page) => ({ path: page.slug.split("/").filter(Boolean) }));
+    .flatMap((page) =>
+      locales.locales.map((locale) => ({
+        path: localizedPath(page.slug, locale, locales.defaultLocale)
+          .split("/")
+          .filter(Boolean),
+      })),
+    );
 }
 
 /**

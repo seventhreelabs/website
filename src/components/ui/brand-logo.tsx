@@ -4,6 +4,8 @@ import type { SiteBranding } from "@/lib/cmssy/branding";
 
 type BrandLogoProps = {
   branding: SiteBranding | null;
+  /** Home link, already localized by the caller. */
+  href?: string;
   /** Height utilities for the logo image, e.g. "h-5 md:h-7". */
   imageClassName: string;
   /** Type utilities for the text fallback, e.g. "text-header4-clamp". */
@@ -18,6 +20,7 @@ type BrandLogoProps = {
  */
 export function BrandLogo({
   branding,
+  href = "/",
   imageClassName,
   textClassName,
   priority,
@@ -27,7 +30,7 @@ export function BrandLogo({
 
   return (
     <Link
-      href="/"
+      href={href}
       aria-label={name || undefined}
       className={`inline-flex items-center font-extrabold tracking-tight ${textClassName}`}
     >

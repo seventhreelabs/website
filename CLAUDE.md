@@ -38,6 +38,7 @@ Rule of thumb: `app` -> `services` -> `lib`; `blocks` -> `components/ui` + `util
 - **Field labels and helper text are Polish**; field keys and block types are English kebab-case.
 - Every section block has `anchor: anchorField("...")` so the header menu can link to it.
 - **Site-wide values** (branding: logo, brand name) are fetched once in the route via `services/site.ts` and handed to blocks through `appContext`; blocks read them with `readBranding(context?.app)` from `lib/cmssy/branding.ts`. No block `loader` for that - the editor bundles `blocks.ts` client-side.
+- **Languages**: the default language has no URL prefix, others get `/<locale>/...` (SDK `localizedPath`, `localizeHref`, `splitLocaleFromPath`). Blocks read `context.locale`; the handful of non-CMS strings (menu button, aria labels, 404 fallback) live in `utils/ui-strings.ts`, everything else is cmssy content per language.
 - Client components only where state or browser APIs are needed; mark them with `"use client"` and keep them as leaves.
 
 ## Git
