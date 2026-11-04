@@ -27,24 +27,28 @@ export async function publishedPaths(): Promise<{ path: string[] }[]> {
 }
 
 /**
- * Published pages with their last change - the sitemap. With `cache` the list
- * joins the cmssy content cache, so publishing a page refreshes it.
+ * Published pages with their last change - the sitemap. The 404 page is left
+ * out. With `cache` the list joins the cmssy content cache, so publishing a
+ * page refreshes it.
  */
 export async function publishedPages(
   cache?: CmssyDataCacheOptions,
 ): Promise<{ slug: string; updatedAt: string }[]> {
-  const data = await cmssyClient.query(
-    PublicPagesDocument,
-    { workspaceSlug: cmssy.workspaceSlug },
-    {
-      public: true,
-      retry: {},
-      ...(cache ? { fetch: cmssyCachedFetch(cache) } : {}),
-    },
-  );
+  const [data, site] = await Promise.all([
+    cmssyClient.query(
+      PublicPagesDocument,
+      { workspaceSlug: cmssy.workspaceSlug },
+      {
+        public: true,
+        retry: {},
+        ...(cache ? { fetch: cmssyCachedFetch(cache) } : {}),
+      },
+    ),
+    siteConfig(cache),
+  ]);
 
   return data.public.page.list
-    .filter((page) => page.publishedAt)
+    .filter((page) => page.publishedAt && page.id !== site?.notFoundPageId)
     .map((page) => ({ slug: page.slug, updatedAt: page.updatedAt }));
 }
 
