@@ -4,9 +4,11 @@ export const COOKIEBOT_ID = process.env.NEXT_PUBLIC_COOKIEBOT_ID || null;
 const culture = (locale: string) => locale.slice(0, 2).toUpperCase();
 
 /**
- * Cookiebot CMP (consent.cookiebot.com), a plain async <script> first in the
- * root layout's <head>. Async is fine here: manual blocking mode means it
- * blocks nothing, it only updates
+ * Cookiebot CMP (consent.cookiebot.com), a plain <script defer> in the root
+ * layout's <head>, right after <ConsentDefaults />. `defer`, not `async`:
+ * React 19 hoists async scripts to the top of <head>, ahead of the inline
+ * consent defaults (seen in production); a deferred one stays in place.
+ * Manual blocking mode means it blocks nothing, it only updates
  * Google Consent Mode v2 once the visitor chooses. The denied defaults
  * come from <ConsentDefaults />, rendered just before this script, so
  * `data-consentmode-defaults` is off.
@@ -19,7 +21,7 @@ export function CookieConsent({ locale }: { locale?: string }) {
   return (
     <script
       id="Cookiebot"
-      async
+      defer
       src="https://consent.cookiebot.com/uc.js"
       data-cbid={COOKIEBOT_ID}
       data-blockingmode="manual"
