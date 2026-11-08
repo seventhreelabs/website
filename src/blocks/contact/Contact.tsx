@@ -39,7 +39,7 @@ export default function Contact({
         ) : null}
         {content.email ? (
           <p className="mt-6 mb-0">
-            <a href={`mailto:${content.email}`} className="underline">
+            <a href={`mailto:${content.email}`} className="inline-block py-2.5 underline md:py-0">
               {content.email}
             </a>
           </p>

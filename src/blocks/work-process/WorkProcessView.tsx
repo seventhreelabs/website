@@ -35,7 +35,7 @@ export function WorkProcessView({
       <div
         role="group"
         aria-label={t.workflowSteps}
-        className={`grid grid-cols-2 gap-2 ${columns}`}
+        className={`grid grid-cols-2 gap-2 [&>:last-child:nth-child(odd)]:col-span-2 lg:[&>:last-child:nth-child(odd)]:col-span-1 ${columns}`}
       >
         {phases.map((item, index) => (
           <button

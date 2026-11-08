@@ -44,8 +44,8 @@
   --font-label: 14px;
 
   /* Fluid sizes */
-  --font-display-clamp: clamp(var(--font-display-mobile), 5vw, var(--font-display));
-  --font-header1-clamp: clamp(var(--font-header1-mobile), 5.4vw, var(--font-header1));
+  --font-display-clamp: clamp(min(var(--font-display-mobile), 11vw), 5vw, var(--font-display));
+  --font-header1-clamp: clamp(min(var(--font-header1-mobile), 11vw), 5.4vw, var(--font-header1));
   --font-header2-clamp: clamp(var(--font-header2-mobile), 4.6vw, var(--font-header2));
   --font-header3-clamp: clamp(var(--font-header3-mobile), 2.4vw, var(--font-header3));
   --font-header4-clamp: clamp(var(--font-header4-mobile), 1.6vw, var(--font-header4));
@@ -382,6 +382,20 @@ select:focus-visible {
 .stl-prose td > p,
 .stl-prose th > p {
   margin: 0;
+}
+
+/* Phones: a wide table scrolls sideways instead of breaking words mid-letter. */
+@media (max-width: 47.98rem) {
+  .stl-prose table {
+    display: block;
+    overflow-x: auto;
+    font-size: var(--font-caption);
+  }
+  .stl-prose th,
+  .stl-prose td {
+    padding: 0.5em 0.6em;
+    overflow-wrap: normal;
+  }
 }
 
 /* ------------------------------------------------------------------

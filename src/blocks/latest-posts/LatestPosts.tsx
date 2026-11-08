@@ -25,7 +25,7 @@ export default function LatestPosts({ content, context }: BlockProps<typeof late
       <div className="flex flex-wrap items-end justify-between gap-4">
         <SectionHeading>{content.heading}</SectionHeading>
         {content.linkLabel ? (
-          <a href={href("/blog")} className="font-mono text-label uppercase underline-offset-4 hover:underline">
+          <a href={href("/blog")} className="-my-3 inline-block py-3 font-mono text-label uppercase underline-offset-4 hover:underline">
             {content.linkLabel} →
           </a>
         ) : null}

@@ -236,7 +236,7 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
         <ul className="mt-8 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 text-small font-medium">
           {downloads.map((file, i) => (
             <li key={i}>
-              <a href={file.href} target="_blank" rel="noopener noreferrer" className="underline hover:text-amber">
+              <a href={file.href} target="_blank" rel="noopener noreferrer" className="inline-block py-2.5 underline hover:text-amber md:py-0">
                 {file.label}
               </a>
             </li>

@@ -68,7 +68,7 @@ export default function SiteFooter({
   return (
     <footer className="bg-panel text-small text-white">
       <div className="mx-auto max-w-content px-5 pb-8 md:px-8">
-        <div className="flex flex-col gap-2 border-t border-rim pt-5 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-x-8">
+        <div className="flex flex-col gap-1 border-t border-rim pt-5 sm:flex-row sm:flex-wrap sm:justify-between sm:gap-2 sm:gap-x-8">
           <BrandLogo
             branding={branding}
             href={href("/")}
@@ -79,12 +79,12 @@ export default function SiteFooter({
             <span key={index}>{item.text}</span>
           ))}
           {(content.links ?? []).map((link, index) => (
-            <a key={index} href={href(link.href)} className="underline">
+            <a key={index} href={href(link.href)} className="py-2 underline sm:py-0">
               {link.label}
             </a>
           ))}
           {COOKIEBOT_ID ? (
-            <CookieSettingsLink label={ui(locale?.current).cookieSettings} className="cursor-pointer appearance-none bg-transparent p-0 text-left text-small text-white underline" />
+            <CookieSettingsLink label={ui(locale?.current).cookieSettings} className="cursor-pointer appearance-none bg-transparent px-0 py-2 text-left text-small text-white underline sm:py-0" />
           ) : null}
           {credit ? (
             content.creditHref ? (
@@ -92,7 +92,7 @@ export default function SiteFooter({
                 href={content.creditHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-amber sm:ml-auto"
+                className="py-2 hover:text-amber sm:ml-auto sm:py-0"
               >
                 {credit}
               </a>

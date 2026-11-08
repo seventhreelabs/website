@@ -40,11 +40,11 @@ export default function SiteHeader({
 
   return (
     <header className="bg-black text-white">
-      <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-8 gap-y-3 px-5 py-4 md:px-8 md:py-6">
+      <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-4 gap-y-3 px-5 py-4 md:gap-x-8 md:px-8 md:py-6">
         <BrandLogo
           branding={branding}
           href={href("/")}
-          imageClassName="h-5 md:h-7"
+          imageClassName="h-4 min-[360px]:h-5 md:h-7"
           textClassName="text-header4-clamp"
           priority
         />
@@ -52,10 +52,21 @@ export default function SiteHeader({
           type="button"
           aria-expanded={open}
           aria-controls="site-menu"
+          aria-label={open ? t.menuClose : t.menuOpen}
           onClick={() => setOpen(!open)}
-          className="min-h-11 rounded-full border border-white px-5 text-small font-bold md:hidden"
+          className="-mr-2 grid size-11 place-items-center md:hidden"
         >
-          {open ? t.menuClose : t.menuOpen}
+          <span aria-hidden="true" className="relative block h-4 w-6">
+            <span
+              className={`absolute top-0 left-0 h-0.5 w-6 bg-white transition-transform duration-200 motion-reduce:transition-none ${open ? "translate-y-[7px] rotate-45" : ""}`}
+            />
+            <span
+              className={`absolute top-[7px] left-0 h-0.5 w-6 bg-white transition-opacity duration-200 motion-reduce:transition-none ${open ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`absolute bottom-0 left-0 h-0.5 w-6 bg-white transition-transform duration-200 motion-reduce:transition-none ${open ? "-translate-y-[7px] -rotate-45" : ""}`}
+            />
+          </span>
         </button>
         <nav
           id="site-menu"

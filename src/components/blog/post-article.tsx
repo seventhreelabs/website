@@ -22,7 +22,7 @@ export function PostArticle({ post, locale, blogHref }: PostArticleProps) {
 
   return (
     <Section innerClassName="max-w-3xl">
-      <a href={blogHref} className="font-mono text-label uppercase text-rim hover:text-ink">
+      <a href={blogHref} className="-my-3 inline-block py-3 font-mono text-label uppercase text-rim hover:text-ink">
         ← {t.backToBlog}
       </a>
       <h1 className="m-0 mt-6 text-header1-clamp font-medium tracking-[-0.03em] text-balance">{post.title}</h1>

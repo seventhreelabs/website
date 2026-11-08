@@ -25,7 +25,7 @@ export function LanguageSwitcher({ locale, slug, label, className = "" }: Langua
             href={localizedPath(slug, code, locale.default)}
             hrefLang={code}
             aria-current={current ? "page" : undefined}
-            className={`rounded-full px-2.5 py-1.5 font-mono text-label uppercase ${
+            className={`inline-grid min-h-11 min-w-11 place-items-center rounded-full font-mono text-label uppercase md:min-h-0 md:min-w-0 md:px-2.5 md:py-1.5 ${
               current ? "bg-lift text-white" : "text-mute hover:text-white"
             }`}
           >

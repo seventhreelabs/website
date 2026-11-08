@@ -85,7 +85,7 @@ export default function Showcase({ content, context }: BlockProps<typeof showcas
                     href={href(item.href)}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
-                    className="mt-6 inline-block w-max font-bold underline hover:text-amber"
+                    className="mt-4 inline-block w-max py-2 font-bold underline hover:text-amber md:mt-6 md:py-0"
                   >
                     {item.linkLabel}
                   </a>
