@@ -8,7 +8,8 @@ const culture = (locale: string) => locale.slice(0, 2).toUpperCase();
  * root layout's <head>. Async is fine here: manual blocking mode means it
  * blocks nothing, it only updates
  * Google Consent Mode v2 once the visitor chooses. The denied defaults
- * stay in components/analytics.tsx, so `data-consentmode-defaults` is off.
+ * come from <ConsentDefaults />, rendered just before this script, so
+ * `data-consentmode-defaults` is off.
  * Manual blocking mode: Google tags run cookieless through consent mode and
  * Vercel's scripts set no cookies, so nothing needs auto-blocking.
  * Without NEXT_PUBLIC_COOKIEBOT_ID (local dev) there is no banner.
