@@ -103,6 +103,8 @@
    ------------------------------------------------------------------ */
 
 html {
+  /* Footer colour: a page shorter than the window ends in the footer, not a light strip. */
+  background: var(--color-panel);
   scroll-behavior: smooth;
   scroll-padding-top: 1rem;
 }
