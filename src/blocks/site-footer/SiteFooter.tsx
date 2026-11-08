@@ -1,5 +1,6 @@
+import Image from "next/image";
 import { localizeHref } from "@cmssy/core";
-import { fields, type BlockProps } from "@cmssy/react";
+import { fields, mediaAlt, mediaUrl, type BlockProps } from "@cmssy/react";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { CookieSettingsLink } from "@/components/ui/cookie-settings-link";
 import { COOKIEBOT_ID } from "@/components/cookie-consent";
@@ -24,6 +25,18 @@ export const siteFooterProps = {
       href: fields.link({ label: "Adres", required: true }),
     },
   }),
+  creditLabel: fields.text({
+    label: "Tekst przed logo",
+    tab: "Powered by",
+    helperText: "np. „Strona działa na”. Pusty: bez dopisku.",
+  }),
+  creditName: fields.text({
+    label: "Nazwa",
+    tab: "Powered by",
+    helperText: "np. „Cmssy”. Pokazywana, gdy nie ma logo, i jako alt logo.",
+  }),
+  creditHref: fields.url({ label: "Adres", tab: "Powered by" }),
+  creditLogo: fields.media({ label: "Logo", tab: "Powered by", acceptedTypes: ["image"] }),
 };
 
 export default function SiteFooter({
@@ -33,6 +46,24 @@ export default function SiteFooter({
   const branding = readBranding(context?.app);
   const locale = context?.locale;
   const href = (value: string) => (locale ? localizeHref(value, locale) : value);
+  const creditLogo = mediaUrl(content.creditLogo);
+  const credit =
+    content.creditName || creditLogo ? (
+      <span className="inline-flex items-center gap-2">
+        {content.creditLabel ? <span className="text-mute">{content.creditLabel}</span> : null}
+        {creditLogo ? (
+          <Image
+            src={creditLogo}
+            alt={mediaAlt(content.creditLogo) ?? content.creditName ?? ""}
+            width={120}
+            height={24}
+            className="h-4 w-auto"
+          />
+        ) : (
+          <span className="font-bold">{content.creditName}</span>
+        )}
+      </span>
+    ) : null;
 
   return (
     <footer className="bg-panel text-small text-white">
@@ -54,6 +85,20 @@ export default function SiteFooter({
           ))}
           {COOKIEBOT_ID ? (
             <CookieSettingsLink label={ui(locale?.current).cookieSettings} className="cursor-pointer appearance-none bg-transparent p-0 text-left text-small text-white underline" />
+          ) : null}
+          {credit ? (
+            content.creditHref ? (
+              <a
+                href={content.creditHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-amber sm:ml-auto"
+              >
+                {credit}
+              </a>
+            ) : (
+              <span className="sm:ml-auto">{credit}</span>
+            )
           ) : null}
         </div>
       </div>

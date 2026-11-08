@@ -4,6 +4,15 @@ import { useState } from "react";
 import { ui } from "@/utils/ui-strings";
 import type { WorkProcessContent } from "./WorkProcess";
 
+// one column per phase on desktop; Tailwind needs the literal class names
+const COLUMNS: Record<number, string> = {
+  2: "lg:grid-cols-2",
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+  5: "lg:grid-cols-5",
+  6: "lg:grid-cols-6",
+};
+
 type Phase = NonNullable<WorkProcessContent["phases"]>[number];
 
 export function WorkProcessView({
@@ -19,13 +28,14 @@ export function WorkProcessView({
   const [picked, setPicked] = useState(0);
   const phase = phases[picked] ?? phases[0];
   if (!phase) return null;
+  const columns = COLUMNS[phases.length] ?? "lg:grid-cols-4";
 
   return (
     <>
       <div
         role="group"
         aria-label={t.workflowSteps}
-        className="grid grid-cols-2 gap-2 lg:grid-cols-4"
+        className={`grid grid-cols-2 gap-2 ${columns}`}
       >
         {phases.map((item, index) => (
           <button
