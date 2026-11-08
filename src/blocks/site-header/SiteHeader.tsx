@@ -7,6 +7,7 @@ import { BrandLogo } from "@/components/ui/brand-logo";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { readBranding } from "@/lib/cmssy/branding";
+import { homeAnchor } from "@/utils/home-anchor";
 import { ui } from "@/utils/ui-strings";
 
 export const siteHeaderProps = {
@@ -39,7 +40,7 @@ export default function SiteHeader({
   const locale = context?.locale;
   const t = ui(locale?.current);
   // internal links get the language prefix; anchors and external hrefs pass through
-  const href = (value: string) => (locale ? localizeHref(value, locale) : value);
+  const href = (value: string) => (locale ? localizeHref(homeAnchor(value), locale) : homeAnchor(value));
 
   useEffect(() => {
     if (!open) return;

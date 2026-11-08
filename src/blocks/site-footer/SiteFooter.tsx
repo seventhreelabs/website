@@ -5,6 +5,7 @@ import { BrandLogo } from "@/components/ui/brand-logo";
 import { CookieSettingsLink } from "@/components/ui/cookie-settings-link";
 import { COOKIEBOT_ID } from "@/components/cookie-consent";
 import { readBranding } from "@/lib/cmssy/branding";
+import { homeAnchor } from "@/utils/home-anchor";
 import { ui } from "@/utils/ui-strings";
 
 export const siteFooterProps = {
@@ -45,7 +46,7 @@ export default function SiteFooter({
 }: BlockProps<typeof siteFooterProps>) {
   const branding = readBranding(context?.app);
   const locale = context?.locale;
-  const href = (value: string) => (locale ? localizeHref(value, locale) : value);
+  const href = (value: string) => (locale ? localizeHref(homeAnchor(value), locale) : homeAnchor(value));
   const creditLogo = mediaUrl(content.creditLogo);
   const credit =
     content.creditName || creditLogo ? (
