@@ -103,10 +103,26 @@
    ------------------------------------------------------------------ */
 
 html {
-  /* Footer colour: a page shorter than the window ends in the footer, not a light strip. */
-  background: var(--color-panel);
   scroll-behavior: smooth;
   scroll-padding-top: 1rem;
+}
+
+/* A page shorter than the window: its last section grows, the footer stays at the bottom. */
+.page-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.page-main > div:last-child {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.page-main > section:last-child,
+.page-main > div:last-child > section:last-child {
+  flex: 1;
 }
 
 body {

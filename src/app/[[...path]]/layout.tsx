@@ -51,7 +51,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         <ConsentDefaults />
         <CookieConsent locale={locale} />
       </head>
-      <body>
+      <body className="flex min-h-dvh flex-col">
         {draft ? <DraftBanner label={t.draftLabel} exitLabel={t.draftExit} path={`/${(path ?? []).join("/")}`} /> : null}
         <SiteProviders>{children}</SiteProviders>
         <Analytics draft={draft} />

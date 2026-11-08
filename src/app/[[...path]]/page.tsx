@@ -215,7 +215,7 @@ export default async function Page(props: PageProps) {
     return (
       <>
         {slot("header")}
-        <main>
+        <main className="page-main">
           <PostArticle post={found} locale={locale} blogHref={localizedPath("/blog", locale, locales.defaultLocale)} />
         </main>
         {slot("footer")}
@@ -227,7 +227,7 @@ export default async function Page(props: PageProps) {
   return (
     <>
       {slot("header")}
-      <main>
+      <main className="page-main">
         <CmssyPage {...props} />
       </main>
       {preview ? null : <StructuredData path={path} />}
