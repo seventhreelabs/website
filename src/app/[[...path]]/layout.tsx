@@ -1,21 +1,33 @@
 import type { ReactNode } from "react";
 import { draftMode } from "next/headers";
 import { resolveCmssyLocale } from "@cmssy/core";
+import { Analytics } from "@/components/analytics";
 import { DraftBanner } from "@/components/ui/draft-banner";
 import { ui } from "@/utils/ui-strings";
 import { cmssy } from "@/cmssy.config";
 import { SiteProviders } from "@/cmssy/site-providers";
 import { siteUrl } from "@/lib/site-url";
+import { siteBranding } from "@/services/site";
 import type { Metadata } from "next";
 import { jetbrainsMono, manrope } from "../fonts";
 import "../globals.css";
 
-/** Fallbacks only - each page sets its own title and description from cmssy SEO settings. */
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl()),
-  title: "SevenThreeLabs",
-  description: "Automatyzujemy powtarzalną pracę w firmach z pomocą AI.",
-};
+const cache = { revalidate: 3600 };
+
+/** Site-wide fallbacks - each page sets its own title, description and Open Graph from cmssy. */
+export async function generateMetadata(): Promise<Metadata> {
+  const branding = await siteBranding(cache);
+  const brand = branding?.brandName ?? "SevenThreeLabs";
+  const verification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+  return {
+    metadataBase: new URL(siteUrl()),
+    title: brand,
+    description: "Automatyzujemy powtarzalną pracę w firmach z pomocą AI.",
+    applicationName: brand,
+    ...(branding?.faviconUrl ? { icons: { icon: branding.faviconUrl } } : {}),
+    ...(verification ? { verification: { google: verification } } : {}),
+  };
+}
 
 type LayoutProps = {
   children: ReactNode;
@@ -32,6 +44,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       <body>
         {draft ? <DraftBanner label={t.draftLabel} exitLabel={t.draftExit} path={`/${(path ?? []).join("/")}`} /> : null}
         <SiteProviders>{children}</SiteProviders>
+        <Analytics draft={draft} />
       </body>
     </html>
   );

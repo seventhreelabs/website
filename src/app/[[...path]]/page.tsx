@@ -20,6 +20,7 @@ import { markdownPath, siteUrl, slugFromPath } from "@/lib/site-url";
 import { jsonLd, postStructuredData, structuredData } from "@/utils/structured-data";
 import { ui } from "@/utils/ui-strings";
 import { ogLocale } from "@/utils/ui-strings";
+import { ogImagePath, withBrand } from "@/utils/seo";
 import { siteBranding } from "@/services/site";
 
 type PageProps = {
@@ -58,6 +59,10 @@ const feedTypes = (locale: string, defaultLocale: string) => ({
   "application/rss+xml": localizedPath("/feed.xml", locale, defaultLocale),
 });
 
+/** Drafts never reach the index, whatever a crawler is handed. */
+const draftRobots = async (): Promise<Pick<Metadata, "robots">> =>
+  (await draftMode()).isEnabled ? { robots: { index: false, follow: false } } : {};
+
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { path } = await props.params;
   const locales = await siteLocales();
@@ -72,16 +77,18 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   ]);
   if (!meta) return {};
 
-  const title = meta.title || branding?.brandName || undefined;
-  const ogImage = branding?.ogImageUrl ?? undefined;
+  const title = meta.title || branding?.brandName || "";
+  const description = meta.description || undefined;
+  const ogImage = branding?.ogImageUrl ?? ogImagePath({ title, description, locale });
   const url = localizedPath(slug, locale, locales.defaultLocale);
   const languages = Object.fromEntries(
     locales.locales.map((code) => [code, localizedPath(slug, code, locales.defaultLocale)]),
   );
 
   return {
-    title,
-    description: meta.description || undefined,
+    title: { absolute: withBrand(title, branding?.brandName) },
+    description,
+    ...(await draftRobots()),
     alternates: {
       canonical: url,
       languages: { ...languages, "x-default": languages[locales.defaultLocale] },
@@ -94,9 +101,10 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
       url,
       siteName: branding?.brandName ?? undefined,
       title,
-      description: meta.description || undefined,
-      images: ogImage ? [{ url: ogImage }] : undefined,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630 }],
     },
+    twitter: { card: "summary_large_image", title, description, images: [ogImage] },
   };
 }
 
@@ -109,11 +117,13 @@ async function postMetadata(postId: string, locale: string): Promise<Metadata> {
   const languages = Object.fromEntries(available.map((code) => [code, localizedPath(slug, code, locales.defaultLocale)]));
   const title = found.seoTitle || found.title;
   const description = found.seoDescription || found.excerpt;
-  const cover = mediaUrl(found.cover) ?? branding?.ogImageUrl ?? undefined;
+  const cover = mediaUrl(found.cover) ?? branding?.ogImageUrl ?? ogImagePath({ title, description, locale });
 
   return {
-    title,
+    title: { absolute: withBrand(title, branding?.brandName) },
     description,
+    ...(found.author ? { authors: [{ name: found.author }] } : {}),
+    ...(await draftRobots()),
     alternates: {
       canonical: url,
       languages: { ...languages, "x-default": languages[locales.defaultLocale] },
@@ -131,8 +141,9 @@ async function postMetadata(postId: string, locale: string): Promise<Metadata> {
       modifiedTime: found.updatedOn ?? found.publishedAt,
       authors: found.author ? [found.author] : undefined,
       tags: found.tags,
-      images: cover ? [{ url: cover }] : undefined,
+      images: [{ url: cover, width: 1200, height: 630 }],
     },
+    twitter: { card: "summary_large_image", title, description, images: [cover] },
   };
 }
 
