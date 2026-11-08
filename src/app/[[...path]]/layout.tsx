@@ -30,7 +30,6 @@ export async function generateMetadata(): Promise<Metadata> {
     description: "Automatyzujemy powtarzalną pracę w firmach z pomocą AI.",
     applicationName: brand,
     ...(draft ? { robots: { index: false, follow: false } } : {}),
-    ...(branding?.faviconUrl ? { icons: { icon: branding.faviconUrl } } : {}),
     ...(verification ? { verification: { google: verification } } : {}),
   };
 }
