@@ -193,12 +193,14 @@ export default async function Page(props: PageProps) {
   const { locale, path: pagePath } = splitLocaleFromPath(path, locales);
   const postId = postSlugFromPath(pagePath);
   const context = await buildAppContext(postId ? postSlug(postId) : slugFromPath(pagePath), locale, cache, preview);
+  // A post is not a cmssy page, so it has no layout of its own: use the blog page's header and footer.
+  const layoutPath = (postId ? path?.slice(0, -1) : path) ?? [];
   const slot = (region: CmssyRegion<typeof layout>) => (
     <CmssyLayoutSlot
       config={cmssy}
       blocks={blocks}
       region={region}
-      path={path ?? []}
+      path={layoutPath}
       editMode={false}
       preview={preview}
       editable={EditableLayout}
