@@ -1,7 +1,7 @@
-import { paragraphs, type BlockMarkdown } from "@/utils/markdown";
+import { absoluteHref, paragraphs, type BlockMarkdown } from "@/utils/markdown";
 import type { PricingContent } from "./Pricing";
 
-export const pricingMarkdown: BlockMarkdown<PricingContent> = (content) =>
+export const pricingMarkdown: BlockMarkdown<PricingContent> = (content, ctx) =>
   paragraphs(
     `## ${content.heading}`,
     content.text,
@@ -23,5 +23,6 @@ export const pricingMarkdown: BlockMarkdown<PricingContent> = (content) =>
     ...(content.extras ?? []).map((c) =>
       `**${c.label ? `${c.label}: ` : ""}${c.title}**${c.text ? ` ${c.text}` : ""}`,
     ),
+    (content.downloads ?? []).map((f) => `- [${f.label}](${absoluteHref(f.href, ctx)})`).join("\n"),
     content.disclaimer,
   );

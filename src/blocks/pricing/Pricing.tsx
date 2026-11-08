@@ -84,6 +84,17 @@ export const pricingProps = {
       text: fields.textarea({ label: "Treść" }),
     },
   }),
+  downloads: fields.repeater({
+    label: "Do pobrania",
+    itemLabel: "Plik",
+    addButtonLabel: "Dodaj plik",
+    tab: "Abonament",
+    helperText: "Linki do PDF-ów (cennik, prospekt). Pokazywane pod sekcją.",
+    itemSchema: {
+      label: fields.text({ label: "Tekst", required: true, helperText: "np. „Cennik i zasady współpracy (PDF)”." }),
+      href: fields.url({ label: "Adres pliku", required: true }),
+    },
+  }),
   disclaimer: fields.textarea({
     label: "Zastrzeżenie",
     tab: "Abonament",
@@ -136,6 +147,7 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
   const plans = content.plans ?? [];
   const stagesNotes = content.stagesNotes ?? [];
   const extras = content.extras ?? [];
+  const downloads = content.downloads ?? [];
 
   return (
     <Section anchor={content.anchor}>
@@ -218,6 +230,18 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
             </div>
           ))}
         </div>
+      ) : null}
+
+      {downloads.length > 0 ? (
+        <ul className="mt-8 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 text-small font-medium">
+          {downloads.map((file, i) => (
+            <li key={i}>
+              <a href={file.href} target="_blank" rel="noopener noreferrer" className="underline hover:text-amber">
+                {file.label}
+              </a>
+            </li>
+          ))}
+        </ul>
       ) : null}
 
       {content.disclaimer ? (
