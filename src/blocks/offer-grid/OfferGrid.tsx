@@ -38,12 +38,8 @@ export default function OfferGrid({ content }: BlockProps<typeof offerGridProps>
 
   return (
     <Section anchor={content.anchor} className="border-y border-line bg-white">
-      <div className="grid gap-6 lg:grid-cols-[1fr_2fr] lg:gap-18">
-        <SectionHeading className="max-w-[12em]">{content.heading}</SectionHeading>
-        {content.text ? (
-          <p className="m-0 max-w-[34em] self-end text-medium-clamp">{content.text}</p>
-        ) : null}
-      </div>
+      <SectionHeading className="max-w-[18em]">{content.heading}</SectionHeading>
+      {content.text ? <p className="mt-6 mb-0 max-w-[34em] text-medium-clamp">{content.text}</p> : null}
       <ul className="mt-10 grid list-none gap-px border border-line bg-line p-0 md:mt-14 md:grid-cols-2">
         {items.map((item, index) => (
           <li key={index} className="flex min-w-0 flex-col bg-white p-6 md:p-8">
