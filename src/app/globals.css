@@ -367,12 +367,15 @@ select:focus-visible {
 }
 
 /* ------------------------------------------------------------------
-   Cookiebot banner. The CMP ships its own overlay element but keeps it
-   hidden on the Free plan; show it so the pop-up reads as a modal.
+   Cookiebot banner. The Free plan renders no overlay element, so the
+   backdrop is a fixed pseudo-element on <body> while the dialog carries
+   Cookiebot's own "active" class; one level under the dialog's z-index.
    ------------------------------------------------------------------ */
-#CybotCookiebotDialogBodyUnderlay {
-  display: block !important;
-  opacity: 1 !important;
-  background: color-mix(in srgb, var(--color-pitch) 60%, transparent) !important;
+body:has(#CybotCookiebotDialog.CybotCookiebotDialogActive)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483630;
+  background: color-mix(in srgb, var(--color-pitch) 60%, transparent);
   backdrop-filter: blur(2px);
 }
