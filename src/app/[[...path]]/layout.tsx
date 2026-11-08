@@ -14,9 +14,13 @@ import "../globals.css";
 
 const cache = { revalidate: 3600 };
 
-/** Site-wide fallbacks - each page sets its own title, description and Open Graph from cmssy. */
+/**
+ * Site-wide fallbacks - each page sets its own title, description and Open
+ * Graph from cmssy. Drafts carry noindex here, so an unpublished page (which
+ * has no metadata of its own yet) can never reach the index.
+ */
 export async function generateMetadata(): Promise<Metadata> {
-  const branding = await siteBranding(cache);
+  const [branding, { isEnabled: draft }] = await Promise.all([siteBranding(cache), draftMode()]);
   const brand = branding?.brandName ?? "SevenThreeLabs";
   const verification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
   return {
@@ -24,6 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: brand,
     description: "Automatyzujemy powtarzalną pracę w firmach z pomocą AI.",
     applicationName: brand,
+    ...(draft ? { robots: { index: false, follow: false } } : {}),
     ...(branding?.faviconUrl ? { icons: { icon: branding.faviconUrl } } : {}),
     ...(verification ? { verification: { google: verification } } : {}),
   };

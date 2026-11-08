@@ -59,10 +59,6 @@ const feedTypes = (locale: string, defaultLocale: string) => ({
   "application/rss+xml": localizedPath("/feed.xml", locale, defaultLocale),
 });
 
-/** Drafts never reach the index, whatever a crawler is handed. */
-const draftRobots = async (): Promise<Pick<Metadata, "robots">> =>
-  (await draftMode()).isEnabled ? { robots: { index: false, follow: false } } : {};
-
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const { path } = await props.params;
   const locales = await siteLocales();
@@ -88,7 +84,6 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   return {
     title: { absolute: withBrand(title, branding?.brandName) },
     description,
-    ...(await draftRobots()),
     alternates: {
       canonical: url,
       languages: { ...languages, "x-default": languages[locales.defaultLocale] },
@@ -123,7 +118,6 @@ async function postMetadata(postId: string, locale: string): Promise<Metadata> {
     title: { absolute: withBrand(title, branding?.brandName) },
     description,
     ...(found.author ? { authors: [{ name: found.author }] } : {}),
-    ...(await draftRobots()),
     alternates: {
       canonical: url,
       languages: { ...languages, "x-default": languages[locales.defaultLocale] },
