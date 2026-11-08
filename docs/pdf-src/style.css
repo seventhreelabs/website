@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300..800&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{
+  --ink:#0b0d10; --panel:#121418; --edge:#2e333b; --rim:#8a9099; --mute:#b7bcc4;
+  --paper:#f7f8fa; --white:#fff; --soft:#f1f3f6; --line:#d9dde3; --text:#16201d; --grey:#5f6670;
+  --amber:#ffb000; --amber-soft:#fff6dc;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+@page{size:A4;margin:0}
+html,body{background:#888}
+body{font-family:'Manrope',sans-serif;color:var(--text);font-size:10.5pt;line-height:1.45;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;background:var(--paper);break-after:page;page-break-after:always;padding:16mm 20mm 20mm}
+.page:last-child{break-after:auto;page-break-after:auto}
+.page.dark{background:var(--ink);color:#fff}
+.mono{font-family:'JetBrains Mono',monospace}
+.label{font-family:'JetBrains Mono',monospace;font-size:7.2pt;letter-spacing:.14em;text-transform:uppercase}
+.topbar{display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:7.2pt;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+.dark .topbar{color:var(--rim)}
+.logo{display:inline-flex;align-items:center;gap:7px;font-family:'Manrope';font-weight:700;font-size:11pt;letter-spacing:-.01em;color:#fff;text-transform:none}
+.logo .sq{width:19px;height:19px;border-radius:3px;background:var(--amber);color:var(--ink);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:8.5pt;display:inline-flex;align-items:center;justify-content:center;letter-spacing:0}
+.logo.on-light{color:var(--text)}
+.kicker{display:flex;align-items:center;gap:9px;margin-top:9mm}
+.kicker .num{background:var(--amber);color:var(--ink);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:7.5pt;padding:2px 6px;border-radius:2px}
+.kicker .txt{font-family:'JetBrains Mono',monospace;font-size:7.2pt;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)}
+.dark .kicker .txt{color:var(--rim)}
+h1.display{font-weight:600;font-size:40pt;line-height:1.0;letter-spacing:-.035em;margin-top:6mm;max-width:150mm}
+h1.display .am{color:var(--amber)}
+h2.title{font-weight:600;font-size:23pt;line-height:1.08;letter-spacing:-.03em;margin-top:5mm;max-width:160mm}
+.lead{font-size:12pt;line-height:1.45;margin-top:4.5mm;max-width:135mm;color:var(--text)}
+.dark .lead{color:#e6e8eb}
+.foot{position:absolute;left:20mm;right:20mm;bottom:9mm;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:.1em;color:var(--grey)}
+.dark .foot{color:var(--rim)}
+.card{background:var(--panel);color:#fff;border-radius:7px;padding:8mm 7mm}
+.card h3{font-size:12.5pt;font-weight:600;letter-spacing:-.015em}
+.card p{font-size:9.3pt;color:var(--mute);margin-top:2mm;line-height:1.45}
+.box{border:1px solid var(--line);border-radius:7px;background:var(--white);padding:7mm 6.5mm}
+.box h3{font-size:12.5pt;font-weight:600;letter-spacing:-.015em}
+.dash{list-style:none;margin-top:3.5mm}
+.dash li{position:relative;padding-left:5.5mm;font-size:9.6pt;line-height:1.4;margin-top:1.8mm}
+.dash li::before{content:"";position:absolute;left:0;top:.62em;width:3mm;height:1.5px;background:var(--amber)}
+.chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:7pt;padding:2px 6px;border-radius:2px;border:1px solid var(--line);background:#fff;white-space:nowrap}
+.chip.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.ghost{border:1px dashed var(--amber);color:var(--amber);background:transparent}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6mm}
+table{width:100%;border-collapse:collapse}
+th{font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);text-align:left;font-weight:400;padding:0 0 3mm;border-bottom:1.5px solid var(--text)}
+td{padding:4mm 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:9.6pt;line-height:1.4}
+td.n{font-family:'JetBrains Mono',monospace;font-size:7.5pt;color:var(--grey);padding-top:4.6mm}
+td.n.am{color:#d98f00}
+td.t{font-weight:600;font-size:11pt}
+.def{display:grid;grid-template-columns:42mm 1fr;border-bottom:1px solid var(--line);padding:3.6mm 0;font-size:9.8pt;line-height:1.45}
+.def b{font-weight:600}

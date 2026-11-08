@@ -1,0 +1,206 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>SevenThreeLabs — prospekt</title><link rel="stylesheet" href="style.css">
+<style>
+.diagram{position:relative;height:118mm;margin:10mm -20mm 0;overflow:hidden}
+.diagram .ln{position:absolute;left:0;right:0;height:1px;background:#2a2f37}
+.diagram .bx{position:absolute;height:5mm;border:1px solid #3a3f47;border-radius:1.5px;background:var(--ink)}
+.diagram .main{position:absolute;left:0;right:0;top:57mm;height:1px;background:var(--amber)}
+.diagram .node{position:absolute;top:52.3mm;height:10mm;padding:0 5mm;border:1.6px solid var(--amber);border-radius:2px;background:var(--ink);color:#fff;font-family:'JetBrains Mono',monospace;font-size:8pt;display:flex;align-items:center}
+.diagram .dia{position:absolute;top:53.6mm;width:8mm;height:8mm;background:var(--amber);transform:rotate(45deg)}
+.diagram .dl{position:absolute;top:64mm;font-family:'JetBrains Mono',monospace;font-size:7.5pt;color:var(--amber)}
+.meta{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:6mm;border-top:1px solid var(--edge);padding-top:5mm;margin-top:14mm}
+.meta .label{color:var(--rim)}
+.meta .v{font-family:'JetBrains Mono',monospace;font-size:8.5pt;margin-top:2mm;color:#fff}
+.proc td:first-child{font-weight:600;font-size:10pt;width:40mm;padding-right:4mm}
+.proc td{font-size:9.2pt;padding:3.4mm 3mm 3.4mm 0}
+.proc td:last-child{white-space:nowrap}
+.chip+.chip{margin-left:3px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:5mm;margin-top:10mm}
+.steps .c{width:7mm;height:7mm;border-radius:50%;border:1.5px solid var(--text);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:7.5pt;font-weight:700;background:var(--paper);position:relative;z-index:1}
+.steps .c.am{background:var(--amber);border-color:var(--amber)}
+.steps .s{position:relative}
+.steps .s::before{content:"";position:absolute;top:3.5mm;left:7mm;right:-5mm;height:1.5px;background:var(--text)}
+.steps .s:last-child::before{display:none}
+.steps h4{font-size:11pt;font-weight:600;margin-top:4mm}
+.steps p{font-size:9pt;line-height:1.4;margin-top:1.5mm;color:#333}
+.steps .tag{display:block;margin-top:2.5mm;font-family:'JetBrains Mono',monospace;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:#a56f00}
+.pillars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7mm;border-top:1.5px solid var(--text);padding-top:4.5mm;margin-top:10mm;font-size:9.3pt;line-height:1.45}
+.pillars b{font-weight:700}
+.offer{display:grid;grid-template-columns:1fr 1fr;border-top:1.5px solid var(--text);margin-top:8mm}
+.offer .cell{padding:4.5mm 6mm 4.5mm 0;border-bottom:1px solid var(--line)}
+.offer .cell:nth-child(even){padding-left:6mm;border-left:1px solid var(--line)}
+.offer .l{font-family:'JetBrains Mono',monospace;font-size:7pt;color:var(--grey)}
+.offer h4{font-size:12.5pt;font-weight:600;letter-spacing:-.015em;margin-top:2mm}
+.offer p{font-size:9.3pt;line-height:1.42;margin-top:1.8mm;color:#333;max-width:76mm}
+.rules .r{display:grid;grid-template-columns:9mm 1fr;padding:2.8mm 0;border-bottom:1px solid var(--edge)}
+.rules .r:last-child{border-bottom:0}
+.rules .i{font-family:'JetBrains Mono',monospace;font-size:7.5pt;color:var(--amber);padding-top:1mm}
+.rules h4{font-size:11pt;font-weight:600}
+.rules p{font-size:9pt;color:var(--mute);margin-top:1mm}
+.person{display:grid;grid-template-columns:26mm 1fr;gap:7mm;padding:7mm 0;border-bottom:1px solid var(--line)}
+.person .av{width:26mm;height:26mm;border-radius:6px;background:var(--panel);color:var(--amber);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13pt;display:flex;align-items:center;justify-content:center}
+.person h4{font-size:14pt;font-weight:600;letter-spacing:-.02em}
+.person .role{font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);margin-top:1.5mm}
+.person .dash{margin-top:3mm}
+.person .chips{margin-top:3.5mm;display:flex;flex-wrap:wrap;gap:4px}
+.name73{display:grid;grid-template-columns:32mm 1fr;gap:6mm;align-items:center;border:1px solid var(--line);border-radius:7px;background:#fff;padding:6mm 7mm;margin-top:10mm}
+.name73 .big{font-size:40pt;font-weight:700;letter-spacing:-.05em;line-height:1}
+.name73 .big span{color:var(--amber)}
+.name73 p{font-size:9.6pt;line-height:1.45}
+.prep{list-style:none;margin-top:4mm;max-width:150mm}
+.prep li{display:grid;grid-template-columns:10mm 1fr;padding:3.6mm 0;border-bottom:1px solid var(--edge);font-size:10.5pt}
+.prep .i{font-family:'JetBrains Mono',monospace;font-size:7.5pt;color:var(--amber);padding-top:1.2mm}
+.contact{position:absolute;left:20mm;right:20mm;bottom:22mm;border-top:1.5px solid var(--amber);padding-top:6mm;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6mm}
+.contact .label{color:var(--rim)}
+.contact .v{font-family:'JetBrains Mono',monospace;font-size:8.5pt;margin-top:2mm;color:#fff}
+.firm{position:absolute;left:20mm;bottom:12mm;font-family:'JetBrains Mono',monospace;font-size:7pt;letter-spacing:.1em;color:var(--rim)}
+.minid{position:relative;height:26mm}
+.minid .b{position:absolute;top:10mm;height:7mm;padding:0 3mm;background:#1b1f25;border:1px solid #2e333b;border-radius:2px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:7pt;display:flex;align-items:center}
+.minid .l{position:absolute;top:13.4mm;height:1px;background:#3a3f47}
+.minid .d{position:absolute;top:10.6mm;width:5.8mm;height:5.8mm;background:var(--amber);transform:rotate(45deg)}
+.minid .t{position:absolute;font-family:'JetBrains Mono',monospace;font-size:6.5pt;color:var(--amber)}
+.minid .arc{position:absolute;top:3mm;left:27mm;width:22mm;height:8mm;border:1px dashed #6b727c;border-bottom:0;border-radius:11mm 11mm 0 0}
+</style></head><body>
+
+<!-- 1 -->
+<section class="page dark">
+  <div class="topbar"><span class="logo"><span class="sq">73</span>SevenThreeLabs</span><span>Prospekt · 2026</span></div>
+  <div class="diagram">
+    <div class="ln" style="top:12mm"></div><div class="bx" style="top:9.5mm;left:28mm;width:18mm"></div><div class="bx" style="top:9.5mm;left:92mm;width:12mm"></div><div class="bx" style="top:9.5mm;left:150mm;width:22mm"></div>
+    <div class="ln" style="top:28mm"></div><div class="bx" style="top:25.5mm;left:52mm;width:14mm"></div><div class="bx" style="top:25.5mm;left:118mm;width:20mm"></div>
+    <div class="ln" style="top:44mm"></div><div class="bx" style="top:41.5mm;left:20mm;width:12mm"></div><div class="bx" style="top:41.5mm;left:74mm;width:22mm"></div><div class="bx" style="top:41.5mm;left:168mm;width:14mm"></div>
+    <div class="main"></div>
+    <div class="node" style="left:22mm">wejście</div>
+    <div class="node" style="left:66mm">AI</div>
+    <div class="dia" style="left:111mm"></div><div class="dl" style="left:105mm">człowiek</div>
+    <div class="node" style="left:146mm">wynik</div>
+    <div class="ln" style="top:74mm"></div><div class="bx" style="top:71.5mm;left:40mm;width:20mm"></div><div class="bx" style="top:71.5mm;left:128mm;width:12mm"></div>
+    <div class="ln" style="top:90mm"></div><div class="bx" style="top:87.5mm;left:64mm;width:16mm"></div><div class="bx" style="top:87.5mm;left:104mm;width:22mm"></div><div class="bx" style="top:87.5mm;left:176mm;width:12mm"></div>
+    <div class="ln" style="top:106mm"></div><div class="bx" style="top:103.5mm;left:30mm;width:14mm"></div><div class="bx" style="top:103.5mm;left:140mm;width:18mm"></div>
+  </div>
+  <h1 class="display" style="font-size:46pt;margin-top:12mm">AI w jednym<br>procesie <span class="am">naraz.</span></h1>
+  <p class="lead">Automatyzujemy powtarzalną pracę w małych firmach. Decyzje, które wymagają człowieka, zostawiamy człowiekowi.</p>
+  <div class="meta">
+    <div><div class="label">Dla kogo</div><div class="v">Firmy od 1 do 20 osób</div></div>
+    <div><div class="label">Rynek</div><div class="v">Polska</div></div>
+    <div><div class="label">Kontakt</div><div class="v">kontakt@seventhreelabs.pl<br>seventhreelabs.com</div></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="page">
+  <div class="topbar"><span>SevenThreeLabs</span><span>Co robimy</span></div>
+  <div class="kicker"><span class="num">01</span><span class="txt">Co robimy</span></div>
+  <h2 class="title">Zaczynamy od jednego procesu, który zabiera Ci czas.</h2>
+  <p class="lead" style="font-size:11.5pt">Nie wdrażamy „AI w całej firmie”. Wybieramy jedną powtarzalną czynność, pokazujemy działające demo i dopiero wtedy wyceniamy wdrożenie. Jeśli automatyzacja się nie opłaca, mówimy to wprost.</p>
+  <table class="proc" style="margin-top:8mm">
+    <tr><th>Proces</th><th>Dziś</th><th>Po wdrożeniu</th><th>Decyduje</th></tr>
+    <tr><td>Odpowiedzi na powtarzalne zapytania</td><td>Ktoś czyta każdego maila i pisze odpowiedź od zera.</td><td>AI przygotowuje szkic na podstawie Twoich zasad i historii.</td><td><span class="chip dark">człowiek wysyła</span></td></tr>
+    <tr><td>Dane z zamówień i faktur</td><td>Przepisywanie danych między mailem, arkuszem i systemem.</td><td>Dane trafiają do systemu same, wątpliwe przypadki są oznaczone.</td><td><span class="chip">automat</span><span class="chip dark">wyjątki</span></td></tr>
+    <tr><td>Opisy produktów w sklepie</td><td>Każdy opis pisany ręcznie, różny styl i braki w danych.</td><td>Szkice opisów w jednym stylu, gotowe do przejrzenia.</td><td><span class="chip dark">człowiek publikuje</span></td></tr>
+    <tr><td>Zestawienia i raporty</td><td>Co tydzień zbieranie liczb z kilku miejsc.</td><td>Raport przygotowuje się sam i przychodzi na maila.</td><td><span class="chip">automat</span></td></tr>
+    <tr><td>Nowe zapytania od klientów</td><td>Zapytania giną w skrzynce albo czekają kilka dni.</td><td>Każde zapytanie jest opisane, przypisane i ma przypomnienie.</td><td><span class="chip">automat</span><span class="chip dark">oferta</span></td></tr>
+  </table>
+  <p style="font-size:8.8pt;color:var(--grey);margin-top:4mm;max-width:165mm">To przykłady procesów, od których często zaczyna się automatyzację. Zakres i efekt dla Twojej firmy ustalamy na rozmowie i pokazujemy na demo.</p>
+  <div class="card" style="position:absolute;left:20mm;right:20mm;bottom:22mm;display:grid;grid-template-columns:1fr 1.1fr;gap:8mm;align-items:center">
+    <div><div class="label" style="color:var(--rim)">Zasada</div><h3 style="margin-top:3mm;font-size:14pt">Automat wykonuje. Człowiek zatwierdza tam, gdzie to ważne.</h3><p>Dla każdego procesu ustalamy z Tobą, co może dziać się samo, a co wymaga Twojej akceptacji.</p></div>
+    <div class="minid">
+      <div class="l" style="left:0;right:0"></div>
+      <div class="b" style="left:0">zgłoszenie</div><div class="b" style="left:22mm">AI: szkic</div>
+      <div class="arc"></div><div class="t" style="top:1mm;left:33mm;color:#8a9099">poprawka</div>
+      <div class="d" style="left:49mm"></div><div class="t" style="top:19mm;left:43mm">akceptacja</div>
+      <div class="b" style="left:64mm">system</div>
+    </div>
+  </div>
+  <div class="foot"><span>SevenThreeLabs · Prospekt</span><span>02</span></div>
+</section>
+
+<!-- 3 -->
+<section class="page">
+  <div class="topbar"><span>SevenThreeLabs</span><span>Jak pracujemy</span></div>
+  <div class="kicker"><span class="num">02</span><span class="txt">Jak pracujemy</span></div>
+  <h2 class="title">Najpierw widzisz, jak to działa. Potem płacisz za wdrożenie.</h2>
+  <p class="lead" style="font-size:11.5pt">Każdy etap kończy się czymś konkretnym. Po każdym możesz zdecydować, czy idziemy dalej.</p>
+  <div class="steps">
+    <div class="s"><div class="c">1</div><h4>Rozmowa</h4><p>Opowiadasz, gdzie tracisz czas. Wybieramy jeden proces.</p><span class="tag">Bezpłatnie · 30 min</span></div>
+    <div class="s"><div class="c">2</div><h4>Demo</h4><p>Pokazujemy działające rozwiązanie na przykładowych danych.</p><span class="tag">Bezpłatnie</span></div>
+    <div class="s"><div class="c am">3</div><h4>Płatny start</h4><p>Analiza procesu i test na Twoich danych. Dostajesz plan i stałą cenę.</p><span class="tag">Do 2 tygodni</span></div>
+    <div class="s"><div class="c am">4</div><h4>Wdrożenie</h4><p>Budujemy, łączymy z Twoimi narzędziami i uczymy zespół.</p><span class="tag">Stała cena</span></div>
+    <div class="s"><div class="c am">5</div><h4>Utrzymanie</h4><p>Pilnujemy, żeby działało, i dodajemy kolejne usprawnienia.</p><span class="tag">Abonament</span></div>
+  </div>
+  <div class="grid2" style="margin-top:12mm">
+    <div class="box"><h3>Co dostajesz po płatnym starcie</h3><ul class="dash"><li>Opis obecnego procesu: kto, co i jak często robi.</li><li>Działające demo na Twoich danych.</li><li>Rekomendację, czy automatyzacja się opłaca.</li><li>Plan wdrożenia i stałą cenę.</li></ul><p style="font-size:8.8pt;color:var(--grey);margin-top:4mm">Koszt płatnego startu odliczamy od wdrożenia.</p></div>
+    <div class="box"><h3>Czego potrzebujemy od Ciebie</h3><ul class="dash"><li>Jednej osoby, która zna proces i odpowie na pytania.</li><li>Przykładowych danych lub dostępu testowego.</li><li>Około 2–3 godzin w trakcie płatnego startu.</li><li>Decyzji po każdym etapie.</li></ul></div>
+  </div>
+  <div class="pillars" style="position:absolute;left:20mm;right:20mm;bottom:22mm">
+    <div><b>Stała cena.</b> Wiesz z góry, ile zapłacisz za wdrożenie. Zmiany zakresu wyceniamy przed rozpoczęciem.</div>
+    <div><b>Twoje konta.</b> Automatyzacje działają na Twoich kontach i narzędziach. Zostają u Ciebie.</div>
+    <div><b>Bez pośredników.</b> Rozmawiasz bezpośrednio z osobami, które budują rozwiązanie.</div>
+  </div>
+  <div class="foot"><span>SevenThreeLabs · Prospekt</span><span>03</span></div>
+</section>
+
+<!-- 4 -->
+<section class="page">
+  <div class="topbar"><span>SevenThreeLabs</span><span>Budujemy też</span></div>
+  <div class="kicker"><span class="num">03</span><span class="txt">Budujemy też</span></div>
+  <h2 class="title">Gdy automatyzacja to za mało, budujemy całą aplikację.</h2>
+  <p class="lead" style="font-size:11.5pt">Jesteśmy programistami, nie tylko konsultantami. Możemy połączyć AI z aplikacją, sklepem albo stroną, którą zbudujemy od podstaw.</p>
+  <div class="offer">
+    <div class="cell"><div class="l">A</div><h4>Aplikacje internetowe</h4><p>Panele, systemy wewnętrzne i narzędzia dla klientów, dopasowane do sposobu, w jaki pracujesz.</p></div>
+    <div class="cell"><div class="l">B</div><h4>Strony i sklepy internetowe</h4><p>Domyślnie na Cmssy, naszym systemie do zarządzania treścią i sprzedażą. Gdy pasuje inne rozwiązanie, wybieramy inne.</p></div>
+    <div class="cell"><div class="l">C</div><h4>Aplikacje mobilne</h4><p>Aplikacje na iOS i Androida z jednego kodu, połączone z Twoim systemem i stroną.</p></div>
+    <div class="cell"><div class="l">D</div><h4>Konsulting i audyt AI</h4><p>Przegląd procesów i narzędzi. Dostajesz listę tego, co warto automatyzować, w jakiej kolejności i czego nie warto.</p></div>
+    <div class="cell"><div class="l">E</div><h4>Szkolenie zespołu i adaptacja AI</h4><p>Po wdrożeniu uczymy Twój zespół pracy z tym, co zbudowaliśmy, i pomagamy wpisać AI w codzienne procesy firmy.</p></div>
+    <div class="cell"><div class="l">F</div><h4>AI dla zespołów deweloperskich</h4><p>Wdrożenie narzędzi AI i pracy na specyfikacjach w zespołach, które piszą oprogramowanie.</p></div>
+  </div>
+  <div class="card rules" style="margin-top:8mm;padding:6mm 7mm">
+    <div class="label" style="color:var(--rim);margin-bottom:2mm">Jak pracujemy</div>
+    <div class="r"><div class="i">01</div><div><h4>Mówimy wprost, gdy coś się nie opłaca</h4><p>Nie każdy proces warto automatyzować. Lepiej to wiedzieć przed wydaniem pieniędzy.</p></div></div>
+    <div class="r"><div class="i">02</div><div><h4>Nie obiecujemy, że AI zastąpi ludzi</h4><p>AI przejmuje powtarzalną pracę. Zespół zajmuje się tym, w czym jest potrzebny.</p></div></div>
+    <div class="r"><div class="i">03</div><div><h4>Dbamy o Twoje dane</h4><p>Pracujemy na Twoich kontach i podpisujemy umowę powierzenia danych. Szczegóły w dokumencie „Dane i bezpieczeństwo”.</p></div></div>
+  </div>
+  <div class="foot"><span>SevenThreeLabs · Prospekt</span><span>04</span></div>
+</section>
+
+<!-- 5 -->
+<section class="page">
+  <div class="topbar"><span>SevenThreeLabs</span><span>Kim jesteśmy</span></div>
+  <div class="kicker"><span class="num">04</span><span class="txt">Kim jesteśmy</span></div>
+  <h2 class="title">Dwóch programistów, z którymi rozmawiasz bezpośrednio.</h2>
+  <p class="lead" style="font-size:11.5pt">SevenThreeLabs to nowa firma, więc nie pokazujemy referencji pod tą marką. Pokazujemy działające demo i nasze doświadczenie z wcześniejszej pracy.</p>
+  <div style="margin-top:6mm">
+    <div class="person"><div class="av">MB</div><div><h4>Maciej Bednarczyk</h4><div class="role">Full-stack developer · ok. 8 lat doświadczenia</div>
+      <ul class="dash"><li>Budował systemy CMS i CRM, sklepy internetowe oraz narzędzia do migracji danych.</li><li>W firmie konsultingowej prowadził wdrażanie AI i narzędzi deweloperskich.</li><li>Buduje Cmssy, system do zarządzania treścią i sprzedażą dla agencji.</li></ul>
+      <div class="chips"><span class="chip">Next.js</span><span class="chip">Node.js</span><span class="chip">MongoDB</span><span class="chip">LLM</span><span class="chip">Agenci AI</span><span class="chip">Azure</span></div></div></div>
+    <div class="person"><div class="av">MJ</div><div><h4>Mateusz Jaszewski</h4><div class="role">Senior frontend developer · od 2015 roku</div>
+      <ul class="dash"><li>Tworzył aplikacje i serwisy w Schibsted Tech Polska, Grupie Wirtualna Polska i Wakacje.pl.</li><li>Specjalizuje się w responsywnych interfejsach i aplikacjach w React i Next.js.</li></ul>
+      <div class="chips"><span class="chip">Next.js</span><span class="chip">React</span><span class="chip">JavaScript</span><span class="chip">Node.js</span></div></div></div>
+  </div>
+  <div class="name73" style="position:absolute;left:20mm;right:20mm;bottom:22mm;margin:0">
+    <div class="big">7<span>3</span></div>
+    <p><b>Skąd nazwa?</b> 73 to jedna z najciekawszych liczb w matematyce: jest 21. liczbą pierwszą, a zapisana od tyłu, czyli 37, jest 12. liczbą pierwszą. Do tego 7 × 3 = 21. Fani „The Big Bang Theory” znają ją jako ulubioną liczbę Sheldona.</p>
+  </div>
+  <div class="foot"><span>SevenThreeLabs · Prospekt</span><span>05</span></div>
+</section>
+
+<!-- 6 -->
+<section class="page dark">
+  <div class="topbar"><span class="logo"><span class="sq">73</span>SevenThreeLabs</span><span></span></div>
+  <div class="kicker" style="margin-top:34mm"><span class="num">05</span><span class="txt">Następny krok</span></div>
+  <h1 class="display">Opowiedz nam o jednym procesie.</h1>
+  <p class="lead">30 minut rozmowy, bez zobowiązań. Jeśli widzimy sens, przygotujemy demo. Jeśli nie, powiemy to od razu.</p>
+  <div class="label" style="color:var(--rim);margin-top:14mm">Przed rozmową warto przygotować</div>
+  <ol class="prep">
+    <li><span class="i">01</span><span><b>Jaki to proces</b> i kto go dziś wykonuje.</span></li>
+    <li><span class="i">02</span><span><b>Jak często</b> się powtarza: codziennie, co tydzień, przy każdym zamówieniu.</span></li>
+    <li><span class="i">03</span><span><b>Jakich narzędzi</b> używacie: poczta, arkusze, sklep, system księgowy.</span></li>
+    <li><span class="i">04</span><span><b>Co byłoby sukcesem</b> po wdrożeniu.</span></li>
+  </ol>
+  <div class="contact">
+    <div><div class="label">Mail</div><div class="v">kontakt@seventhreelabs.pl</div></div>
+    <div><div class="label">Umów rozmowę</div><div class="v">seventhreelabs.com/spotkanie</div></div>
+    <div><div class="label">Strona</div><div class="v">seventhreelabs.com</div></div>
+  </div>
+  <div class="firm">SevenThreeLabs · Gdańsk</div>
+</section>
+</body></html>

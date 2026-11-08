@@ -1,0 +1,144 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><title>SevenThreeLabs — cennik i zasady współpracy</title><link rel="stylesheet" href="style.css">
+<style>
+.hero{background:var(--ink);color:#fff;margin:-16mm -20mm 0;padding:14mm 20mm 10mm;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:9mm 9mm}
+.hero>*{position:relative}
+.hero h1{font-weight:600;font-size:32pt;letter-spacing:-.035em;line-height:1.02;margin-top:10mm}
+.hero .lead{color:#e6e8eb;font-size:12pt;max-width:130mm}
+.hero .chips{display:flex;gap:3mm;margin-top:7mm}
+.hero .chip{background:transparent;border-color:#3a3f47;color:#fff;font-size:7.2pt;padding:3px 7px}
+.hero .chip b{color:var(--ink);background:var(--amber);padding:1px 4px;border-radius:2px;font-weight:700}
+.price-tbl td{padding:3mm 0}
+.price-tbl td.p{text-align:right;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:7.8pt;color:var(--grey);padding-top:4.3mm}
+.price-tbl td.p.b{font-family:'Manrope';font-weight:700;font-size:12pt;color:var(--text);padding-top:3.6mm}
+.price-tbl td.d{color:#333}
+.note2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.big-from{display:grid;grid-template-columns:1fr auto;gap:10mm;align-items:end;border-top:1.5px solid var(--text);padding-top:5mm;margin-top:10mm}
+.big-from p{font-size:9.6pt;line-height:1.45;max-width:105mm}
+.big-from .v{font-size:30pt;font-weight:700;letter-spacing:-.04em;line-height:1}
+.big-from .v small{font-size:10pt;font-weight:400;letter-spacing:0;color:var(--grey);margin-left:2mm}
+.plans{width:100%;border-collapse:separate;border-spacing:0;margin-top:6mm}
+.plans th,.plans td{padding:2.6mm 3mm;text-align:center;border-bottom:1px solid var(--line);font-size:9.6pt;vertical-align:middle}
+.plans th{border-bottom:1.5px solid var(--text);vertical-align:bottom;padding-bottom:3mm}
+.plans th:first-child,.plans td:first-child{text-align:left;padding-left:0;width:52mm}
+.plans th .pn{font-family:'Manrope';font-size:12.5pt;font-weight:600;letter-spacing:-.02em;text-transform:none;color:var(--text);display:block}
+.plans th .pt{display:block;margin-top:1mm;font-size:6.8pt}
+.plans .hot{background:var(--amber-soft)}
+.plans th.hot{position:relative;border-top:3px solid var(--amber)}
+.plans th.hot .badge{position:absolute;top:3mm;left:50%;transform:translateX(-50%);background:var(--amber);color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:6.5pt;font-weight:700;letter-spacing:.1em;padding:2px 6px;border-radius:2px}
+.plans .dot{display:inline-block;width:3.2mm;height:3.2mm;border-radius:50%;background:var(--text)}
+.plans .dash-{color:var(--grey)}
+.plans tr.price td{font-size:16pt;font-weight:700;letter-spacing:-.03em;border-bottom:0;padding-top:4mm}
+.plans tr.price td:first-child{font-size:9pt;font-weight:400;color:var(--grey)}
+.plans td b{font-weight:600}
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:5mm}
+.extras .box .label{color:var(--grey)}
+.extras .box .v{font-size:17pt;font-weight:600;letter-spacing:-.03em;margin-top:3mm}
+.extras .box .v small{font-size:9.5pt;font-weight:400;letter-spacing:0;color:var(--grey);margin-left:1mm}
+.extras .box p{font-size:8.8pt;line-height:1.4;margin-top:2mm;color:#333}
+.ask{background:var(--panel);color:#fff;border-radius:7px;padding:7mm 8mm;display:flex;justify-content:space-between;align-items:center;margin-top:10mm}
+.ask h3{font-size:14pt;font-weight:600}
+.ask p{color:var(--mute);font-size:9.5pt;margin-top:1.5mm}
+.ask p b{color:#fff;font-weight:500;font-family:'JetBrains Mono',monospace;font-size:8.5pt}
+.small{font-size:8.6pt;color:var(--grey);line-height:1.45;margin-top:5mm;max-width:170mm}
+</style></head><body>
+
+<!-- 1 -->
+<section class="page">
+  <div class="hero">
+    <div class="topbar"><span class="logo"><span class="sq">73</span>SevenThreeLabs</span><span></span></div>
+    <h1>Cennik i zasady współpracy</h1>
+    <p class="lead">Stała cena za wdrożenie i abonament za utrzymanie. Wiesz z góry, ile zapłacisz.</p>
+    <div class="chips"><span class="chip">Ceny netto, doliczamy 23% VAT</span><span class="chip">Waluta: PLN</span><span class="chip">Obowiązuje od <b>listopada 2026</b></span></div>
+  </div>
+  <div class="kicker" style="margin-top:9mm"><span class="num">01</span><span class="txt">Etapy i ceny</span></div>
+  <h2 class="title">Płacisz dopiero wtedy, gdy wiesz, co dostaniesz.</h2>
+  <table class="price-tbl" style="margin-top:7mm">
+    <tr><th style="width:9mm"></th><th style="width:45mm">Etap</th><th>Co się dzieje</th><th style="text-align:right">Cena netto</th></tr>
+    <tr><td class="n">01</td><td class="t">Rozmowa</td><td class="d">30 minut. Wybieramy jeden proces do usprawnienia.</td><td class="p">bezpłatnie</td></tr>
+    <tr><td class="n">02</td><td class="t">Demo</td><td class="d">Działające rozwiązanie na przykładowych danych.</td><td class="p">bezpłatnie</td></tr>
+    <tr><td class="n am">03</td><td class="t">Płatny start</td><td class="d">Analiza procesu, test na Twoich danych, plan i stała cena wdrożenia.</td><td class="p b">2 900 zł</td></tr>
+    <tr><td class="n am">04</td><td class="t">Wdrożenie</td><td class="d">Budowa, integracje z Twoimi narzędziami, testy i szkolenie zespołu.</td><td class="p b">od 9 900 zł</td></tr>
+    <tr><td class="n am">05</td><td class="t">Utrzymanie</td><td class="d">Abonament miesięczny w jednym z trzech pakietów.</td><td class="p b">od 690 zł/mies.</td></tr>
+  </table>
+  <div class="note2" style="margin-top:6mm">
+    <div class="card"><h3>Płatny start odliczamy od wdrożenia</h3><p>Jeśli zamówisz wdrożenie w ciągu 30 dni od zakończenia płatnego startu, całe 2 900 zł odejmujemy od jego ceny.</p></div>
+    <div class="card"><h3>Narzędzia opłacasz bezpośrednio</h3><p>Modele AI (Anthropic, OpenAI), narzędzia do automatyzacji i hosting działają na Twoich kontach. Przed wdrożeniem szacujemy ich miesięczny koszt.</p></div>
+  </div>
+  <p class="small">Cennik dotyczy automatyzacji. Aplikacje, strony i sklepy wyceniamy indywidualnie po rozmowie, również ze stałą ceną.</p>
+  <div class="foot"><span>SevenThreeLabs · Cennik i zasady współpracy</span><span>01</span></div>
+</section>
+
+<!-- 2 -->
+<section class="page">
+  <div class="topbar"><span>SevenThreeLabs</span><span>Płatny start i wdrożenie</span></div>
+  <div class="kicker"><span class="num">02</span><span class="txt">Płatny start</span></div>
+  <h2 class="title">Sprawdzamy, czy warto, zanim zapłacisz za całość.</h2>
+  <div style="margin-top:6mm">
+    <div class="def"><b>Zakres</b><span>Jeden proces lub jedna potrzeba biznesowa.</span></div>
+    <div class="def"><b>Czas</b><span>Do 2 tygodni od otrzymania danych i dostępów.</span></div>
+    <div class="def"><b>Co robimy</b><span>Opisujemy obecny proces, budujemy demo na Twoich danych i sprawdzamy, czy automatyzacja się opłaca.</span></div>
+    <div class="def"><b>Co dostajesz</b><span>Działające demo, rekomendację i plan wdrożenia ze stałą ceną. Jeśli automatyzacja się nie opłaca, piszemy to wprost.</span></div>
+    <div class="def" style="border-bottom:0"><b>Cena</b><span><b>2 900 zł netto</b>, płatne z góry.</span></div>
+  </div>
+  <div class="kicker" style="margin-top:12mm"><span class="num">03</span><span class="txt">Wdrożenie</span></div>
+  <h2 class="title">Stała cena ustalona po płatnym starcie.</h2>
+  <div class="grid2" style="margin-top:7mm">
+    <div class="box"><h3>W cenie wdrożenia</h3><ul class="dash"><li>Budowa automatyzacji lub aplikacji według planu.</li><li>Połączenie z Twoimi narzędziami.</li><li>Testy na prawdziwych danych.</li><li>Instrukcja i szkolenie zespołu z gotowego rozwiązania.</li><li>30 dni bezpłatnych poprawek błędów po odbiorze.</li></ul></div>
+    <div class="box"><h3>Od czego zależy cena</h3><ul class="dash"><li>Ile systemów trzeba ze sobą połączyć.</li><li>W jakim stanie są dane.</li><li>Ile jest wyjątków i kroków do zatwierdzenia.</li><li>Wymagania dotyczące bezpieczeństwa i uprawnień.</li></ul></div>
+  </div>
+  <div class="big-from" style="position:absolute;left:20mm;right:20mm;bottom:22mm;margin:0">
+    <p>Najprostsze wdrożenie jednego procesu zaczyna się od kwoty obok. Dokładną cenę podajemy na piśmie przed rozpoczęciem pracy i nie zmieniamy jej bez Twojej zgody.</p>
+    <div class="v">od 9 900 zł<small>netto</small></div>
+  </div>
+  <div class="foot"><span>SevenThreeLabs · Cennik i zasady współpracy</span><span>02</span></div>
+</section>
+
+<!-- 3 -->
+<section class="page">
+  <div class="topbar"><span>SevenThreeLabs</span><span>Utrzymanie</span></div>
+  <div class="kicker"><span class="num">04</span><span class="txt">Abonament</span></div>
+  <h2 class="title">Automatyzacja potrzebuje opieki, tak jak każde narzędzie.</h2>
+  <p class="lead" style="font-size:11.5pt">Dostawcy AI i aplikacji zmieniają swoje usługi. W abonamencie pilnujemy, żeby wszystko działało, i dodajemy kolejne usprawnienia.</p>
+  <table class="plans">
+    <tr><th>Pakiet</th><th><span class="pn">Opieka</span><span class="pt">Działa i jest bezpieczne</span></th><th class="hot"><span class="badge">Polecany</span><span class="pn" style="margin-top:5mm">Rozwój</span><span class="pt">Plus usprawnienia</span></th><th><span class="pn">Partner</span><span class="pt">Stała współpraca</span></th></tr>
+    <tr><td>Monitoring działania</td><td><span class="dot"></span></td><td class="hot"><span class="dot"></span></td><td><span class="dot"></span></td></tr>
+    <tr><td>Naprawa błędów</td><td><span class="dot"></span></td><td class="hot"><span class="dot"></span></td><td><span class="dot"></span></td></tr>
+    <tr><td>Dostosowanie do zmian u dostawców</td><td><span class="dot"></span></td><td class="hot"><span class="dot"></span></td><td><span class="dot"></span></td></tr>
+    <tr><td>Godziny na usprawnienia w miesiącu</td><td class="dash-">—</td><td class="hot"><b>4 h</b></td><td><b>10 h</b></td></tr>
+    <tr><td>Reakcja na awarię</td><td>1 dzień roboczy</td><td class="hot">1 dzień roboczy</td><td><b>ten sam dzień roboczy</b></td></tr>
+    <tr><td>Kontakt: mail lub wspólny kanał</td><td><span class="dot"></span></td><td class="hot"><span class="dot"></span></td><td><span class="dot"></span></td></tr>
+    <tr><td>Telefon przy awarii</td><td class="dash-">—</td><td class="hot dash-">—</td><td><span class="dot"></span></td></tr>
+    <tr class="price"><td>netto / miesiąc</td><td>690 zł</td><td class="hot">1 490 zł</td><td>2 490 zł</td></tr>
+  </table>
+  <p class="small" style="margin-top:4mm">Minimalny okres abonamentu to 3 miesiące, potem obowiązuje miesięczny okres wypowiedzenia. Niewykorzystane godziny nie przechodzą na kolejny miesiąc. Dostępność: od poniedziałku do piątku w godzinach 9–17.</p>
+  <div class="extras">
+    <div class="box"><div class="label">Prace poza zakresem</div><div class="v">220 zł<small>netto / godz.</small></div><p>Dotyczy prac spoza wdrożenia i ponad godziny z abonamentu. Zawsze wyceniamy je przed rozpoczęciem.</p></div>
+    <div class="box"><div class="label">Koszty narzędzi</div><p style="margin-top:3mm">Opłaty za modele AI, narzędzia do automatyzacji i hosting nie wchodzą w abonament. Płacisz je dostawcom bezpośrednio, więc widzisz każdy koszt, a konta należą do Ciebie.</p></div>
+  </div>
+  <div class="foot"><span>SevenThreeLabs · Cennik i zasady współpracy</span><span>03</span></div>
+</section>
+
+<!-- 4 -->
+<section class="page">
+  <div class="topbar"><span>SevenThreeLabs</span><span>Zasady współpracy</span></div>
+  <div class="kicker"><span class="num">05</span><span class="txt">Zasady współpracy</span></div>
+  <h2 class="title">Proste zasady, żeby obie strony wiedziały, na czym stoją.</h2>
+  <div style="margin-top:6mm">
+    <div class="def"><b>Płatności</b><span>Płatny start: 100% z góry. Wdrożenie: 50% przy starcie i 50% po odbiorze. Abonament: z góry za każdy miesiąc. Termin płatności faktury: 7 dni.</span></div>
+    <div class="def"><b>Zmiany zakresu</b><span>Każdą zmianę opisujemy i wyceniamy na piśmie. Pracę zaczynamy dopiero po Twojej akceptacji.</span></div>
+    <div class="def"><b>Odbiór</b><span>Po przekazaniu wdrożenia masz 7 dni roboczych na zgłoszenie uwag. Poprawiamy wszystko, co nie działa zgodnie z planem.</span></div>
+    <div class="def"><b>Gwarancja</b><span>Przez 30 dni od odbioru poprawiamy błędy bezpłatnie.</span></div>
+    <div class="def"><b>Prawa do rozwiązania</b><span>Po zapłacie całości otrzymujesz pełne prawa do kodu przygotowanego dla Ciebie. Nasze ogólne narzędzia i system Cmssy udostępniamy na licencji.</span></div>
+    <div class="def"><b>Konta i dostępy</b><span>Pracujemy na Twoich kontach. Po zakończeniu współpracy oddajemy dostępy i usuwamy kopie Twoich danych.</span></div>
+    <div class="def"><b>Dane osobowe</b><span>Gdy przetwarzamy dane osobowe, podpisujemy umowę powierzenia (RODO). Szczegóły w dokumencie „Dane i bezpieczeństwo”.</span></div>
+    <div class="def"><b>Poufność</b><span>Informacje o Twojej firmie wykorzystujemy tylko do realizacji projektu. Nie pokazujemy Twojego projektu innym bez Twojej zgody.</span></div>
+    <div class="def"><b>Abonament</b><span>Minimum 3 miesiące, potem miesięczny okres wypowiedzenia.</span></div>
+  </div>
+  <div style="position:absolute;left:20mm;right:20mm;bottom:20mm">
+    <div class="ask"><div><h3>Masz pytania do cennika?</h3><p>Napisz: <b>kontakt@seventhreelabs.pl</b> &nbsp;·&nbsp; umów rozmowę: <b>seventhreelabs.com/spotkanie</b></p></div><span class="logo"><span class="sq">73</span>SevenThreeLabs</span></div>
+    <p class="small" style="margin-top:4mm">Ten dokument ma charakter informacyjny. Wiążące warunki określa umowa lub zaakceptowana oferta. SevenThreeLabs · Gdańsk · seventhreelabs.com</p>
+  </div>
+  <div class="foot"><span>SevenThreeLabs · Cennik i zasady współpracy</span><span>04</span></div>
+</section>
+</body></html>
