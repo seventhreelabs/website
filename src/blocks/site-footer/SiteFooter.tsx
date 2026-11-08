@@ -1,7 +1,10 @@
 import { localizeHref } from "@cmssy/core";
 import { fields, type BlockProps } from "@cmssy/react";
 import { BrandLogo } from "@/components/ui/brand-logo";
+import { CookieSettingsLink } from "@/components/ui/cookie-settings-link";
+import { COOKIEBOT_ID } from "@/components/cookie-consent";
 import { readBranding } from "@/lib/cmssy/branding";
+import { ui } from "@/utils/ui-strings";
 
 export const siteFooterProps = {
   details: fields.repeater({
@@ -49,6 +52,9 @@ export default function SiteFooter({
               {link.label}
             </a>
           ))}
+          {COOKIEBOT_ID ? (
+            <CookieSettingsLink label={ui(locale?.current).cookieSettings} className="cursor-pointer appearance-none bg-transparent p-0 text-left text-small text-white underline" />
+          ) : null}
         </div>
       </div>
     </footer>

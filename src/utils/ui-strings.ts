@@ -32,6 +32,7 @@ type Strings = {
   tags: string;
   draftLabel: string;
   draftExit: string;
+  cookieSettings: string;
 };
 
 const STRINGS: Record<string, Strings> = {
@@ -65,6 +66,7 @@ const STRINGS: Record<string, Strings> = {
     tags: "Tagi",
     draftLabel: "Szkic - widzisz niepublikowane zmiany",
     draftExit: "Wyjdź ze szkicu",
+    cookieSettings: "Ustawienia cookies",
   },
   en: {
     menuOpen: "Menu",
@@ -96,6 +98,7 @@ const STRINGS: Record<string, Strings> = {
     tags: "Tags",
     draftLabel: "Draft - you are seeing unpublished changes",
     draftExit: "Leave draft",
+    cookieSettings: "Cookie settings",
   },
 };
 
