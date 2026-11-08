@@ -3,8 +3,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 
 /** Container ids are public (they ship in the HTML); env overrides for another workspace. */
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "GTM-TBG87F67";
-const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-TBG87F67";
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || null;
 
 /**
  * Consent Mode v2 defaults, set before any Google tag loads: every storage
