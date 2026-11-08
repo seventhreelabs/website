@@ -365,3 +365,14 @@ select:focus-visible {
 .stl-prose th > p {
   margin: 0;
 }
+
+/* ------------------------------------------------------------------
+   Cookiebot banner. The CMP ships its own overlay element but keeps it
+   hidden on the Free plan; show it so the pop-up reads as a modal.
+   ------------------------------------------------------------------ */
+#CybotCookiebotDialogBodyUnderlay {
+  display: block !important;
+  opacity: 1 !important;
+  background: color-mix(in srgb, var(--color-pitch) 60%, transparent) !important;
+  backdrop-filter: blur(2px);
+}
