@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import { draftMode } from "next/headers";
 import { resolveCmssyLocale } from "@cmssy/core";
-import { Analytics } from "@/components/analytics";
+import { Analytics, ConsentDefaults } from "@/components/analytics";
+import { CookieConsent } from "@/components/cookie-consent";
 import { DraftBanner } from "@/components/ui/draft-banner";
 import { ui } from "@/utils/ui-strings";
 import { cmssy } from "@/cmssy.config";
@@ -46,6 +47,10 @@ export default async function RootLayout({ children, params }: LayoutProps) {
 
   return (
     <html lang={locale} className={`${manrope.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        <ConsentDefaults />
+        <CookieConsent locale={locale} />
+      </head>
       <body>
         {draft ? <DraftBanner label={t.draftLabel} exitLabel={t.draftExit} path={`/${(path ?? []).join("/")}`} /> : null}
         <SiteProviders>{children}</SiteProviders>
