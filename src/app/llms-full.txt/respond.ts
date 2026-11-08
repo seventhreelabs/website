@@ -8,6 +8,7 @@ export async function respondSiteMarkdown(requested?: string): Promise<Response>
   const locales = await siteLocales();
   const locale = requested && locales.locales.includes(requested) ? requested : locales.defaultLocale;
   return new Response(await siteMarkdown(locale, cache), {
-    headers: { "content-type": "text/markdown; charset=utf-8", "content-language": locale },
+    // for agents, not for the search index - the HTML pages carry the same text
+    headers: { "content-type": "text/markdown; charset=utf-8", "content-language": locale, "x-robots-tag": "noindex" },
   });
 }
