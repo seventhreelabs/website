@@ -50,7 +50,7 @@ export default function SiteHeader({
     dialogRef.current?.focus();
     page.style.overflow = "hidden";
     // the modal is phone-only: leaving that width must not keep the page inert
-    const desktop = window.matchMedia("(min-width: 64rem)");
+    const desktop = window.matchMedia("(min-width: 80rem)");
     const closeOnDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
     };
@@ -87,7 +87,7 @@ export default function SiteHeader({
           aria-controls={open ? "site-menu" : undefined}
           aria-label={t.menuOpen}
           onClick={() => setOpen(true)}
-          className="-mr-2 grid size-11 place-items-center lg:hidden"
+          className="-mr-2 grid size-11 place-items-center xl:hidden"
         >
           <span aria-hidden="true" className="flex h-4 w-6 flex-col justify-between">
             <span className="h-0.5 bg-white" />
@@ -95,7 +95,7 @@ export default function SiteHeader({
             <span className="h-0.5 bg-white" />
           </span>
         </button>
-        <nav aria-label={t.mainNav} className="hidden items-center gap-7 text-small font-medium whitespace-nowrap lg:flex">
+        <nav aria-label={t.mainNav} className="hidden items-center gap-5 text-small font-medium whitespace-nowrap xl:flex">
           {links.map((link, index) => (
             <a key={index} href={href(link.href)} className="py-3 hover:opacity-80">
               {link.label}
@@ -119,7 +119,7 @@ export default function SiteHeader({
           aria-label={t.mainNav}
           tabIndex={-1}
           onClose={close}
-          className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col overflow-y-auto bg-black text-white outline-none open:flex lg:hidden"
+          className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none flex-col overflow-y-auto bg-black text-white outline-none open:flex xl:hidden"
         >
           <div className="flex items-center justify-between gap-x-4 px-5 py-4">
             {logo}
