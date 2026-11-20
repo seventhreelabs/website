@@ -9,6 +9,7 @@ import { latestPostsMarkdown } from "@/blocks/latest-posts/markdown";
 import { notFoundMarkdown } from "@/blocks/not-found/markdown";
 import { offerGridMarkdown } from "@/blocks/offer-grid/markdown";
 import { pricingMarkdown } from "@/blocks/pricing/markdown";
+import { processAnalyzerMarkdown } from "@/blocks/process-analyzer/markdown";
 import { servicesMarkdown } from "@/blocks/services/markdown";
 import { showcaseMarkdown } from "@/blocks/showcase/markdown";
 import { teamMarkdown } from "@/blocks/team/markdown";
@@ -34,6 +35,7 @@ export const blockMarkdown: Record<string, BlockMarkdown<never>> = {
   team: teamMarkdown,
   faq: faqMarkdown,
   contact: contactMarkdown,
+  "process-analyzer": processAnalyzerMarkdown,
   content: contentMarkdown,
   "not-found": notFoundMarkdown,
   "blog-list": blogListMarkdown,

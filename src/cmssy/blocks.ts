@@ -9,6 +9,7 @@ import { latestPostsBlock } from "@/blocks/latest-posts/block";
 import { notFoundBlock } from "@/blocks/not-found/block";
 import { offerGridBlock } from "@/blocks/offer-grid/block";
 import { pricingBlock } from "@/blocks/pricing/block";
+import { processAnalyzerBlock } from "@/blocks/process-analyzer/block";
 import { servicesBlock } from "@/blocks/services/block";
 import { showcaseBlock } from "@/blocks/showcase/block";
 import { siteFooterBlock } from "@/blocks/site-footer/block";
@@ -31,6 +32,7 @@ export const blocks = [
   faqBlock,
   latestPostsBlock,
   contactBlock,
+  processAnalyzerBlock,
   blogListBlock,
   contentBlock,
   bookingBlock,

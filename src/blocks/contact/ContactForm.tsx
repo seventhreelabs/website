@@ -40,15 +40,22 @@ type Status = { kind: "idle" | "sending" | "sent" | "error"; message?: string };
 export function ContactForm({
   form,
   locale,
+  prefill,
+  idPrefix = "contact",
 }: {
   form: CmssyFormDefinition;
   locale: string;
+  /** Values set by the page, not the visitor; their fields are not rendered. */
+  prefill?: Record<string, string>;
+  /** Keeps element ids unique when two forms share a page. */
+  idPrefix?: string;
 }) {
-  const [values, setValues] = useState<Record<string, string>>(() =>
-    Object.fromEntries(
+  const [values, setValues] = useState<Record<string, string>>(() => ({
+    ...Object.fromEntries(
       form.fields.map((field) => [field.name, field.defaultValue ?? ""]),
     ),
-  );
+    ...prefill,
+  }));
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const { settings } = form;
@@ -85,13 +92,13 @@ export function ContactForm({
   }
 
   const fields = visibleFormFields(form.fields, values)
-    .filter((field) => SUPPORTED.has(field.fieldType))
+    .filter((field) => SUPPORTED.has(field.fieldType) && !(prefill && field.name in prefill))
     .sort((a, b) => a.order - b.order);
 
   return (
     <form onSubmit={send} className="flex min-w-0 flex-col gap-5">
       {fields.map((field) => {
-        const id = `contact-${field.name}`;
+        const id = `${idPrefix}-${field.name}`;
         const shared = {
           id,
           name: field.name,
@@ -141,9 +148,9 @@ export function ContactForm({
         );
       })}
       <div aria-hidden="true" className="absolute -left-[9999px]">
-        <label htmlFor="contact-website">Website</label>
+        <label htmlFor={`${idPrefix}-website`}>Website</label>
         <input
-          id="contact-website"
+          id={`${idPrefix}-website`}
           tabIndex={-1}
           autoComplete="off"
           value={website}
