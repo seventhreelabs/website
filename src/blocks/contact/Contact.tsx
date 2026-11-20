@@ -1,6 +1,7 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Section } from "@/components/ui/section";
 import { anchorField } from "@/lib/cmssy/fields";
+import { localizedHref } from "@/utils/localized-href";
 import { ContactForm } from "./ContactForm";
 
 export type ContactContent = InferBlockContent<typeof contactProps>;
@@ -47,7 +48,7 @@ export default function Contact({
         {content.hintLabel && content.hintHref ? (
           <p className="mt-6 mb-0 max-w-[30em]">
             {content.hintText ? `${content.hintText} ` : null}
-            <a href={content.hintHref} className="font-bold text-amber underline">
+            <a href={localizedHref(content.hintHref, context?.locale)} className="font-bold text-amber underline">
               {content.hintLabel}
             </a>
           </p>

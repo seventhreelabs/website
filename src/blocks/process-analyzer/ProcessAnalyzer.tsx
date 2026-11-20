@@ -1,6 +1,7 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Section } from "@/components/ui/section";
 import { anchorField } from "@/lib/cmssy/fields";
+import { localizedHref } from "@/utils/localized-href";
 import { AnalyzerForm } from "./AnalyzerForm";
 
 export type ProcessAnalyzerContent = InferBlockContent<typeof processAnalyzerProps>;
@@ -92,6 +93,13 @@ export const processAnalyzerProps = {
 export default function ProcessAnalyzer({ content, context }: BlockProps<typeof processAnalyzerProps>) {
   const Heading = content.headingLevel === "H1" ? "h1" : "h2";
   const form = content.form ? context?.forms?.[content.form] : undefined;
+  // links resolved here: the client form only gets the locale code
+  const href = (value?: string) => (value ? localizedHref(value, context?.locale) : value);
+  const resolved = {
+    ...content,
+    ctaHref: href(content.ctaHref),
+    services: content.services?.map((service) => ({ ...service, href: href(service.href) })),
+  };
 
   return (
     <Section
@@ -105,7 +113,7 @@ export default function ProcessAnalyzer({ content, context }: BlockProps<typeof 
         </Heading>
         {content.text ? <p className="mt-6 mb-0 max-w-[30em] text-medium-clamp">{content.text}</p> : null}
       </div>
-      <AnalyzerForm content={content} form={form} locale={context?.locale.current ?? "pl"} />
+      <AnalyzerForm content={resolved} form={form} locale={context?.locale.current ?? "pl"} />
     </Section>
   );
 }
