@@ -5,12 +5,9 @@ import { groqClient } from "@/lib/analyzer/groq";
 import { checkAnalyzerLimits } from "@/lib/analyzer/rate-limit";
 import { verifyTurnstile } from "@/lib/analyzer/turnstile";
 import {
-  ANALYSIS_SCHEMA,
-  ANALYZER_MODEL,
   DESCRIPTION_MAX,
   DESCRIPTION_MIN,
-  analyzerSystemPrompt,
-  analyzerUserMessage,
+  analyzerRequest,
   cleanServices,
   readAnalysis,
   type AnalyzerResult,
@@ -58,20 +55,9 @@ export async function analyzeProcess(input: AnalyzeInput): Promise<AnalyzerResul
   }
 
   try {
-    const completion = await groqClient().chat.completions.create({
-      model: ANALYZER_MODEL,
-      max_completion_tokens: 3000,
-      temperature: 0.3,
-      reasoning_effort: "low",
-      response_format: {
-        type: "json_schema",
-        json_schema: { name: "process_analysis", strict: true, schema: ANALYSIS_SCHEMA },
-      },
-      messages: [
-        { role: "system", content: analyzerSystemPrompt(locale) },
-        { role: "user", content: analyzerUserMessage(description, services) },
-      ],
-    });
+    const completion = await groqClient().chat.completions.create(
+      analyzerRequest(description, services, locale),
+    );
 
     const choice = completion.choices[0];
     const usage = completion.usage;

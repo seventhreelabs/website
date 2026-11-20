@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "codegen": "graphql-codegen --config codegen.ts",
     "cmssy:types": "cmssy types --operations-out src/lib/graphql/cmssy-operations.graphql --out src/lib/graphql/generated/cmssy-models.ts && pnpm codegen",
-    "cmssy:sync": "cmssy sync-manifest"
+    "cmssy:sync": "cmssy sync-manifest",
+    "eval:analyzer": "tsx --env-file-if-exists=.env scripts/eval-analyzer.ts"
   },
   "dependencies": {
     "@cmssy/core": "^19.33.0",
@@ -40,6 +41,7 @@
     "eslint-config-next": "16.4.4",
     "graphql": "^17.0.2",
     "tailwindcss": "^4.3.4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   },
   "packageManager": "pnpm@11.1.2"
