@@ -7,6 +7,7 @@ import { DraftBanner } from "@/components/ui/draft-banner";
 import { ui } from "@/utils/ui-strings";
 import { cmssy } from "@/cmssy.config";
 import { SiteProviders } from "@/cmssy/site-providers";
+import { setRequestLocale } from "@/lib/cmssy/request-locale";
 import { siteUrl } from "@/lib/site-url";
 import { siteBranding } from "@/services/site";
 import type { Metadata } from "next";
@@ -42,6 +43,7 @@ type LayoutProps = {
 export default async function RootLayout({ children, params }: LayoutProps) {
   const { path } = await params;
   const [locale, { isEnabled: draft }] = await Promise.all([resolveCmssyLocale(cmssy, path), draftMode()]);
+  setRequestLocale(locale);
   const t = ui(locale);
 
   return (

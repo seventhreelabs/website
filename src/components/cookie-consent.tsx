@@ -18,15 +18,20 @@ const culture = (locale: string) => locale.slice(0, 2).toUpperCase();
  */
 export function CookieConsent({ locale }: { locale?: string }) {
   if (!COOKIEBOT_ID) return null;
+  // The banner is the mobile LCP element: open both Cookiebot origins early.
   return (
-    <script
-      id="Cookiebot"
-      defer
-      src="https://consent.cookiebot.com/uc.js"
-      data-cbid={COOKIEBOT_ID}
-      data-blockingmode="manual"
-      data-consentmode-defaults="disabled"
-      {...(locale ? { "data-culture": culture(locale) } : {})}
-    />
+    <>
+      <link rel="preconnect" href="https://consent.cookiebot.com" />
+      <link rel="preconnect" href="https://consentcdn.cookiebot.com" />
+      <script
+        id="Cookiebot"
+        defer
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid={COOKIEBOT_ID}
+        data-blockingmode="manual"
+        data-consentmode-defaults="disabled"
+        {...(locale ? { "data-culture": culture(locale) } : {})}
+      />
+    </>
   );
 }

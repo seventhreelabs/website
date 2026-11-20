@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-import { CMSSY_LOCALE_HEADER } from "@cmssy/core";
 import { localizedPath } from "@cmssy/core/internal";
 import { CmssyServerPage } from "@cmssy/react";
 import { CmssyLayoutSlot } from "@cmssy/next/server";
@@ -10,6 +8,7 @@ import { EditableLayout } from "@/cmssy/editable-layout";
 import NotFoundBlock from "@/blocks/not-found/NotFound";
 import { BRANDING_CONTEXT_KEY } from "@/lib/cmssy/branding";
 import { siteLocales } from "@/lib/cmssy/locales";
+import { requestLocale } from "@/lib/cmssy/request-locale";
 import { notFoundPage } from "@/services/pages";
 import { siteBranding } from "@/services/site";
 import { ui } from "@/utils/ui-strings";
@@ -18,18 +17,14 @@ const cache = { revalidate: 3600 };
 
 /**
  * Rendered when cmssy has no published page for the path. The body is the 404
- * page picked in cmssy (Settings -> Site) in the request's language (the proxy
- * puts it in a header); header and footer come from the home page's layout.
+ * page picked in cmssy (Settings -> Site) in the request's language (recorded
+ * by the root layout, see request-locale.ts); header and footer come from the
+ * home page's layout.
  * Without a 404 page in cmssy a fixed fallback shows.
  */
 export default async function NotFound() {
-  const [page, branding, locales, requestHeaders] = await Promise.all([
-    notFoundPage(cache),
-    siteBranding(cache),
-    siteLocales(),
-    headers(),
-  ]);
-  const requested = requestHeaders.get(CMSSY_LOCALE_HEADER);
+  const [page, branding, locales] = await Promise.all([notFoundPage(cache), siteBranding(cache), siteLocales()]);
+  const requested = requestLocale();
   const locale =
     requested && locales.locales.includes(requested) ? requested : locales.defaultLocale;
   const path = locale === locales.defaultLocale ? [] : [locale];
