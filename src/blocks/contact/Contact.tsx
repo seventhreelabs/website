@@ -10,6 +10,13 @@ export const contactProps = {
   heading: fields.text({ label: "Nagłówek", required: true }),
   text: fields.textarea({ label: "Tekst" }),
   email: fields.email({ label: "Adres e-mail" }),
+  hintText: fields.text({
+    label: "Podpowiedź: tekst",
+    tab: "Podpowiedź",
+    helperText: "Zdanie przed linkiem, np. „Nie wiesz, od czego zacząć?”. Opcjonalne.",
+  }),
+  hintLabel: fields.text({ label: "Podpowiedź: tekst linku", tab: "Podpowiedź" }),
+  hintHref: fields.link({ label: "Podpowiedź: adres", tab: "Podpowiedź" }),
   form: fields.form({
     label: "Formularz",
     helperText: "Pola, komunikaty i przycisk ustawiasz w Form Builderze.",
@@ -35,6 +42,14 @@ export default function Contact({
         {content.text ? (
           <p className="mt-6 mb-0 max-w-[30em] text-medium-clamp">
             {content.text}
+          </p>
+        ) : null}
+        {content.hintLabel && content.hintHref ? (
+          <p className="mt-6 mb-0 max-w-[30em]">
+            {content.hintText ? `${content.hintText} ` : null}
+            <a href={content.hintHref} className="font-bold text-amber underline">
+              {content.hintLabel}
+            </a>
           </p>
         ) : null}
         {content.email ? (

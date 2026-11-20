@@ -16,7 +16,7 @@ export const siteHeaderProps = {
     itemLabel: "Link",
     addButtonLabel: "Dodaj link",
     collapsible: true,
-    maxItems: 6,
+    maxItems: 7,
     itemSchema: {
       label: fields.text({ label: "Tekst", required: true }),
       href: fields.link({ label: "Adres", required: true }),
