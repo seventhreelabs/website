@@ -1,6 +1,6 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Section } from "@/components/ui/section";
-import { anchorField } from "@/lib/cmssy/fields";
+import { anchorField, isLightTone, toneField } from "@/lib/cmssy/fields";
 import { localizedHref } from "@/utils/localized-href";
 import { AnalyzerForm } from "./AnalyzerForm";
 
@@ -8,6 +8,7 @@ export type ProcessAnalyzerContent = InferBlockContent<typeof processAnalyzerPro
 
 export const processAnalyzerProps = {
   anchor: anchorField("analizator"),
+  tone: toneField(),
   headingLevel: fields.select({
     label: "Poziom nagłówka",
     helperText: "H1, gdy analizator jest pierwszą sekcją strony.",
@@ -102,13 +103,13 @@ export default function ProcessAnalyzer({ content, context }: BlockProps<typeof 
   };
 
   return (
-    <Section
+    <Section light={isLightTone(content.tone)}
       anchor={content.anchor}
       className="bg-panel text-white"
       innerClassName="grid gap-10 lg:grid-cols-2 lg:gap-18"
     >
       <div className="min-w-0">
-        <Heading className="m-0 text-header2-clamp font-medium tracking-[-0.03em] text-balance">
+        <Heading className="m-0 text-header2-clamp font-semibold tracking-heading text-balance">
           {content.heading}
         </Heading>
         {content.text ? <p className="mt-6 mb-0 max-w-[30em] text-medium-clamp">{content.text}</p> : null}

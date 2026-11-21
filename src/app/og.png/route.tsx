@@ -7,7 +7,7 @@ export const revalidate = 86400;
 const cache = { revalidate };
 
 // Tokens from globals.css (:root) - the only place they are duplicated, satori reads no CSS.
-const COLORS = { panel: "#121418", white: "#ffffff", mute: "#c4c9d1", amber: "#ffb000" };
+const COLORS = { panel: "#101113", white: "#f5f5f2", mute: "#aaa9a3", amber: "#f5b934" };
 
 /**
  * Open Graph card for pages without an image in cmssy branding:

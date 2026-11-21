@@ -21,11 +21,11 @@ export default function NotFound({ content }: BlockProps<typeof notFoundProps>) 
   return (
     <Section innerClassName="flex min-h-[60vh] max-w-3xl flex-col items-start justify-center">
       {content.code ? (
-        <p className="m-0 font-mono text-label font-bold uppercase tracking-[0.2em] text-amber">
+        <p className="m-0 font-mono text-label font-bold uppercase tracking-kicker text-amber">
           {content.code}
         </p>
       ) : null}
-      <h1 className="mt-4 text-header1-clamp font-medium tracking-[-0.03em] text-balance">
+      <h1 className="mt-4 text-header1-clamp font-semibold tracking-heading text-balance">
         {content.heading}
       </h1>
       {content.text ? (

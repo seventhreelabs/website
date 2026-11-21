@@ -1,12 +1,14 @@
 import { Fragment } from "react";
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
-import { Section, SectionHeading } from "@/components/ui/section";
-import { anchorField } from "@/lib/cmssy/fields";
+import { Section, SectionHead } from "@/components/ui/section";
+import { anchorField, kickerField, isLightTone, toneField } from "@/lib/cmssy/fields";
 
 export type ConnectionDiagramContent = InferBlockContent<typeof connectionDiagramProps>;
 
 export const connectionDiagramProps = {
   anchor: anchorField("polaczenia"),
+  tone: toneField(),
+  kicker: kickerField(),
   heading: fields.text({ label: "Nagłówek", required: true }),
   text: fields.textarea({ label: "Tekst" }),
   nodes: fields.repeater({
@@ -37,8 +39,8 @@ export const connectionDiagramProps = {
 
 const TONES = {
   Ciemny: "border border-edge bg-panel",
-  Jasny: "bg-white text-ink",
-  Akcent: "bg-amber text-ink",
+  Jasny: "border border-edge bg-lift shadow-step",
+  Akcent: "bg-amber text-pitch",
 };
 
 export default function ConnectionDiagram({
@@ -47,13 +49,8 @@ export default function ConnectionDiagram({
   const nodes = content.nodes ?? [];
 
   return (
-    <Section anchor={content.anchor} className="stl-grid text-white">
-      <SectionHeading className="max-w-[16em]">{content.heading}</SectionHeading>
-      {content.text ? (
-        <p className="mt-5 mb-10 max-w-[34em] text-medium-clamp md:mb-14">
-          {content.text}
-        </p>
-      ) : null}
+    <Section light={isLightTone(content.tone)} anchor={content.anchor} className="stl-grid">
+      <SectionHead kicker={content.kicker} heading={content.heading} text={content.text} />
       <div className="flex flex-col lg:flex-row">
         {nodes.map((node, index) => (
           <Fragment key={index}>
@@ -64,9 +61,9 @@ export default function ConnectionDiagram({
               />
             ) : null}
             <div
-              className={`min-w-0 flex-1 rounded-xl p-6 ${TONES[node.tone ?? "Ciemny"]}`}
+              className={`min-w-0 flex-1 p-6 ${TONES[node.tone ?? "Ciemny"]}`}
             >
-              <h3 className="m-0 mb-3 text-header4-clamp font-bold">{node.title}</h3>
+              <h3 className="m-0 mb-3 text-header4-clamp font-bold tracking-title">{node.title}</h3>
               <ul className="m-0 list-none p-0 font-mono text-label leading-loose">
                 {(node.items ?? []).map((item, itemIndex) => (
                   <li key={itemIndex}>{item.text}</li>

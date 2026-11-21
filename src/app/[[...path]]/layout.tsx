@@ -11,7 +11,7 @@ import { setRequestLocale } from "@/lib/cmssy/request-locale";
 import { siteUrl } from "@/lib/site-url";
 import { siteBranding } from "@/services/site";
 import type { Metadata } from "next";
-import { jetbrainsMono, manrope } from "../fonts";
+import { dmMono, manrope } from "../fonts";
 import "../globals.css";
 
 const cache = { revalidate: 3600 };
@@ -47,7 +47,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   const t = ui(locale);
 
   return (
-    <html lang={locale} className={`${manrope.variable} ${jetbrainsMono.variable}`}>
+    <html lang={locale} className={`${manrope.variable} ${dmMono.variable}`}>
       <head>
         <ConsentDefaults />
         <CookieConsent locale={locale} />

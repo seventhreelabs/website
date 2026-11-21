@@ -1,10 +1,12 @@
 import { blogListMarkdown } from "@/blocks/blog-list/markdown";
 import { bookingMarkdown } from "@/blocks/booking/markdown";
+import { caseDemoMarkdown } from "@/blocks/case-demo/markdown";
 import { connectionDiagramMarkdown } from "@/blocks/connection-diagram/markdown";
 import { contactMarkdown } from "@/blocks/contact/markdown";
 import { contentMarkdown } from "@/blocks/content/markdown";
 import { faqMarkdown } from "@/blocks/faq/markdown";
 import { heroMarkdown } from "@/blocks/hero/markdown";
+import { introBarMarkdown } from "@/blocks/intro-bar/markdown";
 import { latestPostsMarkdown } from "@/blocks/latest-posts/markdown";
 import { notFoundMarkdown } from "@/blocks/not-found/markdown";
 import { offerGridMarkdown } from "@/blocks/offer-grid/markdown";
@@ -24,6 +26,8 @@ import type { BlockMarkdown } from "@/utils/markdown";
  */
 export const blockMarkdown: Record<string, BlockMarkdown<never>> = {
   hero: heroMarkdown,
+  "intro-bar": introBarMarkdown,
+  "case-demo": caseDemoMarkdown,
   "tech-marquee": techMarqueeMarkdown,
   services: servicesMarkdown,
   "offer-grid": offerGridMarkdown,

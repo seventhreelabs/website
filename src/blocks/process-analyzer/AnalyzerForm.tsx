@@ -34,7 +34,7 @@ declare global {
 }
 
 const CONTROL =
-  "box-border w-full rounded-lg border border-rim bg-pitch px-4 py-3 font-[inherit] text-white";
+  "box-border w-full border border-rim bg-pitch px-4 py-3 font-[inherit] text-white";
 
 const track = (event: string, extra: Record<string, unknown> = {}) =>
   window.dataLayer?.push({ event, ...extra });
@@ -243,8 +243,8 @@ function AnalysisResult({
     <div role="status" className="flex min-w-0 flex-col gap-8">
       <div>
         <span
-          className={`inline-block rounded-full px-4 py-1.5 font-mono text-label font-bold uppercase tracking-[0.12em] ${
-            analysis.verdict === "no" ? "border border-mute text-mute" : "bg-amber text-ink"
+          className={`inline-block px-4 py-1.5 font-mono text-label font-bold uppercase tracking-kicker ${
+            analysis.verdict === "no" ? "border border-mute text-mute" : "bg-amber text-pitch"
           }`}
         >
           {verdictLabel}
@@ -271,7 +271,7 @@ function AnalysisResult({
 
       {analysis.timeSaved ? (
         <p className="m-0">
-          <span className="block font-mono text-label uppercase tracking-[0.12em] text-mute">
+          <span className="block font-mono text-label uppercase tracking-kicker text-mute">
             {content.timeSavedLabel}
           </span>
           <span className="mt-1 block text-header4-clamp font-medium">{analysis.timeSaved}</span>
@@ -283,7 +283,7 @@ function AnalysisResult({
           <h3 className="m-0 text-header4-clamp font-medium">{content.servicesHeading}</h3>
           <ul className="mt-4 mb-0 grid list-none gap-4 p-0 md:grid-cols-2">
             {services.map((service, index) => (
-              <li key={index} className="flex flex-col rounded-lg border border-edge p-5">
+              <li key={index} className="flex flex-col border border-edge p-5">
                 <strong className="font-bold">{service.name}</strong>
                 {service.description ? <span className="mt-2 text-small text-mute">{service.description}</span> : null}
                 {service.href ? (

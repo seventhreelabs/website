@@ -1,11 +1,13 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
-import { Section, SectionHeading } from "@/components/ui/section";
-import { anchorField } from "@/lib/cmssy/fields";
+import { Section, SectionHead } from "@/components/ui/section";
+import { anchorField, kickerField, isLightTone, toneField } from "@/lib/cmssy/fields";
 
 export type PricingContent = InferBlockContent<typeof pricingProps>;
 
 export const pricingProps = {
   anchor: anchorField("cennik"),
+  tone: toneField(),
+  kicker: kickerField(),
   heading: fields.text({ label: "Nagłówek", required: true }),
   text: fields.textarea({ label: "Tekst" }),
   terms: fields.repeater({
@@ -108,28 +110,28 @@ function PlanCard({ plan }: { plan: Plan }) {
   const hot = Boolean(plan.highlighted);
   return (
     <article
-      className={`relative flex min-w-0 flex-col rounded-xl p-6 md:p-8 ${
-        hot ? "bg-ink text-white" : "border border-line bg-white"
+      className={`relative flex min-w-0 flex-col border p-6 md:p-8 ${
+        hot ? "border-amber bg-lift shadow-step" : "border-line bg-card"
       }`}
     >
       {plan.badge ? (
-        <span className="absolute -top-3 left-6 rounded-full bg-amber px-3 py-1 font-mono text-label font-bold text-ink uppercase">
+        <span className="absolute -top-3 left-6 bg-amber px-2.5 py-1 font-mono text-micro tracking-wider text-pitch uppercase">
           {plan.badge}
         </span>
       ) : null}
-      <h4 className="m-0 text-header3-clamp font-medium tracking-[-0.02em]">{plan.name}</h4>
+      <h4 className="m-0 text-header3-clamp font-semibold tracking-heading">{plan.name}</h4>
       {plan.tagline ? (
-        <p className={`mt-1 mb-0 font-mono text-label uppercase ${hot ? "text-mute" : "text-rim"}`}>
+        <p className="mt-1 mb-0 font-mono text-micro tracking-wider text-amber uppercase">
           {plan.tagline}
         </p>
       ) : null}
-      <p className="mt-6 mb-0 text-header2-clamp leading-none font-medium tracking-[-0.03em]">
+      <p className="mt-6 mb-0 text-header2-clamp leading-none font-semibold tracking-heading">
         {plan.price}
       </p>
       {plan.period ? (
-        <p className={`mt-1 mb-0 text-caption ${hot ? "text-mute" : "text-rim"}`}>{plan.period}</p>
+        <p className="mt-1 mb-0 text-caption text-mute">{plan.period}</p>
       ) : null}
-      <ul className={`mt-6 mb-0 list-none border-t p-0 pt-5 text-small ${hot ? "border-edge" : "border-line"}`}>
+      <ul className="mt-6 mb-0 list-none border-t border-line p-0 pt-5 text-small">
         {(plan.features ?? []).map((f, i) => (
           <li key={i} className="flex gap-3 py-1.5">
             <span aria-hidden="true" className="mt-[0.7em] h-px w-3 shrink-0 bg-amber" />
@@ -150,35 +152,32 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
   const downloads = content.downloads ?? [];
 
   return (
-    <Section anchor={content.anchor}>
-      <SectionHeading className="max-w-[14em]">{content.heading}</SectionHeading>
-      {content.text ? (
-        <p className="mt-5 mb-0 max-w-[34em] text-medium-clamp">{content.text}</p>
-      ) : null}
+    <Section light={isLightTone(content.tone)} anchor={content.anchor}>
+      <SectionHead kicker={content.kicker} heading={content.heading} text={content.text} className="" />
       {(content.terms ?? []).length ? (
-        <ul className="mt-6 flex list-none flex-wrap gap-2 p-0 font-mono text-label">
+        <ul className="mt-6 flex list-none flex-wrap gap-2 p-0 font-mono text-micro tracking-wider uppercase">
           {(content.terms ?? []).map((t, i) => (
-            <li key={i} className="rounded border border-line px-3 py-1.5">
+            <li key={i} className="border border-line px-3 py-1.5 text-mute">
               {t.text}
             </li>
           ))}
         </ul>
       ) : null}
 
-      <ol className="mt-10 mb-0 list-none border-t border-ink p-0 md:mt-14">
+      <ol className="mt-10 mb-0 list-none border-t border-line p-0 md:mt-12">
         {stages.map((stage, index) => (
           <li
             key={index}
             className="grid gap-x-6 gap-y-2 border-b border-line py-5 md:grid-cols-[3rem_1fr_2fr_auto] md:items-baseline md:py-6"
           >
-            <span className={`font-mono text-label ${stage.paid ? "text-amber" : "text-rim"}`}>
+            <span className={`font-mono text-micro ${stage.paid ? "text-amber" : "text-mute"}`}>
               {String(index + 1).padStart(2, "0")}
             </span>
-            <h3 className="m-0 text-header4-clamp font-medium">{stage.title}</h3>
-            <p className="m-0 max-w-[36em] text-small text-rim md:text-body md:text-ink">{stage.text}</p>
+            <h3 className="m-0 text-header4-clamp font-bold tracking-title">{stage.title}</h3>
+            <p className="m-0 max-w-[36em] text-small text-mute">{stage.text}</p>
             <p
               className={`m-0 md:text-right ${
-                stage.paid ? "text-header4-clamp font-medium" : "font-mono text-label text-rim"
+                stage.paid ? "text-header4-clamp font-bold text-amber" : "font-mono text-micro text-mute uppercase"
               }`}
             >
               {stage.price}
@@ -187,10 +186,10 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
         ))}
       </ol>
       {stagesNotes.length ? (
-        <div className="mt-6 grid gap-px overflow-hidden rounded-xl bg-edge md:grid-cols-2">
+        <div className="mt-6 grid gap-px border border-line bg-line md:grid-cols-2">
           {stagesNotes.map((note, i) => (
-            <div key={i} className="bg-panel p-6 text-white md:p-8">
-              <h3 className="m-0 text-header4-clamp font-medium">{note.title}</h3>
+            <div key={i} className="bg-card p-6 md:p-8">
+              <h3 className="m-0 text-header4-clamp font-bold tracking-title">{note.title}</h3>
               {note.text ? <p className="mt-2 mb-0 text-small text-mute">{note.text}</p> : null}
             </div>
           ))}
@@ -200,12 +199,12 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
       {plans.length ? (
         <div className="mt-16 md:mt-24">
           {content.plansHeading ? (
-            <h3 className="m-0 max-w-[16em] text-header3-clamp font-medium tracking-[-0.02em]">
+            <h3 className="m-0 max-w-[16em] text-header3-clamp font-semibold tracking-heading">
               {content.plansHeading}
             </h3>
           ) : null}
           {content.plansText ? (
-            <p className="mt-3 mb-0 max-w-[34em]">{content.plansText}</p>
+            <p className="mt-3 mb-0 max-w-[34em] text-small text-mute">{content.plansText}</p>
           ) : null}
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {plans.map((plan, i) => (
@@ -213,7 +212,7 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
             ))}
           </div>
           {content.plansNote ? (
-            <p className="mt-5 mb-0 max-w-[48em] text-caption text-rim">{content.plansNote}</p>
+            <p className="mt-5 mb-0 max-w-[48em] text-caption text-mute">{content.plansNote}</p>
           ) : null}
         </div>
       ) : null}
@@ -221,12 +220,12 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
       {extras.length ? (
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {extras.map((card, i) => (
-            <div key={i} className="rounded-xl border border-line bg-white p-6 md:p-8">
+            <div key={i} className="border border-line bg-card p-6 md:p-8">
               {card.label ? (
-                <p className="m-0 font-mono text-label text-rim uppercase">{card.label}</p>
+                <p className="m-0 font-mono text-micro tracking-wider text-amber uppercase">{card.label}</p>
               ) : null}
-              <p className="mt-2 mb-0 text-header3-clamp font-medium tracking-[-0.02em]">{card.title}</p>
-              {card.text ? <p className="mt-2 mb-0 text-small">{card.text}</p> : null}
+              <p className="mt-2 mb-0 text-header3-clamp font-semibold tracking-heading">{card.title}</p>
+              {card.text ? <p className="mt-2 mb-0 text-small text-mute">{card.text}</p> : null}
             </div>
           ))}
         </div>
@@ -245,7 +244,7 @@ export default function Pricing({ content }: BlockProps<typeof pricingProps>) {
       ) : null}
 
       {content.disclaimer ? (
-        <p className="mt-8 mb-0 max-w-[48em] text-caption text-rim">{content.disclaimer}</p>
+        <p className="mt-8 mb-0 max-w-[48em] text-caption text-mute">{content.disclaimer}</p>
       ) : null}
     </Section>
   );

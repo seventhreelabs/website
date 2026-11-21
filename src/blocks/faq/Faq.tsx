@@ -1,11 +1,13 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
-import { Section, SectionHeading } from "@/components/ui/section";
-import { anchorField } from "@/lib/cmssy/fields";
+import { Section, SectionHead } from "@/components/ui/section";
+import { anchorField, kickerField, isLightTone, toneField } from "@/lib/cmssy/fields";
 
 export type FaqContent = InferBlockContent<typeof faqProps>;
 
 export const faqProps = {
   anchor: anchorField("pytania"),
+  tone: toneField(),
+  kicker: kickerField(),
   heading: fields.text({ label: "Nagłówek", required: true }),
   items: fields.repeater({
     label: "Pytania",
@@ -23,22 +25,24 @@ export default function Faq({ content }: BlockProps<typeof faqProps>) {
   const items = content.items ?? [];
 
   return (
-    <Section
+    <Section light={isLightTone(content.tone)}
       anchor={content.anchor}
-      innerClassName="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-18"
+      innerClassName="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-25"
     >
-      <SectionHeading>{content.heading}</SectionHeading>
-      <div className="min-w-0 border-t border-ink">
+      <div className="min-w-0 lg:sticky lg:top-8 lg:self-start">
+        <SectionHead kicker={content.kicker} heading={content.heading} stacked className="" />
+      </div>
+      <div className="min-w-0 border-t border-line">
         {items.map((item, index) => (
           <details
             key={index}
             open={index === 0}
-            className="stl-faq border-b border-ink"
+            className="stl-faq border-b border-line"
           >
-            <summary className="flex cursor-pointer items-baseline justify-between gap-6 py-5 text-header4-clamp font-medium md:py-6">
+            <summary className="flex cursor-pointer items-baseline justify-between gap-6 py-5 text-header4-clamp font-bold tracking-title hover:text-amber md:py-6">
               {item.question}
             </summary>
-            <p className="mt-0 mb-6 max-w-[36em]">{item.answer}</p>
+            <p className="mt-0 mb-6 max-w-[36em] text-small text-mute">{item.answer}</p>
           </details>
         ))}
       </div>

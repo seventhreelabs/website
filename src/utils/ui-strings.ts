@@ -7,16 +7,11 @@ type Strings = {
   menuClose: string;
   mainNav: string;
   languageNav: string;
-  actorAgent: string;
-  actorHuman: string;
-  sampleProcess: string;
-  workflowSteps: string;
   notFoundHeading: string;
   notFoundText: string;
   notFoundCta: string;
   languageName: string;
   technologies: string;
-  sampleProcesses: string;
   profile: string;
   email: string;
   mdNote: string;
@@ -41,16 +36,11 @@ const STRINGS: Record<string, Strings> = {
     menuClose: "Zamknij",
     mainNav: "Główna",
     languageNav: "Język",
-    actorAgent: "Agent",
-    actorHuman: "Człowiek",
-    sampleProcess: "Przykładowy proces",
-    workflowSteps: "Etapy współpracy",
     notFoundHeading: "Tej strony nie ma",
     notFoundText: "Adres jest nieaktualny albo strona została przeniesiona.",
     notFoundCta: "Wróć na stronę główną",
     languageName: "Polski",
     technologies: "Technologie",
-    sampleProcesses: "Przykładowe procesy",
     profile: "Profil",
     email: "E-mail",
     mdNote: "Wersja markdown strony",
@@ -73,16 +63,11 @@ const STRINGS: Record<string, Strings> = {
     menuClose: "Close",
     mainNav: "Main",
     languageNav: "Language",
-    actorAgent: "Agent",
-    actorHuman: "Human",
-    sampleProcess: "Sample process",
-    workflowSteps: "Stages of work",
     notFoundHeading: "This page does not exist",
     notFoundText: "The address is out of date or the page has moved.",
     notFoundCta: "Back to the home page",
     languageName: "English",
     technologies: "Technologies",
-    sampleProcesses: "Sample processes",
     profile: "Profile",
     email: "Email",
     mdNote: "Markdown version of",

@@ -1,11 +1,13 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
-import { Section, SectionHeading } from "@/components/ui/section";
-import { anchorField } from "@/lib/cmssy/fields";
+import { Section, SectionHead } from "@/components/ui/section";
+import { anchorField, kickerField, isLightTone, toneField } from "@/lib/cmssy/fields";
 
 export type OfferGridContent = InferBlockContent<typeof offerGridProps>;
 
 export const offerGridProps = {
   anchor: anchorField("aplikacje"),
+  tone: toneField(),
+  kicker: kickerField(),
   heading: fields.text({ label: "Nagłówek", required: true }),
   text: fields.textarea({ label: "Tekst" }),
   items: fields.repeater({
@@ -30,33 +32,29 @@ export const offerGridProps = {
   }),
 };
 
-const LETTERS = "ABCDEFGH";
-
 /** Bordered grid of what the studio builds beyond automation: apps, sites, consulting, training. */
 export default function OfferGrid({ content }: BlockProps<typeof offerGridProps>) {
   const items = content.items ?? [];
 
   return (
-    <Section anchor={content.anchor} className="border-y border-line bg-white">
-      <SectionHeading className="max-w-[18em]">{content.heading}</SectionHeading>
-      {content.text ? <p className="mt-6 mb-0 max-w-[34em] text-medium-clamp">{content.text}</p> : null}
-      <ul className="mt-10 grid list-none gap-px border border-line bg-line p-0 md:mt-14 md:grid-cols-2">
+    <Section light={isLightTone(content.tone)} anchor={content.anchor}>
+      <SectionHead kicker={content.kicker} heading={content.heading} text={content.text} />
+      <ul className="m-0 grid list-none gap-px border border-line bg-line p-0 md:grid-cols-2">
         {items.map((item, index) => (
-          <li key={index} className="flex min-w-0 flex-col bg-white p-6 md:p-8">
-            <span className="font-mono text-label text-rim">{LETTERS[index] ?? index + 1}</span>
-            <h3 className="mt-3 mb-0 text-header3-clamp font-medium tracking-[-0.02em]">
+          <li key={index} className="flex min-w-0 flex-col bg-card p-6 md:p-8">
+            <h3 className="m-0 text-header4-clamp font-bold tracking-title">
               {item.title}
             </h3>
-            {item.text ? <p className="mt-3 mb-0 max-w-[30em]">{item.text}</p> : null}
+            {item.text ? <p className="mt-2 mb-0 max-w-[30em] text-small text-mute">{item.text}</p> : null}
             {item.tag ? (
               <span className="mt-auto pt-5">
-                <span className="inline-block rounded-full bg-soft px-3 py-1 font-mono text-label text-ink">{item.tag}</span>
+                <span className="inline-block bg-amber-tint px-2.5 py-1.5 font-mono text-micro tracking-wider text-amber uppercase">{item.tag}</span>
               </span>
             ) : null}
           </li>
         ))}
       </ul>
-      {content.note ? <p className="mt-6 mb-0 max-w-[40em] text-caption text-rim">{content.note}</p> : null}
+      {content.note ? <p className="mt-6 mb-0 max-w-[40em] text-caption text-mute">{content.note}</p> : null}
     </Section>
   );
 }

@@ -35,7 +35,7 @@ float sp=pow(max(dot(q,normalize(vec3(.5,.8,.6))),0.),40.);
 float env=smoothstep(.5,.65,.5+.5*sin(q.y*5.+q.x*2.+t*.15));
 c=(.04+.42*f+.3*sp+.07*env)*cov;
 }
-c*=1.-.35*dot(u,u);
+c*=1.-.35*dot(u,u);c=max(c,.0196);
 gl_FragColor=vec4(vec3(c*.96,c*.98,c*1.05),1.);
 }`;
 

@@ -3,7 +3,7 @@ import { resolveCmssyLocale } from "@cmssy/core";
 import { cmssy } from "@/cmssy.config";
 import { SiteProviders } from "@/cmssy/site-providers";
 import type { Metadata } from "next";
-import { jetbrainsMono, manrope } from "../../fonts";
+import { dmMono, manrope } from "../../fonts";
 import "../../globals.css";
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export default async function EditRootLayout({
   const locale = await resolveCmssyLocale(cmssy, path);
 
   return (
-    <html lang={locale} className={`${manrope.variable} ${jetbrainsMono.variable}`}>
+    <html lang={locale} className={`${manrope.variable} ${dmMono.variable}`}>
       <body>
         <SiteProviders>{children}</SiteProviders>
       </body>

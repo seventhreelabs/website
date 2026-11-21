@@ -44,3 +44,6 @@ next-env.d.ts
 
 # analyzer eval reports
 /evals/results/
+
+/.idea
+.idea

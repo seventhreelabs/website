@@ -5,7 +5,7 @@ export const servicesBlock = defineBlock({
   type: "services",
   label: "Usługi",
   category: "Sekcje",
-  description: "Siatka usług z ilustracją danych przy każdej pozycji.",
+  description: "Numerowana siatka usług z krótkim opisem.",
   component: Services,
   props: servicesProps,
 });

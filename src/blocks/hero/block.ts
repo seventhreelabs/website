@@ -5,7 +5,7 @@ export const heroBlock = defineBlock({
   type: "hero",
   label: "Hero",
   category: "Sekcje",
-  description: "Nagłówek z tłem 3D, przyciskami i interaktywnymi przykładami procesów.",
+  description: "Nagłówek z animowanym tłem 3D na całą szerokość, tekstem i przyciskami.",
   component: Hero,
   props: heroProps,
 });

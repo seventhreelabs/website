@@ -21,9 +21,9 @@ export default function TechMarquee({
   return (
     <section
       aria-label="Technologie"
-      className="overflow-hidden border-t border-edge bg-black py-5"
+      className="overflow-hidden border-y border-line bg-paper py-5"
     >
-      <ul className="stl-track m-0 flex w-max list-none p-0 font-mono text-caption text-mute">
+      <ul className="stl-track m-0 flex w-max list-none p-0 font-mono text-label tracking-wider text-mute uppercase">
         {[0, 1].map((copy) =>
           content.items.map((item, index) => (
             <li

@@ -25,7 +25,7 @@ export function PostArticle({ post, locale, blogHref }: PostArticleProps) {
       <a href={blogHref} className="-my-3 inline-block py-3 font-mono text-label uppercase text-rim hover:text-ink">
         ← {t.backToBlog}
       </a>
-      <h1 className="m-0 mt-6 text-header1-clamp font-medium tracking-[-0.03em] text-balance">{post.title}</h1>
+      <h1 className="m-0 mt-6 text-header1-clamp font-semibold tracking-heading text-balance">{post.title}</h1>
       <PostMeta
         publishedAt={post.publishedAt}
         author={post.author}
@@ -43,7 +43,7 @@ export function PostArticle({ post, locale, blogHref }: PostArticleProps) {
           height={675}
           sizes="(min-width: 768px) 48rem, 100vw"
           priority
-          className="mt-10 aspect-video h-auto w-full rounded-xl object-cover"
+          className="mt-10 aspect-video h-auto w-full object-cover"
         />
       ) : null}
       <RichText html={post.body} className="mt-10" />
@@ -51,7 +51,7 @@ export function PostArticle({ post, locale, blogHref }: PostArticleProps) {
         {post.tags.length ? (
           <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
             {post.tags.map((tag) => (
-              <li key={tag} className="rounded-full border border-line px-3 py-1 font-mono text-label uppercase text-rim">
+              <li key={tag} className="border border-line px-3 py-1 font-mono text-label uppercase text-rim">
                 {tagLabel(tag, locale)}
               </li>
             ))}

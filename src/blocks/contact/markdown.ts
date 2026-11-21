@@ -5,6 +5,7 @@ export const contactMarkdown: BlockMarkdown<ContactContent> = (content, ctx) =>
   paragraphs(
     `## ${content.heading}`,
     content.text,
+    content.ctaLabel && content.ctaHref && `[${content.ctaLabel}](${absoluteHref(content.ctaHref, ctx)})`,
     content.hintLabel &&
       content.hintHref &&
       `${content.hintText ? `${content.hintText} ` : ""}[${content.hintLabel}](${absoluteHref(content.hintHref, ctx)})`,

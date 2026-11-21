@@ -19,7 +19,7 @@ export function PostCard({ post, href, locale, as: Heading = "h2" }: PostCardPro
   return (
     <article className="group grid gap-5 border-t border-line py-8 md:grid-cols-[2fr_3fr] md:gap-10">
       {cover ? (
-        <a href={href} tabIndex={-1} aria-hidden="true" className="block overflow-hidden rounded-xl bg-soft">
+        <a href={href} tabIndex={-1} aria-hidden="true" className="block overflow-hidden bg-soft">
           <Image
             src={cover}
             alt={mediaAlt(post.cover) ?? ""}
@@ -34,7 +34,7 @@ export function PostCard({ post, href, locale, as: Heading = "h2" }: PostCardPro
       )}
       <div className="min-w-0">
         <PostMeta publishedAt={post.publishedAt} locale={locale} />
-        <Heading className="m-0 mt-3 text-header3-clamp font-medium tracking-[-0.02em] text-balance">
+        <Heading className="m-0 mt-3 text-header3-clamp font-semibold tracking-heading text-balance">
           <a href={href} className="hover:underline">
             {post.title}
           </a>
@@ -43,7 +43,7 @@ export function PostCard({ post, href, locale, as: Heading = "h2" }: PostCardPro
         {post.tags.length ? (
           <ul className="m-0 mt-4 flex list-none flex-wrap gap-2 p-0">
             {post.tags.map((tag) => (
-              <li key={tag} className="rounded-full border border-line px-3 py-1 font-mono text-label uppercase text-rim">
+              <li key={tag} className="border border-line px-3 py-1 font-mono text-label uppercase text-rim">
                 {tagLabel(tag, locale)}
               </li>
             ))}

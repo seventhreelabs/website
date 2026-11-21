@@ -1,12 +1,13 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
-import { anchorField } from "@/lib/cmssy/fields";
+import { anchorField, isLightTone, toneField } from "@/lib/cmssy/fields";
 
 export type BookingContent = InferBlockContent<typeof bookingProps>;
 
 export const bookingProps = {
   anchor: anchorField("spotkanie"),
+  tone: toneField(),
   heading: fields.text({ label: "Nagłówek", required: true }),
   text: fields.textarea({ label: "Tekst" }),
   facts: fields.repeater({
@@ -65,13 +66,13 @@ export default function Booking({ content }: BlockProps<typeof bookingProps>) {
   const embed = content.embedUrl?.trim();
 
   return (
-    <Section
+    <Section light={isLightTone(content.tone)}
       anchor={content.anchor}
       className="stl-grid text-white"
       innerClassName="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-18"
     >
       <div className="min-w-0">
-        <h1 className="m-0 text-header1-clamp font-medium tracking-[-0.03em] text-balance">
+        <h1 className="m-0 text-header1-clamp font-semibold tracking-heading text-balance">
           {content.heading}
         </h1>
         {content.text ? (
@@ -112,10 +113,10 @@ export default function Booking({ content }: BlockProps<typeof bookingProps>) {
             src={embed}
             title={content.embedTitle || "Calendar"}
             loading="lazy"
-            className="h-[44rem] w-full rounded-xl border-0 bg-white"
+            className="h-[44rem] w-full border-0 bg-white"
           />
         ) : (
-          <div className="rounded-xl border border-edge bg-panel p-6 md:p-10">
+          <div className="border border-edge bg-panel p-6 md:p-10">
             {content.fallbackText ? <p className="m-0 text-mute">{content.fallbackText}</p> : null}
             {content.email ? (
               <>

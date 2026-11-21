@@ -12,7 +12,7 @@ import { submitForm } from "@/services/forms";
 import { localize } from "@/utils/localize";
 
 const CONTROL =
-  "box-border w-full rounded-lg border border-rim bg-pitch px-4 py-3 font-[inherit] text-white";
+  "box-border w-full rounded-xs border border-edge bg-paper px-4 py-3 font-[inherit] text-ink focus:border-amber";
 
 const INPUT_TYPES: Partial<Record<CmssyFormField["fieldType"], string>> = {
   email: "email",

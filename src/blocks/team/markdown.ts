@@ -4,6 +4,7 @@ import type { TeamContent } from "./Team";
 export const teamMarkdown: BlockMarkdown<TeamContent> = (content, ctx) =>
   paragraphs(
     `## ${content.heading}`,
+    content.text,
     ...(content.members ?? []).map((m) =>
       paragraphs(
         `### ${m.name}${m.role ? ` - ${m.role}` : ""}`,

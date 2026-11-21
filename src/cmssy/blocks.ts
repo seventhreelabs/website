@@ -1,10 +1,12 @@
 import { blogListBlock } from "@/blocks/blog-list/block";
 import { bookingBlock } from "@/blocks/booking/block";
+import { caseDemoBlock } from "@/blocks/case-demo/block";
 import { connectionDiagramBlock } from "@/blocks/connection-diagram/block";
 import { contactBlock } from "@/blocks/contact/block";
 import { contentBlock } from "@/blocks/content/block";
 import { faqBlock } from "@/blocks/faq/block";
 import { heroBlock } from "@/blocks/hero/block";
+import { introBarBlock } from "@/blocks/intro-bar/block";
 import { latestPostsBlock } from "@/blocks/latest-posts/block";
 import { notFoundBlock } from "@/blocks/not-found/block";
 import { offerGridBlock } from "@/blocks/offer-grid/block";
@@ -21,6 +23,8 @@ import { workProcessBlock } from "@/blocks/work-process/block";
 export const blocks = [
   siteHeaderBlock,
   heroBlock,
+  introBarBlock,
+  caseDemoBlock,
   techMarqueeBlock,
   servicesBlock,
   offerGridBlock,

@@ -1,12 +1,13 @@
 import { fields, type BlockProps, type InferBlockContent } from "@cmssy/react";
 import { RichText } from "@/components/ui/rich-text";
 import { Section } from "@/components/ui/section";
-import { anchorField } from "@/lib/cmssy/fields";
+import { anchorField, isLightTone, toneField } from "@/lib/cmssy/fields";
 
 export type ContentContent = InferBlockContent<typeof contentProps>;
 
 export const contentProps = {
   anchor: anchorField("tresc"),
+  tone: toneField(),
   heading: fields.text({ label: "Nagłówek", required: true }),
   lead: fields.textarea({
     label: "Wstęp",
@@ -18,8 +19,8 @@ export const contentProps = {
 /** Long-form page: policy, terms, an article. One narrow column of prose. */
 export default function Content({ content }: BlockProps<typeof contentProps>) {
   return (
-    <Section anchor={content.anchor} innerClassName="max-w-3xl">
-      <h1 className="m-0 text-header1-clamp font-medium tracking-[-0.03em] text-balance">
+    <Section light={isLightTone(content.tone)} anchor={content.anchor} innerClassName="max-w-3xl">
+      <h1 className="m-0 text-header1-clamp font-semibold tracking-heading text-balance">
         {content.heading}
       </h1>
       {content.lead ? (
