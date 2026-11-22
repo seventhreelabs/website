@@ -9,22 +9,31 @@ const MOBILE_PIXELS = 450_000;
 const VERTEX = "attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}";
 
 const FRAGMENT = `precision highp float;
-uniform vec2 r;uniform float t;uniform vec2 m;
+uniform vec2 r;uniform float t;uniform vec2 m;uniform vec3 k;
 float sm(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
 float s(vec3 p,vec3 c,float q){return length(p-c)-q;}
+float rnd(float i){return fract(sin(i*12.9898)*43758.5453);}
+float splash(vec3 p){
+vec3 o=vec3(k.xy,.6);float e=k.z,d=s(p,o,.38*(1.-smoothstep(0.,.35,e)));
+for(int j=0;j<10;j++){float i=float(j),a=i*.628+.5*rnd(i);
+vec3 v=vec3(cos(a),sin(a),.5*(rnd(i+7.)-.5))*(1.3+1.4*rnd(i+3.));
+vec3 c=o+v*(1.-exp(-2.6*e))-vec3(0.,.9*e*e,0.);
+d=sm(d,s(p,c,(.1+.14*rnd(i+5.))*(1.-smoothstep(.2,1.5,e))),.25);}
+return d;}
 float map(vec3 p){
 float d=s(p,vec3(1.5+.5*sin(t*.31),.3*cos(t*.23),.2),1.05);
 d=sm(d,s(p,vec3(-.6+.9*sin(t*.19),.95*cos(t*.27),-.2),.8),.55);
 d=sm(d,s(p,vec3(2.8*cos(t*.13),-1.0+.5*sin(t*.37),.1),.7),.55);
 d=sm(d,s(p,vec3(-2.6+.6*cos(t*.29),.7*sin(t*.17),.3),.95),.55);
 d=sm(d,s(p,vec3(m.x*3.2,m.y*1.8,.6),.42),.7);
-return d;}
+if(k.z<1.6)d=sm(d,splash(p),.3);
+return d+.035*sin(p.x*6.+t*.7)*sin(p.y*7.-t*.5)*sin(p.z*5.+t*.3);}
 vec3 nor(vec3 p){vec2 e=vec2(.002,0.);return normalize(vec3(map(p+e.xyy)-map(p-e.xyy),map(p+e.yxy)-map(p-e.yxy),map(p+e.yyx)-map(p-e.yyx)));}
 void main(){
 vec2 u=(gl_FragCoord.xy-.5*r)/r.y;
 vec3 ro=vec3(0.,0.,5.5),rd=normalize(vec3(u*1.15,-1.5));
 float d=0.,h=1.,mn=1e3,dm=0.;
-for(int i=0;i<64;i++){h=map(ro+rd*d);if(h<mn){mn=h;dm=d;}if(h<.002||d>10.)break;d+=h;}
+for(int i=0;i<64;i++){h=map(ro+rd*d);if(h<mn){mn=h;dm=d;}if(h<.002||d>10.)break;d+=h*.8;}
 float px=4./r.y;
 float cov=1.-smoothstep(.002,.002+px,mn);
 float c=0.;
@@ -34,6 +43,7 @@ float f=pow(1.-max(dot(n,-rd),0.),2.);
 float sp=pow(max(dot(q,normalize(vec3(.5,.8,.6))),0.),40.);
 float env=smoothstep(.5,.65,.5+.5*sin(q.y*5.+q.x*2.+t*.15));
 c=(.04+.42*f+.3*sp+.07*env)*cov;
+c+=(fract(sin(dot(gl_FragCoord.xy+fract(t)*97.,vec2(12.9898,78.233)))*43758.5453)-.5)*.07*cov;
 }
 c*=1.-.35*dot(u,u);c=max(c,.0196);
 gl_FragColor=vec4(vec3(c*.96,c*.98,c*1.05),1.);
@@ -71,6 +81,7 @@ export function HeroBackground() {
     const uRes = gl.getUniformLocation(program, "r");
     const uTime = gl.getUniformLocation(program, "t");
     const uMouse = gl.getUniformLocation(program, "m");
+    const uSplash = gl.getUniformLocation(program, "k");
 
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let targetX = 0.3;
@@ -79,6 +90,10 @@ export function HeroBackground() {
     let mouseY = targetY;
     let frame = 0;
     let visible = true;
+    // click splash: point on the z=.6 plane the shader's camera sees under the cursor
+    let splashX = 0;
+    let splashY = 0;
+    let splashAt = -Infinity;
 
     const onMove = (event: PointerEvent) => {
       const box = canvas.getBoundingClientRect();
@@ -86,6 +101,17 @@ export function HeroBackground() {
       targetX = ((event.clientX - box.left) / box.width) * 2 - 1;
       targetY = 1 - ((event.clientY - box.top) / box.height) * 2;
     };
+
+    // camera at z=5.5 looking down -z with rd=(u*1.15,-1.5): the z=.6 plane is 4.9/1.5 rays away
+    const PLANE = (1.15 * 4.9) / 1.5;
+    const onDown = (event: PointerEvent) => {
+      const box = canvas.getBoundingClientRect();
+      if (!box.height || event.clientY > box.bottom) return;
+      splashX = ((event.clientX - box.left - box.width / 2) / box.height) * PLANE;
+      splashY = ((box.top + box.height / 2 - event.clientY) / box.height) * PLANE;
+      splashAt = performance.now();
+    };
+    const hero = canvas.parentElement;
 
     const draw = (ms: number) => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -104,6 +130,7 @@ export function HeroBackground() {
       gl.uniform2f(uRes, width, height);
       gl.uniform1f(uTime, still ? 14 : 14 + ms / 1000);
       gl.uniform2f(uMouse, mouseX, mouseY);
+      gl.uniform3f(uSplash, splashX, splashY, Math.min((ms - splashAt) / 1000, 9));
       gl.drawArrays(gl.TRIANGLES, 0, 3);
       if (!still && visible) frame = requestAnimationFrame(draw);
     };
@@ -114,13 +141,17 @@ export function HeroBackground() {
       if (visible && !wasVisible && !still) frame = requestAnimationFrame(draw);
     });
     observer.observe(canvas);
-    if (!still) window.addEventListener("pointermove", onMove);
+    if (!still) {
+      window.addEventListener("pointermove", onMove);
+      hero?.addEventListener("pointerdown", onDown);
+    }
     frame = requestAnimationFrame(draw);
 
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
       window.removeEventListener("pointermove", onMove);
+      hero?.removeEventListener("pointerdown", onDown);
     };
   }, []);
 
