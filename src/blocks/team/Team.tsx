@@ -21,14 +21,16 @@ export const teamProps = {
       name: fields.text({ label: "Imię i nazwisko", required: true }),
       role: fields.text({ label: "Rola" }),
       bio: fields.textarea({ label: "Opis" }),
-      photo: fields.media({ label: "Zdjęcie", acceptedTypes: ["image"] }),
+      photo: fields.media({
+        label: "Zdjęcie",
+        helperText:
+          "Sylwetka bez tła (PNG z przezroczystością), pionowa ok. 4:5, kadr od głowy do pasa. Wycięcie: swift scripts/cutout.swift.",
+        acceptedTypes: ["image"],
+      }),
       profileUrl: fields.url({ label: "Link do profilu" }),
     },
   }),
 };
-
-// avatar tile colours alternate when there is no photo
-const TILES = ["bg-amber", "bg-blush"];
 
 const initials = (name: string) =>
   name
@@ -41,51 +43,57 @@ const initials = (name: string) =>
 export default function Team({ content, context }: BlockProps<typeof teamProps>) {
   const members = content.members ?? [];
   const t = ui(context?.locale?.current);
+  const columns = members.length > 1 ? "grid-cols-2" : "";
 
   return (
     <Section light={isLightTone(content.tone)} anchor={content.anchor} className="bg-panel">
       <SectionHead kicker={content.kicker} heading={content.heading} text={content.text} />
-      <div className="grid gap-3.5 lg:grid-cols-2">
+
+      {/* figures side by side on one backdrop, also on phones */}
+      <div className={`stl-grid stl-stage grid border border-line ${columns}`}>
         {members.map((member, index) => {
           const photo = mediaUrl(member.photo);
 
           return (
-            <article
-              key={index}
-              className="grid grid-cols-[3.25rem_1fr] items-start gap-4.5 bg-lift p-5 sm:grid-cols-[4rem_1fr] sm:p-7"
-            >
+            <div key={index} className="relative aspect-4/5 overflow-hidden md:aspect-1/1">
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-1/7 top-1/6 bottom-0 grid place-items-center rounded-t-full bg-amber-solid"
+              >
+                {photo ? null : (
+                  <span className="font-mono text-header3-clamp text-on-solid">{initials(member.name)}</span>
+                )}
+              </div>
               {photo ? (
                 <Image
                   src={photo}
                   alt={mediaAlt(member.photo) ?? member.name}
-                  width={128}
-                  height={128}
+                  fill
+                  sizes="(min-width: 77.75rem) 37rem, 50vw"
                   quality={85}
-                  className="size-13 object-cover sm:size-16"
+                  className="object-contain object-bottom"
                 />
-              ) : (
-                <div
-                  aria-hidden="true"
-                  className={`grid size-13 place-items-center font-mono text-body text-pitch sm:size-16 ${TILES[index % TILES.length]}`}
-                >
-                  {initials(member.name)}
-                </div>
-              )}
-              <div className="min-w-0">
-                <h3 className="mt-0.5 mb-1 text-body font-bold tracking-title">{member.name}</h3>
-                {member.role ? (
-                  <p className="m-0 font-mono text-micro text-amber uppercase">{member.role}</p>
-                ) : null}
-                {member.bio ? <p className="mt-3 mb-0 text-small text-mute">{member.bio}</p> : null}
-                {member.profileUrl ? (
-                  <a href={member.profileUrl} className="mt-3 inline-block text-small font-bold underline hover:text-amber">
-                    {t.profile}
-                  </a>
-                ) : null}
-              </div>
-            </article>
+              ) : null}
+            </div>
           );
         })}
+      </div>
+
+      <div className={`mt-8 grid gap-x-8 gap-y-10 md:mt-10 md:gap-x-14 ${members.length > 1 ? "md:grid-cols-2" : ""}`}>
+        {members.map((member, index) => (
+          <article key={index} className="min-w-0 border-t border-line pt-6">
+            <h3 className="m-0 text-header4-clamp font-bold tracking-title">{member.name}</h3>
+            {member.role ? (
+              <p className="mt-2 mb-0 font-mono text-micro tracking-kicker text-amber uppercase">{member.role}</p>
+            ) : null}
+            {member.bio ? <p className="mt-4 mb-0 max-w-[34em] text-small text-mute">{member.bio}</p> : null}
+            {member.profileUrl ? (
+              <a href={member.profileUrl} className="mt-4 inline-block text-small font-bold underline hover:text-amber">
+                {t.profile}
+              </a>
+            ) : null}
+          </article>
+        ))}
       </div>
     </Section>
   );

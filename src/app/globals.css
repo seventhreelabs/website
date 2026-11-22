@@ -22,6 +22,9 @@
   --color-amber-bright: #ffd067;
   --color-amber-deep: #29200d;
   --color-amber-tint: #332a17;
+  /* fills that stay bright in .tone-light too (amber there darkens for text) */
+  --color-amber-solid: #f5b934;
+  --color-on-solid: #080808;
   --color-blush: #f2c2ad;
 
   /* Type scale: desktop */
@@ -78,6 +81,8 @@
   --color-amber-bright: var(--color-amber-bright);
   --color-amber-deep: var(--color-amber-deep);
   --color-amber-tint: var(--color-amber-tint);
+  --color-amber-solid: var(--color-amber-solid);
+  --color-on-solid: var(--color-on-solid);
   --color-blush: var(--color-blush);
 
   --font-sans: var(--font-manrope), sans-serif;
@@ -197,6 +202,11 @@ select:focus-visible {
     linear-gradient(color-mix(in srgb, var(--color-ink) 5.5%, transparent) 1px, transparent 1px),
     linear-gradient(90deg, color-mix(in srgb, var(--color-ink) 5.5%, transparent) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+/* Team block backdrop: on light sections a grey ground keeps white shirts from melting into it. */
+.tone-light .stl-stage {
+  background-color: var(--color-soft);
 }
 
 .stl-track {
