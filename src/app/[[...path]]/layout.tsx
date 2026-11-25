@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(siteUrl()),
     title: brand,
-    description: "Automatyzujemy powtarzalną pracę w firmach z pomocą AI.",
+    description: "Wdrażamy AI w firmach i dzięki temu automatyzujemy powtarzalną pracę.",
     applicationName: brand,
     ...(draft ? { robots: { index: false, follow: false } } : {}),
     ...(verification ? { verification: { google: verification } } : {}),
