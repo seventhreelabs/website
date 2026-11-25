@@ -16,6 +16,9 @@ export type StructuredDataInput = {
   blocks: LocalizedBlock[];
 };
 
+/** The company's own profiles elsewhere (schema.org sameAs). */
+const ORG_PROFILES = ["https://www.linkedin.com/company/seventhreelabs/"];
+
 /**
  * schema.org graph for a page: Organization and WebSite once, the WebPage,
  * breadcrumbs below the home page, and what the blocks carry - services as a
@@ -42,6 +45,7 @@ export function structuredData(input: StructuredDataInput): { "@context": string
     name: input.siteName,
     url: input.origin,
     ...(input.logoUrl ? { logo: input.logoUrl } : {}),
+    sameAs: ORG_PROFILES,
     ...(contact?.email ? { email: contact.email } : {}),
     ...(services?.items?.length
       ? {
@@ -124,7 +128,7 @@ export function postStructuredData(input: PostStructuredDataInput): { "@context"
   return {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Organization", "@id": orgId, name: input.siteName, url: input.origin, ...(input.logoUrl ? { logo: input.logoUrl } : {}) },
+      { "@type": "Organization", "@id": orgId, name: input.siteName, url: input.origin, ...(input.logoUrl ? { logo: input.logoUrl } : {}), sameAs: ORG_PROFILES },
       {
         "@type": "BlogPosting",
         "@id": input.url,
