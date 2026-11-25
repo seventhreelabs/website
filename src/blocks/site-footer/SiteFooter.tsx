@@ -69,36 +69,53 @@ export default function SiteFooter({
   return (
     <footer className="bg-card font-mono text-label text-ink">
       <div className="mx-auto max-w-content px-5 md:px-8">
-        <div className="flex flex-col gap-1 py-6.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2 sm:gap-x-8">
-          <BrandLogo
-            branding={branding}
-            href={href("/")}
-            imageClassName="h-4"
-            textClassName="font-sans text-small"
-          />
-          {(content.details ?? []).map((item, index) => (
-            <span key={index}>{item.text}</span>
-          ))}
-          {(content.links ?? []).map((link, index) => (
-            <a key={index} href={href(link.href)} className="py-2 text-amber hover:underline sm:py-0">
-              {link.label}
-            </a>
-          ))}
-          {COOKIEBOT_ID ? (
-            <CookieSettingsLink label={ui(locale?.current).cookieSettings} className="cursor-pointer appearance-none bg-transparent px-0 py-2 text-left font-mono text-label text-amber hover:underline sm:py-0" />
-          ) : null}
+        {/*
+          Three groups. Phone: stacked. From sm: brand and credit share the first
+          row, the links get a full row below (one row does not fit even at the
+          full content width, and English labels are longer).
+        */}
+        <div className="flex flex-col gap-3 py-6.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-3">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-x-8">
+            <BrandLogo
+              branding={branding}
+              href={href("/")}
+              imageClassName="h-4"
+              textClassName="font-sans text-small"
+            />
+            {(content.details ?? []).map((item, index) => (
+              <span key={index}>{item.text}</span>
+            ))}
+          </div>
+          <div className="flex flex-col sm:order-last sm:basis-full sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-2">
+            {(content.links ?? []).map((link, index) => {
+              const external = /^https?:\/\//.test(link.href);
+              return (
+                <a
+                  key={index}
+                  href={href(link.href)}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="py-2 whitespace-nowrap text-amber hover:underline sm:py-0"
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+            {COOKIEBOT_ID ? (
+              <CookieSettingsLink label={ui(locale?.current).cookieSettings} className="cursor-pointer appearance-none whitespace-nowrap bg-transparent px-0 py-2 text-left font-mono text-label text-amber hover:underline sm:py-0" />
+            ) : null}
+          </div>
           {credit ? (
             content.creditHref ? (
               <a
                 href={content.creditHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2 hover:text-amber sm:ml-auto sm:py-0"
+                className="shrink-0 py-2 whitespace-nowrap hover:text-amber sm:ml-auto sm:py-0"
               >
                 {credit}
               </a>
             ) : (
-              <span className="sm:ml-auto">{credit}</span>
+              <span className="shrink-0 whitespace-nowrap sm:ml-auto">{credit}</span>
             )
           ) : null}
         </div>
